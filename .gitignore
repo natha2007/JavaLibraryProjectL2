@@ -1,16 +1,9 @@
 # Eclipse
-.project
-.classpath
 .settings/
+bin/
 
 # Java
-*.class
 *.log
-
-# Build
-/bin/
-/target/
-/out/
 
 # OS
 .DS_Store
@@ -20,3 +13,4 @@ Thumbs.db
 .idea/
 *.iml
 .vscode/
+

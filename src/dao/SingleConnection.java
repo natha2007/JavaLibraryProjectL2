@@ -8,6 +8,14 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 public class SingleConnection {
 	private static Connection connect;
 	
+	/**
+	 * Crée une nouvelle connexion 
+	 * @param dbname nom de la base de données
+	 * @param servername nom du server
+	 * @param login identifiant
+	 * @param password mot de passe
+	 * @throws SQLException
+	 */
 	private SingleConnection(String dbname, String servername, String login, String password) throws SQLException{
 		String url="jdbc:mysql://"+servername+":3306/"+dbname+"?serverTimezone=UTC";
 		MysqlDataSource mysqlDS = new MysqlDataSource();
@@ -23,6 +31,11 @@ public class SingleConnection {
 		}
 	}
 	
+	/**
+	 * récupère l'instance de connexion et la créé si elle est null
+	 * @return l'instance de connexion
+	 * @throws SQLException
+	 */
 	public static Connection getInstance() throws SQLException {
 		if (connect == null) {
 			new SingleConnection("bibliotheque","127.0.0.1","root","") ;
@@ -33,9 +46,12 @@ public class SingleConnection {
 	//étant donné qu'on a qu'une seule base de donnée, j'ai trouvé inutile de faire
 	//une deuxième méthode getInstance avec des paramètres
 	
-	public void close(Connection conn) {
+	/**
+	 * ferme la connexion
+	 */
+	public static void close() {
 		try {
-			conn.close();
+			connect.close();
 		} catch (SQLException e) {
 			System.out.println("problème de fermeture de la connexion");
 			e.printStackTrace();

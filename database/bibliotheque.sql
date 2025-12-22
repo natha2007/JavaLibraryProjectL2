@@ -140,4 +140,4 @@ CREATE TABLE DateSysteme (
 -- SET current_date = CURRENT_DATE
 -- WHERE id = 1;
 
--- pouvoir changer la date manuellement pour pouvoir tester--
+-- pouvoir changer la date manuellement pour pouvoir tester

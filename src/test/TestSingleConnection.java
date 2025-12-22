@@ -1,7 +1,9 @@
-package dao;
+package test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import dao.SingleConnection;
 
 public class TestSingleConnection {
 	public static void main(String[] args) {

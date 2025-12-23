@@ -38,7 +38,7 @@ public class SingleConnection {
 	 */
 	public static Connection getInstance() throws SQLException {
 		if (connect == null) {
-			new SingleConnection("bibliotheque","127.0.0.1","root","") ;
+			new SingleConnection("bibliotheque","127.0.0.1","root","");
 		}
 		return connect;
 	}

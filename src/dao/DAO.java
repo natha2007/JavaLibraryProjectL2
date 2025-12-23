@@ -8,6 +8,9 @@ public abstract class DAO<T> {
 	protected Connection connect;
 	protected Statement stmt;
 	
+	/**
+	 * Ouvre la connexion et crée un statement
+	 */
 	public void open() {
 		try {
 			connect = SingleConnection.getInstance();
@@ -18,12 +21,27 @@ public abstract class DAO<T> {
 		}
 	}
 	
+	/*
+	 * méthode abstraite : ajouter un objet à la BD
+	 */
 	public abstract T create(T obj);
 	
+	/**
+	 * méthode abstraite : maj d'un objet de la BD
+	 * @param obj l'objet à mettre à jour
+	 * @return l'objet mis à jour
+	 */
 	public abstract T update(T obj);
 	
+	/**
+	 * méthode abstraite : supprimer un élément de la BD
+	 * @param obj élément à supprimer
+	 */
 	public abstract void delete(T obj);
 	
+	/**
+	 * ferme la connexion
+	 */
 	public void close() {
 		SingleConnection.close();
 	}

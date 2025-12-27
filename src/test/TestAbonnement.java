@@ -23,7 +23,8 @@ public class TestAbonnement {
 		System.out.println(ab3);
 		//ok
 		
-		//les classesDAO ne sont pas forcément finies complétement et peuvent être complétées en cas de besoin
+		//les classesDAO ne sont pas forcément finies complétement et peuvent être complétées 
+		//en cas de besoin
 	}
 
 }

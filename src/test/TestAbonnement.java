@@ -22,6 +22,8 @@ public class TestAbonnement {
 		Abonnement ab3 = test1.read(2);
 		System.out.println(ab3);
 		//ok
+		
+		//les classesDAO ne sont pas forcément finies complétement et peuvent être complétées en cas de besoin
 	}
 
 }

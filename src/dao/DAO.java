@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -8,13 +9,18 @@ public abstract class DAO<T> {
 	protected Connection connect;
 	protected Statement stmt;
 	
+	public DAO() {
+		open();
+	}
+	
 	/**
 	 * Ouvre la connexion et crée un statement
 	 */
 	public void open() {
 		try {
 			connect = SingleConnection.getInstance();
-			stmt = connect.createStatement();
+			stmt = connect.createStatement(Statement.RETURN_GENERATED_KEYS,
+				    						ResultSet.TYPE_FORWARD_ONLY);
 		} catch (SQLException e) {
 			System.out.println("erreur ouverture DAO");
 			e.printStackTrace();

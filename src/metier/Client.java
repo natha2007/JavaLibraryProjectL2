@@ -3,15 +3,25 @@ package metier;
 import dao.DAO;
 
 public class Client {
-	private int clientId;
+	private Integer clientId;
 	private String nom;
 	private String prenom;
 	private Abonnement abonnement; //clé étrangère abonnementId
+	private Compte compte; //clé étrangère compteId
 	
-	public Client(String nom, String prenom, Abonnement abonnement) {
+	public Client(String nom, String prenom, Abonnement abonnement, Compte compte) {
 		this.abonnement = abonnement;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.compte = compte;
+	}
+	
+	public Client(Integer clientId, String nom, String prenom, Abonnement abonnement, Compte compte) {
+		this.abonnement = abonnement;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.compte = compte;
+		this.clientId = clientId;
 	}
 	
 	public int getClientId() {
@@ -46,9 +56,17 @@ public class Client {
 		this.abonnement = abonnement;
 	}
 	
+	public Compte getCompte() {
+		return compte;
+	}
+
+	public void setCompte(Compte compte) {
+		this.compte = compte;
+	}
+
 	@Override
 	public String toString() {
-		return "Client [clientId=" + clientId + ", nom=" + nom + ", prenom=" + prenom + "abonnementId=" + this.abonnement.getAbonnementId() + "]";
+		return "Client [clientId=" + clientId + ", nom=" + nom + ", prenom=" + prenom + ", abonnementId=" + this.abonnement.getAbonnementId() + "]";
 	}
 	
 

@@ -17,6 +17,12 @@ public class Abonnement {
 		*/
 	}
 	
+	public Abonnement(Integer abonnementId, String typeAbonnement, float prix) {
+		this.typeAbonnement = typeAbonnement;
+		this.prix = prix;
+		this.abonnementId = abonnementId;
+	}
+	
 	public int getAbonnementId() {
 		return abonnementId;
 	}

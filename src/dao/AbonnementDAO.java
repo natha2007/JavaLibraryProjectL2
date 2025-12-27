@@ -1,6 +1,8 @@
 package dao;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import metier.Abonnement;
 
@@ -8,24 +10,65 @@ public class AbonnementDAO extends DAO<Abonnement>{
 	private ResultSet rs;
 
 	@Override
-	public Abonnement create(Abonnement obj) {
-		return null;
+	public Abonnement create(Abonnement ab) {
+		String requete = "INSERT INTO abonnement(typeAbonnement, prix)"
+				+ " VALUES('" + ab.getTypeAbonnement() + "', '" + ab.getPrix()
+				+ "')";
+		try {
+			stmt.executeUpdate(requete, Statement.RETURN_GENERATED_KEYS);
+			rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				ab.setAbonnementId(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+		return ab;
 	}
 
 	@Override
-	public Abonnement update(Abonnement obj) {
-		// TODO Auto-generated method stub
-		return null;
+	public Abonnement update(Abonnement ab) {
+		String requete = "UPDATE abonnement"
+				+ " SET typeAbonnement= '" + ab.getTypeAbonnement()
+				+ "', prix= '" + ab.getPrix() + "'"
+				+ "WHERE abonnementId= " + ab.getAbonnementId();
+		try {
+			stmt.executeUpdate(requete);
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+		return ab;
 	}
 
 	@Override
-	public void delete(Abonnement obj) {
-		// TODO Auto-generated method stub
-		
+	public void delete(Abonnement ab) {
+		String requete = "DELETE FROM abonnement"
+				+ " WHERE abonnementId= " + ab.getAbonnementId();
+		try {
+			stmt.executeUpdate(requete);
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
 	}
 	
-	public void read(String id) {
-		
+	public Abonnement read(Integer id) {
+		Abonnement ab = null;
+		String requete = "SELECT *"
+				+ " FROM abonnement"
+				+ " WHERE abonnementId= " + id;
+		try {
+			rs = stmt.executeQuery(requete);
+			if (rs.first()) {
+				ab = new Abonnement(rs.getInt(1), rs.getString(2), rs.getFloat(3));
+			}
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+		return ab;
 	}
 
 }

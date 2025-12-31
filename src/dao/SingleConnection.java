@@ -17,7 +17,7 @@ public class SingleConnection {
 	 * @throws SQLException
 	 */
 	private SingleConnection(String dbname, String servername, String login, String password) throws SQLException{
-		String url="jdbc:mysql://"+servername+":3306/"+dbname+"?serverTimezone=UTC";
+		String url="jdbc:mysql://" + servername + ":3306/" + dbname + "?useSSL=false&serverTimezone=UTC";
 		MysqlDataSource mysqlDS = new MysqlDataSource();
 		mysqlDS.setURL(url);
 		mysqlDS.setUser(login);

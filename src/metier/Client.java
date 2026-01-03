@@ -1,6 +1,5 @@
 package metier;
 
-import dao.DAO;
 
 public class Client {
 	private Integer clientId;

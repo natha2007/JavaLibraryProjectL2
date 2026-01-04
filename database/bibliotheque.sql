@@ -30,9 +30,9 @@ CREATE TABLE client (
 CREATE TABLE objet(
 	objetId INT AUTO_INCREMENT NOT NULL,
 	nom VARCHAR(100) NOT NULL, -- titre pour un livre, modele pour un ordinateur, titre d'un CD...
-	auteur VARCHAR(100), -- auteur du livre, du DVD, constructeur de l'ordinateur
+	auteur VARCHAR(100), -- auteur du livre, du DVD, constructeur de l'ordinateur...
 	prix DECIMAL(4,2),
-	typeObjet VARCHAR(10) NOT NULL, -- JeuSociete, Ordinateur, Livre, CD, DVD
+	typeObjet VARCHAR(20) NOT NULL, -- JeuSociete, Ordinateur, Livre, CD, DVD
 	quantite INT NOT NULL DEFAULT 1,
 	reference VARCHAR(100) NOT NULL, -- Pour un livre ISBN, pour les autres code barre ou qqch comme ça qui identifie dans le cas où on aurait deux objets de même nom
 	CONSTRAINT pkObjetIdObjet PRIMARY KEY (objetId)
@@ -62,79 +62,12 @@ CREATE TABLE bibliothecaire(
 	REFERENCES compte(compteId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE jeu_societe(
-	jeuSocieteId INT AUTO_INCREMENT NOT NULL,
-	nom VARCHAR(100) NOT NULL,
-	auteur VARCHAR(100),
-	dateAchat DATE NOT NULL,
-	reference VARCHAR(100) NOT NULL,
-	objetId INT NOT NULL,
-	CONSTRAINT pkJeuSocieteId PRIMARY KEY(jeuSocieteId),
-	CONSTRAINT fkObjetId2 FOREIGN KEY (objetId)
-	REFERENCES objet(objetId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE cd(
-	cdId INT AUTO_INCREMENT NOT NULL,
-	titre VARCHAR(100) NOT NULL,
-	auteur VARCHAR(100),
-	dateAchat DATE NOT NULL,
-	reference VARCHAR(100) NOT NULL,
-	genre VARCHAR(50), -- Rock, Pop, Mathématiques, espagnol...
-	objetId INT NOT NULL,
-	CONSTRAINT pkCdId PRIMARY KEY(cdId),
-	CONSTRAINT fkObjetId3 FOREIGN KEY (objetId)
-	REFERENCES objet(objetId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE livre(
-	livreId INT AUTO_INCREMENT NOT NULL,
-	titre VARCHAR(100) NOT NULL,
-	auteur VARCHAR(100),
-	dateAchat DATE NOT NULL,
-	referenceISBN VARCHAR(100) NOT NULL,
-	genre VARCHAR(50), -- Roman historique, société, Policier, magazine, BD, manga...
-	objetId INT NOT NULL,
-	CONSTRAINT pkLivreId PRIMARY KEY(livreId),
-	CONSTRAINT fkObjetId4 FOREIGN KEY (objetId)
-	REFERENCES objet(objetId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE dvd(
-	dvdId INT AUTO_INCREMENT NOT NULL,
-	titre VARCHAR(100) NOT NULL,
-	auteur VARCHAR(100),
-	dateAchat DATE NOT NULL,
-	reference VARCHAR(100) NOT NULL,
-	genre VARCHAR(50), -- Thriller, comédie, géopolitique...
-	objetId INT NOT NULL,
-	CONSTRAINT pkDvdId PRIMARY KEY(dvdId),
-	CONSTRAINT fkObjetId5 FOREIGN KEY (objetId)
-	REFERENCES objet(objetId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE ordinateur(
-	ordinateurId INT AUTO_INCREMENT NOT NULL,
-	titre VARCHAR(100) NOT NULL,
-	auteur VARCHAR(100),
-	dateAchat DATE NOT NULL,
-	reference VARCHAR(100) NOT NULL,
-	genre VARCHAR(50), -- Thriller, comédie, géopolitique...
-	objetId INT NOT NULL,
-	CONSTRAINT pkOrdinateurId PRIMARY KEY(ordinateurId),
-	CONSTRAINT fkObjetId6 FOREIGN KEY (objetId)
-	REFERENCES objet(objetId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
 CREATE TABLE date_systeme (
 	dateId INT AUTO_INCREMENT NOT NULL,
 	dateDuJour DATETIME DEFAULT CURRENT_TIMESTAMP,
 	dateManuelle BOOLEAN DEFAULT FALSE, -- permet de changer la date manuellement si true
 	CONSTRAINT pkDateId PRIMARY KEY (dateId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- On fait pas de table catégorie finalement--
 
 -- a chaque lancement de l'application pour que la date se mette à jour
 -- UPDATE system_date

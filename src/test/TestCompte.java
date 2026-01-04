@@ -19,7 +19,7 @@ public class TestCompte {
 		test1.delete(c2);
 		//ok
 		
-		Compte c3 = test1.read(11);
+		Compte c3 = test1.read(1);
 		System.out.println(c3);
 		//ok
 		

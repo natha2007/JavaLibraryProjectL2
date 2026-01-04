@@ -36,12 +36,12 @@ public class EmpruntDAO extends DAO<Emprunt> {
 	@Override
 	public Emprunt update(Emprunt e1) {
 		String requete = "UPDATE emprunt"
-				+ "SET dateDebut= '" + e1.getDateDebut()
+				+ " SET dateDebut= '" + e1.getDateDebut()
 				+ "', dateFin= '" + e1.getDateFin()
-				+ "', dureeMaximaleEmprunt= '" + e1.getDureeMaximaleEmprunt()
-				+ "', clientId= '" + e1.getClient().getClientId() 
-				+ "', objetId= '" + e1.getObjet().getObjetId() 
-				+ "' WHERE compteId= " + e1.getEmpruntId();
+				+ "', dureeMaximaleEmprunt= " + e1.getDureeMaximaleEmprunt()
+				+ ", clientId= " + e1.getClient().getClientId() 
+				+ ", objetId= " + e1.getObjet().getObjetId() 
+				+ " WHERE empruntId= " + e1.getEmpruntId();
 		try {
 			stmt.executeUpdate(requete);
 		} catch (SQLException e) {

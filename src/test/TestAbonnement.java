@@ -12,6 +12,7 @@ public class TestAbonnement {
 		test1.create(ab);
 		//ok
 		
+		
 		Abonnement ab2 = new Abonnement(1, "classique",2.5f);
 		test1.update(ab2);
 		//ok
@@ -25,6 +26,7 @@ public class TestAbonnement {
 		
 		//les classesDAO ne sont pas forcément finies complétement et peuvent être complétées 
 		//en cas de besoin
+		 
 	}
 
 }

@@ -18,6 +18,7 @@ public class TestClient {
 		cld.create(cl);
 		//ok
 		
+		
 		Client c2 = cld.read(cl.getClientId());
 		System.out.println(c2);
 		//ok
@@ -28,6 +29,8 @@ public class TestClient {
 		
 		cld.delete(cl3);
 		//ok
+		
+		 
 	}
 
 }

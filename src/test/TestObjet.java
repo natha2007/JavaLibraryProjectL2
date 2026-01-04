@@ -14,5 +14,6 @@ public class TestObjet {
 		objetdao.update(o1);
 		
 		//objetdao.delete(o1);
+		System.out.println(o1.toString());
 	}
 }

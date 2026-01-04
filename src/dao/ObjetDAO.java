@@ -39,7 +39,6 @@ private ResultSet rs;
 				+ "', quantite= '" + o1.getQuantite()
 				+ "' WHERE objetId= " + o1.getObjetId();
 		try {
-			System.out.println(requete);
 			stmt.executeUpdate(requete);
 		} catch (SQLException e) {
 			System.out.println("erreur requête SQL");
@@ -63,8 +62,8 @@ private ResultSet rs;
 	public Objet read(Integer id) {
 		Objet o1 = null;
 		String requete = "SELECT *"
-				+ " FROM emprunt"
-				+ " WHERE empruntId =" + id;
+				+ " FROM objet"
+				+ " WHERE objetId =" + id;
 		try {
 			this.rs = stmt.executeQuery(requete);
 			if (rs.first()) {

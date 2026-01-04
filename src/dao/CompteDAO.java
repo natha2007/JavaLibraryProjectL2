@@ -75,5 +75,59 @@ public class CompteDAO extends DAO<Compte> {
 		return c;
 	}
 	
+	public boolean exists(String identifiant, String mdpHash) {
+		boolean exists = false;
+		String requete = "SELECT *"
+				+ " FROM compte"
+				+ " WHERE identifiant='" + identifiant +
+				"' AND mdpHash='" + mdpHash + "'";
+		try {
+			rs = stmt.executeQuery(requete);
+			if (rs.first()) {
+				exists = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+		return exists;
+	}
+	
+	public boolean exists(String identifiant) {
+		boolean exists = false;
+		String requete = "SELECT *"
+				+ " FROM compte"
+				+ " WHERE identifiant='" + identifiant +
+				"'";
+		try {
+			rs = stmt.executeQuery(requete);
+			if (rs.first()) {
+				exists = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+		return exists;
+	}
+	
+	public Compte read(String identifiant) {
+		Compte c = null;
+		String requete = "SELECT *"
+				+ " FROM compte"
+				+ " WHERE identifiant='" + identifiant +
+				"'";
+		try {
+			rs = stmt.executeQuery(requete);
+			if (rs.first()) {
+				c = new Compte(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+			}
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+		return c;
+	}
+	
 	
 }

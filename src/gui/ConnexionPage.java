@@ -1,71 +1,72 @@
 package gui;
 
 import java.awt.*;
+
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+
 
 import dao.CompteDAO;
 
-//idées lambda : transformer un resultSet en collection Java grâce à un lambdaStream
-//on peut mettre un abonnement bibliothécaire, vu que l'abonnement crée le compte
-
-public class ConnexionPage extends JFrame{
+public class ConnexionPage extends JPanel {
 	private JTextField champId = new JTextField(30);
 	private JPasswordField champMdp = new JPasswordField(30);
 	
-	public ConnexionPage(String s) {
-		super(s);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(new BorderLayout());
+	private final Runnable conn;
+	
+	public ConnexionPage(Runnable conn) {
+		this.conn = conn;
 		
+		JPanel head = new JPanel(new GridBagLayout());
+		setLayout(new BorderLayout());
 		JLabel titre = new JLabel("Bienvenue");
 		titre.setHorizontalAlignment(SwingConstants.CENTER);
 		titre.setFont(new Font(titre.getFont().getName(), Font.BOLD, 40));
-		getContentPane().add(titre, BorderLayout.NORTH);
+		add(head, BorderLayout.NORTH);
+		head.add(titre);
 		
-		JPanel ecran = new JPanel();
-		JPanel corps = new JPanel();
-		ecran.setLayout(new GridBagLayout());
-		corps.setLayout(new GridBagLayout());
-		getContentPane().add(ecran, BorderLayout.CENTER);
-		ecran.add(corps);
+		JPanel body = new JPanel(new GridBagLayout());
+		add(body, BorderLayout.CENTER);
 		
 		GridBagConstraints ctr = new GridBagConstraints();
+		
 		
 		ctr.insets = new Insets(100,0,0,200); //tlbr
 		ctr.gridx = 0;
 		ctr.gridy = 0;
 		JLabel id = new JLabel("Identifiant");
-		id.setFont(new Font(corps.getFont().getName(), corps.getFont().getStyle(), 25));
-		corps.add(id, ctr);
+		id.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
+		body.add(id, ctr);
 		
 		ctr.insets = new Insets(0,100,25,100);
 		ctr.gridy = 1;
 		
-		champId.setFont(new Font(corps.getFont().getName(), corps.getFont().getStyle(), 25));
-		corps.add(champId, ctr);
+		champId.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
+		body.add(champId, ctr);
 		
 		ctr.insets = new Insets(25,0,0,200);
 		ctr.gridy = 2;
 		JLabel mdp = new JLabel("Mot de passe");
-		mdp.setFont(new Font(corps.getFont().getName(), corps.getFont().getStyle(), 25));
-		corps.add(mdp, ctr);
+		mdp.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
+		body.add(mdp, ctr);
 		
 		ctr.insets = new Insets(0,100,200,100);
 		ctr.gridy = 3;
 		
-		champMdp.setFont(new Font(corps.getFont().getName(), corps.getFont().getStyle(), 25));
-		corps.add(champMdp, ctr);
+		champMdp.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
+		body.add(champMdp, ctr);
+	 	
+		JButton connexionBtn = new JButton("Se connecter");
 		
-		JButton connexionBtn = new JButton();
-		JPanel pied = new JPanel();
-		pied.setLayout(new GridBagLayout());
-		getContentPane().add(pied, BorderLayout.SOUTH);
-		pied.add(connexionBtn);
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.insets = new Insets(0,100,100,100);
+		
+		JPanel foot = new JPanel(new GridBagLayout());
+		
+		add(foot, BorderLayout.SOUTH);
+		foot.add(connexionBtn, gbc);
 		connexionBtn.addActionListener(e -> verifInfos());
 		
-		pack();
-		//setSize(600,600);
 	}
 	
 	public String getIdResult() {
@@ -102,11 +103,16 @@ public class ConnexionPage extends JFrame{
 			System.out.println("connexion réussie");
 			System.out.println("mdp attendu : " + this.getMdpAttendu());
 			System.out.println("mdp rentré : " + this.getMdpResultHash());
+			conn.run();
+			
 		} else {
 			System.out.println("utilisateur ou mot de passe incorrect");
+			JOptionPane.showMessageDialog(this, 
+										  "Identifiant ou mot de passe incorrect",
+										  "Erreur de connexion",
+										  JOptionPane.ERROR_MESSAGE);
 		}
 		return verif;
 	}
 	//vérifier qu'un nom d'utilisateur soit unique
-	
 }

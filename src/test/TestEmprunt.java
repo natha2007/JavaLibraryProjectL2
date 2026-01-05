@@ -29,9 +29,9 @@ public class TestEmprunt {
 		
 		//ok
 		
-		e = ed.read(1);
-		e.setDureeMaximaleEmprunt(29);
-		e.setDateFin("2026-02-03");
+		//e = ed.read(1);
+		//e.setDureeMaximaleEmprunt(29);
+		//e.setDateFin("2026-02-03");
 		
 		//ed.update(e);
 		

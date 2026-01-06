@@ -17,7 +17,7 @@ public class DateSysteme {
 		 * dateId sera géré dans la méthode create
 		 * de DateSystemeDAO. mais enft jsp trop si ca marche bien ici, car je vois pas d'increment 
 		 * avec le test
-		 * (L'id s'incrémente automatiquement en base.)
+		 * L'id s'incrémente automatiquement en base.)
 		 */
 	}
 

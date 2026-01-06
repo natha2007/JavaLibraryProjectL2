@@ -38,6 +38,20 @@ public class Main {
 		Objet o3 = od.read(6);
 		Objet o4 = od.read(7);
 		Objet o5 = od.read(8);
+		Emprunt e1 = new Emprunt("2026-01-06","2026-02-06",30f,cl,o1);
+		Emprunt e2 = new Emprunt("2026-01-06","2026-02-06",30f,cl,o2);
+		Emprunt e3 = new Emprunt("2026-01-06","2026-02-06",30f,cl,o3);
+		Emprunt e4 = new Emprunt("2026-01-06","2026-02-06",30f,cl,o4);
+		Emprunt e5 = new Emprunt("2026-01-06","2026-02-06",30f,cl,o5);
+		/*
+		ed.create(e1);
+		ed.create(e2);
+		ed.create(e3);
+		ed.create(e4);
+		ed.create(e5);
+	*/
+
+		
 				
 	}
 }

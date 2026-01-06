@@ -19,13 +19,16 @@ public class PageClient extends JPanel {
 		Client cl = cd.read(user.getClientId());
 		ArrayList<Emprunt> listeEmprunt = ed.getListeEmpruntsByClientId(user.getClientId());
 		JLabel test2 = new JLabel("clientId : " + user.getClientId() + ", prenom : " + cl.getPrenom() + ", nom : " + cl.getNom());
-		add(test2, BorderLayout.CENTER);
+		add(test2, BorderLayout.SOUTH);
+		JPanel body = new JPanel(new GridLayout(5,1));
+		add(body, BorderLayout.CENTER);
 		for (Emprunt e : listeEmprunt) {
 			JLabel test3 = new JLabel("empruntId : " + e.getEmpruntId()
 									+ ", date debut : " + e.getDateDebut()
 									+ ", date fin :" + e.getDateFin()
 									+ ", dureeMaximaleEmprunt : " + e.getDureeMaximaleEmprunt()
 									);
+			body.add(test3);
 		}
 	}
 	

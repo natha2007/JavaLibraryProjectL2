@@ -80,5 +80,22 @@ public class ClientDAO extends DAO<Client>{
 		}
 		return cl;
 	}
+	
+	public Integer getClientFromCompte(Integer compteId) {
+		Integer clientId = null;
+		String requete = "SELECT *"
+				+ " FROM client"
+				+ " WHERE compteId=" + compteId;
+		try {
+			rs = stmt.executeQuery(requete);
+			if(rs.first()) {
+				clientId = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erreur requête SQL");
+			e.printStackTrace();
+		}
+		return clientId;
+	}
 
 }

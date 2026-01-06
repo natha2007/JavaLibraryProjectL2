@@ -1,19 +1,21 @@
 package gui;
 
 import java.awt.*;
+import java.util.function.Consumer;
 
 import javax.swing.*;
 
-
+import dao.ClientDAO;
 import dao.CompteDAO;
+import metier.Compte;
 
 public class ConnexionPage extends JPanel {
 	private JTextField champId = new JTextField(30);
 	private JPasswordField champMdp = new JPasswordField(30);
+	private Consumer<CompteUtilisateur> conn;
+	private Integer IdClientActuel;
 	
-	private final Runnable conn;
-	
-	public ConnexionPage(Runnable conn) {
+	public ConnexionPage(Consumer<CompteUtilisateur> conn) {
 		this.conn = conn;
 		
 		JPanel head = new JPanel(new GridBagLayout());
@@ -96,15 +98,31 @@ public class ConnexionPage extends JPanel {
 		return mdpAttendu;
 	}
 	
+	public void setClientIdFromCompteId() {
+		CompteDAO  cd = new CompteDAO();
+		ClientDAO cld = new ClientDAO();
+		Integer compteId = cd.read(getIdResult()).getCompteId();
+		this.IdClientActuel = cld.getClientFromCompte(compteId);
+	}
+	
+	public Integer getIdClientActuel() {
+		return this.IdClientActuel;
+	}
+	
 	public boolean verifInfos() {
 		boolean verif = false;
 		if (this.getMdpAttendu().equals(this.getMdpResultHash())) {
 			verif = true;
 			System.out.println("connexion réussie");
-			System.out.println("mdp attendu : " + this.getMdpAttendu());
-			System.out.println("mdp rentré : " + this.getMdpResultHash());
-			conn.run();
+			CompteDAO cd = new CompteDAO();
+			Compte c = cd.read(getIdResult());
+			System.out.println(c);
+			if (c != null) {
+				CompteUtilisateur user = new CompteUtilisateur(c.getCompteId(), c.getTypeCompte());
+				conn.accept(user);
+			}
 			
+		
 		} else {
 			System.out.println("utilisateur ou mot de passe incorrect");
 			JOptionPane.showMessageDialog(this, 

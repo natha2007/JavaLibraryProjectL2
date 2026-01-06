@@ -3,6 +3,7 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import metier.Emprunt;
 import metier.Client;
@@ -84,5 +85,29 @@ public class EmpruntDAO extends DAO<Emprunt> {
 			e.printStackTrace();
 		}
 		return e1;
+	}
+	
+	public ArrayList<Emprunt> getListeEmpruntsByClientId(Integer clientId){
+		ArrayList<Emprunt> liste = new ArrayList<Emprunt>();
+		Client c1 = null;
+		Objet o1 = null;
+		ClientDAO cd = new ClientDAO();
+		ObjetDAO od = new ObjetDAO();
+		String requete = "SELECT *"
+						+ " FROM emprunt"
+						+ " WHERE clientId= " + clientId;
+		try {
+			this.rs = stmt.executeQuery(requete);
+			while (rs.next()) {
+				c1 = cd.read(rs.getInt(5));
+				o1 = od.read(rs.getInt(6));
+				Emprunt e = new Emprunt(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getFloat(4),c1,o1);
+				liste.add(e);
+			}
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+		return liste;
 	}
 }

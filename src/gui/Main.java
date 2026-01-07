@@ -29,6 +29,7 @@ public class Main {
 		//cld.create(cl);
 		*/
 		
+		/*
 		EmpruntDAO ed = new EmpruntDAO();
 		ClientDAO cld = new ClientDAO();
 		ObjetDAO od = new ObjetDAO();

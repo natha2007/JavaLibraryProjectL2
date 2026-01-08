@@ -6,25 +6,25 @@ public class Objet {
 	private String auteur;
 	private Float prix;
 	private String typeObjet;
-	private int quantite;
+	private int disponibilite;
 	private String reference;
 	
-	public Objet(String nom, String auteur, Float prix, String typeObjet, int quantite, String reference) {
+	public Objet(String nom, String auteur, Float prix, String typeObjet, int disponibilite, String reference) {
 		this.nom=nom;
 		this.auteur=auteur;
 		this.prix=prix;
 		this.typeObjet=typeObjet;
-		this.quantite=quantite;
+		this.disponibilite=disponibilite;
 		this.reference=reference;
 	}
 	
-	public Objet(Integer objetId, String nom, String auteur, Float prix, String typeObjet, int quantite, String reference) {
+	public Objet(Integer objetId, String nom, String auteur, Float prix, String typeObjet, int disponibilite, String reference) {
 		this.objetId=objetId;
 		this.nom=nom;
 		this.auteur=auteur;
 		this.prix=prix;
 		this.typeObjet=typeObjet;
-		this.quantite=quantite;
+		this.disponibilite=disponibilite;
 		this.reference=reference;
 	}
 
@@ -68,12 +68,12 @@ public class Objet {
 		this.typeObjet = typeObjet;
 	}
 
-	public int getQuantite() {
-		return quantite;
+	public int getDisponibilite() {
+		return disponibilite;
 	}
 
-	public void setQuantite(int quantite) {
-		this.quantite = quantite;
+	public void setDisponibilite(int disponibilite) {
+		this.disponibilite = disponibilite;
 	}
 
 	public String getReference() {
@@ -87,6 +87,6 @@ public class Objet {
 	@Override
 	public String toString() {
 		return "Objet [objetId=" + objetId + ", nom=" + nom + ", auteur=" + auteur + ", prix=" + prix + ", typeObjet="
-				+ typeObjet + ", quantite=" + quantite + ", reference=" + reference + "]";
+				+ typeObjet + ", disponibilite=" + disponibilite + ", reference=" + reference + "]";
 	}
 }

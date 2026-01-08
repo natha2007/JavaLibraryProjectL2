@@ -33,7 +33,7 @@ CREATE TABLE objet(
 	auteur VARCHAR(100), -- auteur du livre, du DVD, constructeur de l'ordinateur...
 	prix DECIMAL(4,2),
 	typeObjet VARCHAR(20) NOT NULL, -- JeuSociete, Ordinateur, Livre, CD, DVD
-	quantite INT NOT NULL DEFAULT 1,
+	disponibilite BOOLEAN NOT NULL DEFAULT 1,
 	reference VARCHAR(100) NOT NULL, -- Pour un livre ISBN, pour les autres code barre ou qqch comme ça qui identifie dans le cas où on aurait deux objets de même nom
 	CONSTRAINT pkObjetIdObjet PRIMARY KEY (objetId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

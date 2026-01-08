@@ -12,9 +12,9 @@ private ResultSet rs;
 	
 	@Override
 	public Objet create(Objet o1) {
-		String requete = "INSERT INTO objet(nom, auteur, prix, typeObjet, quantite, reference)"
+		String requete = "INSERT INTO objet(nom, auteur, prix, typeObjet, disponibilite, reference)"
 				+ "VALUES('" + o1.getNom() + "', '" + o1.getAuteur() 
-				+ "', '" + o1.getPrix() + "', '" + o1.getTypeObjet() + "', '" + o1.getQuantite() 
+				+ "', '" + o1.getPrix() + "', '" + o1.getTypeObjet() + "', '" + o1.getDisponibilite() 
 				+ "', '" + o1.getReference() + "')";
 		try {
 			stmt.executeUpdate(requete, Statement.RETURN_GENERATED_KEYS);
@@ -36,7 +36,7 @@ private ResultSet rs;
 				+ "', auteur= '" + o1.getAuteur()
 				+ "', prix= '" + o1.getPrix()
 				+ "', typeObjet= '" + o1.getTypeObjet()
-				+ "', quantite= '" + o1.getQuantite()
+				+ "', disponibilite= '" + o1.getDisponibilite()
 				+ "' WHERE objetId= " + o1.getObjetId();
 		try {
 			stmt.executeUpdate(requete);
@@ -67,7 +67,9 @@ private ResultSet rs;
 		try {
 			this.rs = stmt.executeQuery(requete);
 			if (rs.first()) {
-				o1 = new Objet(rs.getInt(1),rs.getString(2),rs.getString(3), rs.getFloat(4), rs.getString(5), rs.getInt(6), rs.getString(7));
+				o1 = new Objet(rs.getInt(1),rs.getString(2),
+						rs.getString(3), rs.getFloat(4),
+						rs.getString(5), rs.getInt(6), rs.getString(7));
 			}
 		} catch (SQLException e) {
 			System.out.println("erreur requête SQL");

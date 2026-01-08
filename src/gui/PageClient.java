@@ -9,30 +9,50 @@ import dao.*;
 import metier.*;
 
 public class PageClient extends JPanel {
-	
-	private CompteUtilisateur user;
-	
-	public void setUser(CompteUtilisateur user) {
-		this.user = user;
-		ClientDAO cd = new ClientDAO();
-		EmpruntDAO ed = new EmpruntDAO();
-		Client cl = cd.read(user.getClientId());
-		ArrayList<Emprunt> listeEmprunt = ed.getListeEmpruntsByClientId(user.getClientId());
-		JLabel test2 = new JLabel("clientId : " + user.getClientId() + ", prenom : " + cl.getPrenom() + ", nom : " + cl.getNom());
-		add(test2, BorderLayout.CENTER);
-		for (Emprunt e : listeEmprunt) {
-			JLabel test3 = new JLabel("empruntId : " + e.getEmpruntId()
-									+ ", date debut : " + e.getDateDebut()
-									+ ", date fin :" + e.getDateFin()
-									+ ", dureeMaximaleEmprunt : " + e.getDureeMaximaleEmprunt()
-									);
-		}
-	}
-	
-	public PageClient(Runnable rb) {
-		setLayout(new BorderLayout());
-		JLabel test = new JLabel("Bonjour je suis la page client");
-		add(test, BorderLayout.NORTH);
-	
-	}
+
+    private CompteUtilisateur user;
+    private JPanel contenu;
+
+    public PageClient(Runnable rb) {
+        setLayout(new BorderLayout());
+
+        JLabel titre = new JLabel("Bonjour je suis la page client");
+        add(titre, BorderLayout.NORTH);
+
+        contenu = new JPanel();
+        contenu.setLayout(new BoxLayout(contenu, BoxLayout.Y_AXIS));
+
+        add(contenu, BorderLayout.CENTER);
+    }
+
+    public void setUser(CompteUtilisateur user) {
+        this.user = user;
+        contenu.removeAll(); // IMPORTANT si setUser est rappelé
+
+        ClientDAO cd = new ClientDAO();
+        EmpruntDAO ed = new EmpruntDAO();
+        Client cl = cd.read(user.getClientId());
+        ArrayList<Emprunt> listeEmprunt =
+                ed.getListeEmpruntsByClientId(user.getClientId());
+
+        JLabel infoClient = new JLabel(
+            "clientId : " + user.getClientId()
+            + ", prenom : " + cl.getPrenom()
+            + ", nom : " + cl.getNom()
+        );
+        contenu.add(infoClient);
+
+        for (Emprunt e : listeEmprunt) {
+            JLabel infoEmprunt = new JLabel(
+                "empruntId : " + e.getEmpruntId()
+                + ", date debut : " + e.getDateDebut()
+                + ", date fin : " + e.getDateFin()
+                + ", dureeMax : " + e.getDureeMaximaleEmprunt()
+            );
+            contenu.add(infoEmprunt);
+        }
+
+        contenu.revalidate();
+        contenu.repaint();
+    }
 }

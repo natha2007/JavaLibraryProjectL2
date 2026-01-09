@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -13,6 +15,8 @@ public class PageClient extends JPanel {
 	private CompteUtilisateur user;
 	
 	public void setUser(CompteUtilisateur user) {
+		LocalDate today = LocalDate.now();
+		
 		this.user = user;
 		ClientDAO cd = new ClientDAO();
 		EmpruntDAO ed = new EmpruntDAO();
@@ -23,10 +27,12 @@ public class PageClient extends JPanel {
 		JPanel body = new JPanel(new GridLayout(5,1));
 		add(body, BorderLayout.CENTER);
 		for (Emprunt e : listeEmprunt) {
-			JLabel test3 = new JLabel("empruntId : " + e.getEmpruntId()
-									+ ", date debut : " + e.getDateDebut()
-									+ ", date fin :" + e.getDateFin()
-									+ ", dureeMaximaleEmprunt : " + e.getDureeMaximaleEmprunt()
+			LocalDate localDateFin = LocalDate.parse(e.getDateFin());
+			JLabel test3 = new JLabel("Numéro emprunt : " + e.getEmpruntId()
+									+ ", Date de l'emprunt : " + e.getDateDebut()
+									+ ", Date d'expiration :" + e.getDateFin()
+									+ ", Nombre de jours : " + ChronoUnit.DAYS.between(today, localDateFin)
+
 									);
 			body.add(test3);
 		}
@@ -34,7 +40,7 @@ public class PageClient extends JPanel {
 	
 	public PageClient(Runnable rb) {
 		setLayout(new BorderLayout());
-		JLabel test = new JLabel("Bonjour je suis la page client");
+		JLabel test = new JLabel("Profil");
 		add(test, BorderLayout.NORTH);
 	
 	}

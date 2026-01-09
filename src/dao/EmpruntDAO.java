@@ -3,6 +3,7 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import metier.Emprunt;
@@ -15,8 +16,11 @@ public class EmpruntDAO extends DAO<Emprunt> {
 	
 	@Override
 	public Emprunt create(Emprunt e1) {
+		LocalDate today = LocalDate.now();
+		LocalDate oneMonthLater = today.plusDays(30);
+
 		String requete = "INSERT INTO emprunt(dateDebut, dateFin, dureeMaximaleEmprunt, clientId, objetId)"
-				+ "VALUES('" + e1.getDateDebut() + "', '" + e1.getDateFin() 
+				+ "VALUES('" + today + "', '" + oneMonthLater
 				+ "', '" + e1.getDureeMaximaleEmprunt() 
 				+ "', '" + e1.getClient().getClientId() 
 				+ "', '" + e1.getObjet().getObjetId() 

@@ -6,11 +6,10 @@ import javax.swing.*;
 
 public class BibliothecairePage extends JPanel {
 	private CardLayout cl;
+	private CompteUtilisateur user;
 	
-	public BibliothecairePage(Runnable rb) {
-		
-		setLayout(new BorderLayout());
-		
+	public void setUser(CompteUtilisateur user) {
+		this.user = user;
 		JPanel head = new JPanel(new GridLayout(0,5,0,0)); //int rows, int cols, int hgap, int vgap
 		head.setPreferredSize(new Dimension(0,50));
 		
@@ -42,6 +41,13 @@ public class BibliothecairePage extends JPanel {
 		
 		foot.add(footText);
 		foot.add(accueil);
+	}
+	
+	public BibliothecairePage(Runnable rb) {
+		
+		setLayout(new BorderLayout());
+		
+		
 		
 		//accueil.addActionListener(e->conn.run());
 		

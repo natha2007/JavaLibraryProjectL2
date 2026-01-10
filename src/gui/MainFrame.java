@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import dao.BibliothecaireDAO;
 import dao.ClientDAO;
 import dao.CompteDAO;
 
@@ -14,6 +15,7 @@ public class MainFrame extends JFrame{
 	private CardLayout crd;
 	private JPanel root;
 	private PageClient pg;
+	private BibliothecairePage bp;
 	
 	public MainFrame(String s) {
 		super(s);
@@ -25,11 +27,11 @@ public class MainFrame extends JFrame{
 		setContentPane(root);
 		
 		ConnexionPage connexion = new ConnexionPage(this::showLogiciel);
-		BibliothecairePage bbl = new BibliothecairePage(this::showConnexion);
+		bp = new BibliothecairePage(this::showConnexion);
 		pg = new PageClient(this::showConnexion);
 		
 		root.add(connexion, "Connexion");
-		root.add(bbl, "Bibliothecaire");
+		root.add(bp, "Bibliothecaire");
 		root.add(pg, "Client");
 		
 		
@@ -38,12 +40,13 @@ public class MainFrame extends JFrame{
 	}
 	
 	public void showLogiciel(CompteUtilisateur user) {
-		if (user.getType() == "bibliothécaire") {
-			//BibliothecaireDAO bd = new BibliothecaireDAO();
-			//Integer bibliothecaireId = bd.getBibliothecaireIdByCompteId(user.getCompteId());
-			//user.setBibliothecaireId(bibliothecaireId);
+		if (user.getType().equals("bibliothecaire")) {
+			BibliothecaireDAO bd = new BibliothecaireDAO();
+			Integer bibliothecaireId = bd.readByCompteId(user.getCompteId()).getBibliothecaireId();
+			user.setBibliothecaireId(bibliothecaireId);
+			bp.setUser(user);
 			crd.show(root, "Bibliothecaire");
-		} else {
+		} else if (user.getType().equals("client")) {
 			ClientDAO cd = new ClientDAO();
 			Integer clientId = cd.getClientFromCompte(user.getCompteId());
 			user.setClientId(clientId);

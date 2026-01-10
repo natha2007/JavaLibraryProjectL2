@@ -33,7 +33,7 @@ public class BibliothecaireDAO extends DAO<Bibliothecaire> {
 		String requete = "UPDATE bibliothecaire"
 				+ " SET nom= '" + bbl.getNom()
 				+ "', prenom= '" + bbl.getPrenom()
-				+ "', compte= " + bbl.getCompte().getCompteId()
+				+ "', compteId= " + bbl.getCompte().getCompteId()
 				+ " WHERE bibliothecaireId= " + bbl.getBibliothecaireId();
 		try {
 			stmt.executeUpdate(requete);

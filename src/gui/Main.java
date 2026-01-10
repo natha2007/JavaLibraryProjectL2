@@ -17,15 +17,15 @@ public class Main {
 		
 		
 //		CompteDAO cd = new CompteDAO();
-//		Compte c = new Compte("MercierN",GestionMdp.hash("122007"),"2026-01-03","Client");
+//		Compte c = new Compte("Mercier",GestionMdp.hash("122007"),"2026-01-03","client");
 //		cd.create(c);
 //		
-//		Compte c2 = cd.read(1);
+//		Compte c2 = cd.read(14);
 //		ClientDAO cld = new ClientDAO();
 //		AbonnementDAO ad = new AbonnementDAO();
-//		Abonnement ab = ad.read(1);
+//		Abonnement ab = ad.read(2);
 //		
-//		Client cl = new Client("MERCIER","Nathanaël",ab,c2);
+//		Client cl = new Client("MERCIER","Nathanaël2",ab,c2);
 //		cld.create(cl);
 		
 		

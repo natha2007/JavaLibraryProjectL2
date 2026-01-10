@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import dao.*;
 import metier.*;
@@ -15,27 +16,58 @@ public class PageClient extends JPanel {
 	private CompteUtilisateur user;
 	
 	public void setUser(CompteUtilisateur user) {
-		LocalDate today = LocalDate.now();
-		
 		this.user = user;
+		
+		LocalDate today = LocalDate.now();
 		ClientDAO cd = new ClientDAO();
 		EmpruntDAO ed = new EmpruntDAO();
 		Client cl = cd.read(user.getClientId());
 		ArrayList<Emprunt> listeEmprunt = ed.getListeEmpruntsByClientId(user.getClientId());
+		
 		JLabel test2 = new JLabel("clientId : " + user.getClientId() + ", prenom : " + cl.getPrenom() + ", nom : " + cl.getNom());
-		add(test2, BorderLayout.SOUTH);
-		JPanel body = new JPanel(new GridLayout(5,1));
+		add(test2, BorderLayout.NORTH);
+		
+		JPanel body = new JPanel(new BorderLayout());
 		add(body, BorderLayout.CENTER);
+//		JPanel body = new JPanel(new GridLayout(10,1));
+//		add(body, BorderLayout.CENTER);
+		
+		String[] colonnes = {
+		        "N° de l'emprunt",
+		        "Date de l'empreint",
+		        "Date d'expiration",
+		        "Jours restants"
+		};
+		DefaultTableModel tabRes = new DefaultTableModel(colonnes, 0);
+
 		for (Emprunt e : listeEmprunt) {
 			LocalDate localDateFin = LocalDate.parse(e.getDateFin());
-			JLabel test3 = new JLabel("Numéro emprunt : " + e.getEmpruntId()
-									+ ", Date de l'emprunt : " + e.getDateDebut()
-									+ ", Date d'expiration :" + e.getDateFin()
-									+ ", Nombre de jours : " + ChronoUnit.DAYS.between(today, localDateFin)
 
-									);
-			body.add(test3);
+			Object[] ligne = {
+				e.getEmpruntId(),
+				e.getDateDebut(),
+				e.getDateFin(),
+				ChronoUnit.DAYS.between(today, localDateFin)
+			};
+
+			tabRes.addRow(ligne);
+//			LocalDate localDateFin = LocalDate.parse(e.getDateFin());
+//			JLabel test3 = new JLabel("Numéro emprunt : " + e.getEmpruntId()
+//									+ ", Date de l'emprunt : " + e.getDateDebut()
+//									+ ", Date d'expiration :" + e.getDateFin()
+//									+ ", Nombre de jours restants : " + ChronoUnit.DAYS.between(today, localDateFin)
+//
+//									);
+//			body.add(test3);
 		}
+		JTable table = new JTable(tabRes);
+		table.setRowHeight(25);
+		table.setFont(new Font("Arial", Font.PLAIN, 14));
+
+		JScrollPane scroll = new JScrollPane(table);
+		body.setLayout(new BorderLayout());
+		body.add(scroll, BorderLayout.CENTER);
+
 	}
 	
 	public PageClient(Runnable rb) {

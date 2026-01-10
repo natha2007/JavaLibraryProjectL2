@@ -53,7 +53,7 @@ public class Bibliothecaire {
 
 	@Override
 	public String toString() {
-		return "Bibliothecaire [nom=" + nom + ", prenom=" + prenom + ", compte=" + compte + "]";
+		return "Bibliothecaire [bibliothecaireId=" + bibliothecaireId + ", nom=" + nom + ", prenom=" + prenom + ", compteId=" + compte.getCompteId() + "]";
 	}
 	
 	

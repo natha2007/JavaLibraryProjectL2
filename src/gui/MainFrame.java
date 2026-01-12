@@ -23,7 +23,7 @@ public class MainFrame extends JFrame{
 		
 		crd = new CardLayout();
 		root = new JPanel(crd);
-		root.setPreferredSize(new Dimension(600,600));
+		root.setPreferredSize(new Dimension(900,600));
 		setContentPane(root);
 		
 		// Lambda permet de ne pas créer de dépendances entre les pages
@@ -77,6 +77,5 @@ public class MainFrame extends JFrame{
 		bp.setUser(null);
 		crd.show(root, "Connexion");
 	}
-
 	
 }

@@ -68,8 +68,5 @@ public class Client {
 		return "Client [clientId=" + clientId + ", nom=" + nom + ", prenom=" + prenom + ", abonnementId=" + this.abonnement.getAbonnementId() + "]";
 	}
 	
-
-	
-	
 	
 }

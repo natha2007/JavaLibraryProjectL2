@@ -1,7 +1,8 @@
 CREATE TABLE abonnement (
 	abonnementId INT AUTO_INCREMENT NOT NULL,
-	typeAbonnement VARCHAR(20),
+	typeAbonnement VARCHAR(20) NOT NULL,
 	prix DECIMAL(4,2) NOT NULL,
+	nbEmpruntsMax INT NOT NULL,
 	CONSTRAINT pkAbonnementId PRIMARY KEY(abonnementId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -41,7 +42,7 @@ CREATE TABLE objet(
 CREATE TABLE emprunt(
 	empruntId INT AUTO_INCREMENT NOT NULL,
 	dateDebut DATE NOT NULL,
-	dateFin DATE,
+	dateFin DATE NOT NULL,
 	dureeMaximaleEmprunt DECIMAL(8,4), -- durée en jours, si on devait mettre des durées de moins d'1 jour, il faudrait choisir des heures multiples de 3 (3h = 0,125 jour)
 	clientId INT NOT NULL,
 	objetId INT NOT NULL,

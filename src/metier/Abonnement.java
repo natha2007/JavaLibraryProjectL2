@@ -4,10 +4,12 @@ public class Abonnement {
 	private Integer abonnementId; //se mettra à null et non pas à 0 (cas de int), plus clair sur le fait que l'objet est pas encore en base, il faut que AbonnementDAO ensuite appelle setId
 	private String typeAbonnement;
 	private float prix;
+	private Integer nbEmpruntsMax;
 	
-	public Abonnement(String typeAbonnement, float prix) {
+	public Abonnement(String typeAbonnement, float prix, Integer nbEmpruntsMax) {
 		this.typeAbonnement = typeAbonnement;
 		this.prix = prix;
+		this.nbEmpruntsMax=nbEmpruntsMax;
 		/*abonnementId sera géré dans la méthode create
 		* de AbonnementDAO, il suffira de faire un 
 		* INSERT INTO simple, sans préciser l'id
@@ -17,17 +19,18 @@ public class Abonnement {
 		*/
 	}
 	
-	public Abonnement(Integer abonnementId, String typeAbonnement, float prix) {
+	public Abonnement(Integer abonnementId, String typeAbonnement, float prix, Integer nbEmpruntsMax) {
 		this.typeAbonnement = typeAbonnement;
 		this.prix = prix;
 		this.abonnementId = abonnementId;
+		this.nbEmpruntsMax=nbEmpruntsMax;
 	}
 	
 	public int getAbonnementId() {
 		return abonnementId;
 	}
 	
-	public void setAbonnementId(int abonnementId) {
+	public void setAbonnementId(Integer abonnementId) {
 		this.abonnementId = abonnementId;
 	}
 	
@@ -47,10 +50,19 @@ public class Abonnement {
 		this.prix = prix;
 	}
 
+	public Integer getNbEmpruntsMax() {
+		return nbEmpruntsMax;
+	}
+
+	public void setNbEmpruntsMax(Integer nbEmpruntsMax) {
+		this.nbEmpruntsMax = nbEmpruntsMax;
+	}
+
 	@Override
 	public String toString() {
-		return "Abonnement [abonnementId=" + abonnementId + ", typeAbonnement=" + typeAbonnement + ", prix=" + prix
-				+ "]";
+		return "Abonnement [abonnementId=" + abonnementId + ", typeAbonnement=" + typeAbonnement
+				+ ", prix=" + prix
+				+ ", nbEmpruntsMax=" + nbEmpruntsMax + "]";
 	}
 	
 

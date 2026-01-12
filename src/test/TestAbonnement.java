@@ -7,13 +7,13 @@ public class TestAbonnement {
 
 	public static void main(String[] args) {
 		AbonnementDAO test1 = new AbonnementDAO();
-		Abonnement ab = new Abonnement("premium",10f);
+		Abonnement ab = new Abonnement("premium",10f,10);
 		
 		test1.create(ab);
 		//ok
 		
 		
-		Abonnement ab2 = new Abonnement(1, "classique",2.5f);
+		Abonnement ab2 = new Abonnement(1, "classique",2.5f,10);
 		test1.update(ab2);
 		//ok
 		

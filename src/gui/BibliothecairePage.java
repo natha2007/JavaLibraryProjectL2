@@ -20,13 +20,18 @@ public class BibliothecairePage extends JPanel {
 	private JButton retours;
 	private JLabel footText;
 	private JButton accueil;
+	private JButton connexion;
+	private JPanel footGrid;
 	
 	private PageAbonnement pa;
 	private PageEmprunts pe;
 	private PageCommandes pc;
 	private PageStocks ps;
 	private PageRetours pr;
-	private JLabel pb;
+
+	private JPanel pb;
+
+	
 	
 	public void setUser(CompteUtilisateur user) {
 		this.user = user;
@@ -35,15 +40,24 @@ public class BibliothecairePage extends JPanel {
 	}
 	
 	private void initialiserUI() {
+		
+		
+		//crdl = new CardLayout();
+		//mainRoot = new JPanel(crdl);
+		
+		//add(mainRoot);
 		setLayout(new BorderLayout());
 		
-		cl = new CardLayout();
 		
+		cl = new CardLayout();
+		//root = new JPanel(new BorderLayout());
 		head = new JPanel(new GridLayout(0,5,0,0)); //int rows, int cols, int hgap, int vgap
 		head.setPreferredSize(new Dimension(0,50));
 		
 		body = new JPanel(cl);
-		foot = new JPanel(new GridLayout(0,2,20,0));
+		foot = new JPanel(new GridLayout(2,1,0,0));
+		
+		//add(root);
 		
 		add(head, BorderLayout.NORTH);
 		add(body, BorderLayout.CENTER);
@@ -69,7 +83,14 @@ public class BibliothecairePage extends JPanel {
 		pc = new PageCommandes(this::retournerAccueil);
 		ps = new PageStocks(this::retournerAccueil);
 		pr = new PageRetours(this::retournerAccueil);
-		pb = new JLabel("menu");
+		
+		pb = new JPanel();
+		
+		//mainRoot.add(root, "MenuBibliothecaire");
+		
+		//mainRoot.add(cp, "Connexion");
+		
+		pb.add(new JLabel("Bienvenue"));
 		
 		body.add(pa,"Abonnements");
 		body.add(pe,"Emprunts");
@@ -82,12 +103,21 @@ public class BibliothecairePage extends JPanel {
 		emprunts.addActionListener(e -> showEmprunts());
 		
 		footText = new JLabel("Gestionnaire bibliothèque - 2026 Tous droits réservés");
+		footText.setHorizontalAlignment(getWidth());
 		accueil = new JButton("Accueil");
+		connexion = new JButton("Se déconnecter");
+		footGrid = new JPanel(new GridLayout(1,2));
 		
 		accueil.addActionListener(e -> retournerAccueil());
+		commandes.addActionListener(e -> showCommandes());
+		stocks.addActionListener(e -> showStocks());
+		retours.addActionListener(e -> showRetours());
+		connexion.addActionListener(e -> retournerPageConnexion(user));
 		
 		foot.add(footText);
-		foot.add(accueil);
+		foot.add(footGrid);
+		footGrid.add(accueil);
+		footGrid.add(connexion);
 		
 		cl.show(body, "Menu");
 	}
@@ -119,6 +149,22 @@ public class BibliothecairePage extends JPanel {
 	
 	public void showEmprunts() {
 		cl.show(body, "Emprunts");
+	}
+	
+	public void showCommandes() {
+		cl.show(body, "Commandes");
+	}
+	
+	public void showStocks() {
+		cl.show(body, "Stocks");
+	}
+	
+	public void showRetours() {
+		cl.show(body, "Retours");
+	}
+	
+	public void retournerPageConnexion(CompteUtilisateur empty) {
+		rb.run();
 	}
 	
 	//Méthode de test

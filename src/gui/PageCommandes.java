@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PageCommandes extends JPanel {
@@ -7,5 +8,7 @@ public class PageCommandes extends JPanel {
 
 	public PageCommandes(Runnable rb) {
 		this.rb = rb;
+		JLabel test = new JLabel("Commandes");
+		add(test);
 	}
 }

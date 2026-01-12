@@ -21,6 +21,13 @@ public class BibliothecairePage extends JPanel {
 	private JLabel footText;
 	private JButton accueil;
 	
+	private PageAbonnement pa;
+	private PageEmprunts pe;
+	private PageCommandes pc;
+	private PageStocks ps;
+	private PageRetours pr;
+	private JLabel pb;
+	
 	public void setUser(CompteUtilisateur user) {
 		this.user = user;
 		majUI();
@@ -29,10 +36,13 @@ public class BibliothecairePage extends JPanel {
 	
 	private void initialiserUI() {
 		setLayout(new BorderLayout());
+		
+		cl = new CardLayout();
+		
 		head = new JPanel(new GridLayout(0,5,0,0)); //int rows, int cols, int hgap, int vgap
 		head.setPreferredSize(new Dimension(0,50));
 		
-		body = new JPanel(new GridBagLayout());
+		body = new JPanel(cl);
 		foot = new JPanel(new GridLayout(0,2,20,0));
 		
 		add(head, BorderLayout.NORTH);
@@ -40,7 +50,7 @@ public class BibliothecairePage extends JPanel {
 		add(foot, BorderLayout.SOUTH);
 		
 		mainText = new JLabel();
-		body.add(mainText);
+		//body.add(mainText);
 		
 		abonnements = new JButton("Abonnements");
 		emprunts = new JButton("Emprunts");
@@ -54,13 +64,32 @@ public class BibliothecairePage extends JPanel {
 		head.add(stocks);
 		head.add(retours);
 		
+		pa = new PageAbonnement(this::retournerAccueil);
+		pe = new PageEmprunts(this::retournerAccueil);
+		pc = new PageCommandes(this::retournerAccueil);
+		ps = new PageStocks(this::retournerAccueil);
+		pr = new PageRetours(this::retournerAccueil);
+		pb = new JLabel("menu");
+		
+		body.add(pa,"Abonnements");
+		body.add(pe,"Emprunts");
+		body.add(pc,"Commandes");
+		body.add(ps,"Stocks");
+		body.add(pr,"Retours");
+		body.add(pb,"Menu");
+
+		abonnements.addActionListener(e -> showAbonnements());
+		emprunts.addActionListener(e -> showEmprunts());
+		
 		footText = new JLabel("Gestionnaire bibliothèque - 2026 Tous droits réservés");
 		accueil = new JButton("Accueil");
+		
+		accueil.addActionListener(e -> retournerAccueil());
 		
 		foot.add(footText);
 		foot.add(accueil);
 		
-		setMaximumSize(new Dimension(100,100));
+		cl.show(body, "Menu");
 	}
 	
 	private void majUI() {
@@ -78,6 +107,18 @@ public class BibliothecairePage extends JPanel {
 		this.rb = rb;
 		initialiserUI();
 		majUI();
+	}
+	
+	public void retournerAccueil() {
+		cl.show(body, "Menu");
+	}
+	
+	public void showAbonnements() {
+		cl.show(body, "Abonnements");
+	}
+	
+	public void showEmprunts() {
+		cl.show(body, "Emprunts");
 	}
 	
 	//Méthode de test

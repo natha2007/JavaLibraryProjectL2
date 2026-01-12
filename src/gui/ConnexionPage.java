@@ -51,7 +51,7 @@ public class ConnexionPage extends JPanel {
 		mdp.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
 		body.add(mdp, ctr);
 		
-		ctr.insets = new Insets(0,100,200,100);
+		ctr.insets = new Insets(0,100,100,100);
 		ctr.gridy = 3;
 		
 		champMdp.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));

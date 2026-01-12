@@ -20,11 +20,24 @@ public class MainFrame extends JFrame{
 	public MainFrame(String s) {
 		super(s);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(900,600));
 		
 		crd = new CardLayout();
 		root = new JPanel(crd);
+		root.setPreferredSize(new Dimension(600,600));
 		setContentPane(root);
+		
+		// Lambda permet de ne pas créer de dépendances entre les pages
+		// et donc de, entre autres, pouvoir tester les classes seules.
+		// Par exemple, au lieu de mettre en paramètre du constructeur
+		// de ConnexionPage un MainFrame (couplage fort),
+		// on lui passe un lambda représentant l’action à effectuer
+		// quand la page veut changer d’écran.
+		// La page ne sait pas qui fait le changement ni comment,
+		// elle sait juste quand déclencher l’action.
+		
+		/*
+		 * un lambda permet de passer une fonction en paramètre plutôt qu'une variable ?
+		 */
 		
 		ConnexionPage connexion = new ConnexionPage(this::showLogiciel);
 		bp = new BibliothecairePage(this::showConnexion);
@@ -33,7 +46,6 @@ public class MainFrame extends JFrame{
 		root.add(connexion, "Connexion");
 		root.add(bp, "Bibliothecaire");
 		root.add(pg, "Client");
-		
 		
 		pack();
 		//setSize(600,600);

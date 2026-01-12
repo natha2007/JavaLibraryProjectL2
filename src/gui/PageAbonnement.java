@@ -8,7 +8,7 @@ public class PageAbonnement extends JPanel {
 	
 	public PageAbonnement(Runnable conn) {
 		this.conn = conn;
-		JLabel test = new JLabel("test");
+		JLabel test = new JLabel("abonnements");
 		add(test);
 	}
 	

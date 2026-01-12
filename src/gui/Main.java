@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.Dimension;
+
 import dao.AbonnementDAO;
 import metier.*;
 import dao.ClientDAO;
@@ -14,7 +16,7 @@ public class Main {
 	public static void main(String[] args) {
 		MainFrame mf = new MainFrame("Gestionnaire de bibliothèque");
 		mf.setVisible(true);
-		
+		mf.setMinimumSize(new Dimension(900,600));
 		
 //		CompteDAO cd = new CompteDAO();
 //		Compte c = new Compte("Mercier",GestionMdp.hash("122007"),"2026-01-03","client");

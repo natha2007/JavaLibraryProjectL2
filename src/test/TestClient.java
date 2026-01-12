@@ -9,7 +9,7 @@ public class TestClient {
 		ClientDAO cld = new ClientDAO();
 		AbonnementDAO abd = new AbonnementDAO();
 		CompteDAO cd = new CompteDAO();
-		Abonnement ab = new Abonnement("classique",2.5f);
+		Abonnement ab = new Abonnement("classique",2.5f, 10);
 		Compte c = new Compte("nathanael_mercier","mdp","2025-12-27","client");
 		Client cl = new Client("Nathanaël","MERCIER",ab,c);
 		

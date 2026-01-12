@@ -9,62 +9,137 @@ public class BibliothecairePage extends JPanel {
 	private Runnable rb;
 	private CardLayout cl;
 	private CompteUtilisateur user;
+	
 	private JPanel head;
 	private JPanel body;
 	private JPanel foot;
-	private JLabel mainText;
+	
+	// HEAD
+
 	private JButton abonnements;
 	private JButton emprunts;
 	private JButton commandes;
 	private JButton stocks;
 	private JButton retours;
-	private JLabel footText;
-	private JButton accueil;
-	private JButton connexion;
-	private JPanel footGrid;
+	
+	// BODY
 	
 	private PageAbonnement pa;
 	private PageEmprunts pe;
 	private PageCommandes pc;
 	private PageStocks ps;
 	private PageRetours pr;
-
 	private JPanel pb;
-
+	private JLabel mainText;
 	
+	// FOOT
 	
-	public void setUser(CompteUtilisateur user) {
-		this.user = user;
+	private JLabel footText;
+	private JButton accueil;
+	private JButton connexion;
+	private JPanel footGrid;
+	
+	public BibliothecairePage(Runnable rb) {
+		this.rb = rb;
+		initialiserUI();
 		majUI();
-		
 	}
 	
+	/**
+	 * Récupère les infos de l'utilisateur connecté
+	 * @param user utilisateur (client ou bibliothecaire)
+	 */
+	public void setUser(CompteUtilisateur user) {
+		this.user = user;
+		pa.setUser(user);
+		pe.setUser(user);
+		pc.setUser(user);
+		ps.setUser(user);
+		pr.setUser(user);
+		majUI();
+	}
+	
+	/**
+	 * Initialise les éléments de l'interface "dynamiques" (dépendant de l'utilisateur)
+	 * Et crée les éléments "statiques".
+	 */
 	private void initialiserUI() {
-		
-		
-		//crdl = new CardLayout();
-		//mainRoot = new JPanel(crdl);
-		
-		//add(mainRoot);
 		setLayout(new BorderLayout());
 		
+		initHead();
+		initBody();
+		initFoot();
 		
-		cl = new CardLayout();
-		//root = new JPanel(new BorderLayout());
+		cl.show(body, "Menu");
+	}
+	
+	/**
+	 * Crée les élements dynamiques (dépendant de l'utilisateur)
+	 */
+	private void majUI() {
+		if (user == null) {
+			mainText.setText("En attente de connexion");
+		} else {
+			mainText.setText("salut je suis le logiciel bibliothèque");
+			//compléter ici si on a besoin des infos de l'utilisateur
+		}
+	}
+	
+	/*
+	 * Switch sur la "page" Accueil 
+	 */
+	public void retournerAccueil() {
+		cl.show(body, "Menu");
+	}
+	
+	/*
+	 * Switch sur la "page" Abonnements
+	 */
+	public void showAbonnements() {
+		cl.show(body, "Abonnements");
+	}
+	
+	/*
+	 * Switch sur la "page" Emprunts
+	 */
+	public void showEmprunts() {
+		cl.show(body, "Emprunts");
+	}
+	
+	/*
+	 * Switch sur la "page" Commandes 
+	 */
+	public void showCommandes() {
+		cl.show(body, "Commandes");
+	}
+	
+	/*
+	 * Switch sur la "page" Stocks
+	 */
+	public void showStocks() {
+		cl.show(body, "Stocks");
+	}
+	
+	/*
+	 * Switch sur la "page" Retours
+	 */
+	public void showRetours() {
+		cl.show(body, "Retours");
+	}
+	
+	/*
+	 * Switch sur la "page" Connexion 
+	 */
+	public void retournerPageConnexion(CompteUtilisateur empty) {
+		rb.run();
+	}
+	
+	/**
+	 * Initialisation de la partie "head" (supérieure) de la page
+	 */
+	private void initHead() {
 		head = new JPanel(new GridLayout(0,5,0,0)); //int rows, int cols, int hgap, int vgap
 		head.setPreferredSize(new Dimension(0,50));
-		
-		body = new JPanel(cl);
-		foot = new JPanel(new GridLayout(2,1,0,0));
-		
-		//add(root);
-		
-		add(head, BorderLayout.NORTH);
-		add(body, BorderLayout.CENTER);
-		add(foot, BorderLayout.SOUTH);
-		
-		mainText = new JLabel();
-		//body.add(mainText);
 		
 		abonnements = new JButton("Abonnements");
 		emprunts = new JButton("Emprunts");
@@ -78,6 +153,22 @@ public class BibliothecairePage extends JPanel {
 		head.add(stocks);
 		head.add(retours);
 		
+		abonnements.addActionListener(e -> showAbonnements());
+		emprunts.addActionListener(e -> showEmprunts());
+		commandes.addActionListener(e -> showCommandes());
+		stocks.addActionListener(e -> showStocks());
+		retours.addActionListener(e -> showRetours());
+		
+		add(head, BorderLayout.NORTH);
+	}
+	
+	/**
+	 * Initialisation de la partie "body" (centrale) de la page
+	 */
+	private void initBody() {
+		cl = new CardLayout();
+		body = new JPanel(cl);
+		
 		pa = new PageAbonnement(this::retournerAccueil);
 		pe = new PageEmprunts(this::retournerAccueil);
 		pc = new PageCommandes(this::retournerAccueil);
@@ -85,12 +176,8 @@ public class BibliothecairePage extends JPanel {
 		pr = new PageRetours(this::retournerAccueil);
 		
 		pb = new JPanel();
-		
-		//mainRoot.add(root, "MenuBibliothecaire");
-		
-		//mainRoot.add(cp, "Connexion");
-		
-		pb.add(new JLabel("Bienvenue"));
+		mainText = new JLabel();
+		pb.add(mainText);
 		
 		body.add(pa,"Abonnements");
 		body.add(pe,"Emprunts");
@@ -98,74 +185,38 @@ public class BibliothecairePage extends JPanel {
 		body.add(ps,"Stocks");
 		body.add(pr,"Retours");
 		body.add(pb,"Menu");
-
-		abonnements.addActionListener(e -> showAbonnements());
-		emprunts.addActionListener(e -> showEmprunts());
 		
+		add(body, BorderLayout.CENTER);
+	}
+	
+	/**
+	 * Initialisation de la partie "foot" (inférieure) de la page
+	 */
+	private void initFoot() {
+		foot = new JPanel(new GridLayout(2,1,0,0));
+
 		footText = new JLabel("Gestionnaire bibliothèque - 2026 Tous droits réservés");
 		footText.setHorizontalAlignment(getWidth());
+		
+		
 		accueil = new JButton("Accueil");
 		connexion = new JButton("Se déconnecter");
-		footGrid = new JPanel(new GridLayout(1,2));
 		
 		accueil.addActionListener(e -> retournerAccueil());
-		commandes.addActionListener(e -> showCommandes());
-		stocks.addActionListener(e -> showStocks());
-		retours.addActionListener(e -> showRetours());
 		connexion.addActionListener(e -> retournerPageConnexion(user));
 		
-		foot.add(footText);
-		foot.add(footGrid);
+		footGrid = new JPanel(new GridLayout(1,2));
+		
 		footGrid.add(accueil);
 		footGrid.add(connexion);
 		
-		cl.show(body, "Menu");
+		foot.add(footText);
+		foot.add(footGrid);
+		
+		add(foot, BorderLayout.SOUTH);
 	}
 	
-	private void majUI() {
-		if (user == null) {
-			mainText.setText("En attente de connexion");
-		} else {
-			mainText.setText("salut je suis le logiciel bibliothèque");
-			//user n'est pas utilisé pour l'instant mais pourra l'être
-		}
-		//accueil.addActionListener(e->conn.run());
-		//abonnements.addActionListener(e->conn.run());
-	}
 	
-	public BibliothecairePage(Runnable rb) {
-		this.rb = rb;
-		initialiserUI();
-		majUI();
-	}
-	
-	public void retournerAccueil() {
-		cl.show(body, "Menu");
-	}
-	
-	public void showAbonnements() {
-		cl.show(body, "Abonnements");
-	}
-	
-	public void showEmprunts() {
-		cl.show(body, "Emprunts");
-	}
-	
-	public void showCommandes() {
-		cl.show(body, "Commandes");
-	}
-	
-	public void showStocks() {
-		cl.show(body, "Stocks");
-	}
-	
-	public void showRetours() {
-		cl.show(body, "Retours");
-	}
-	
-	public void retournerPageConnexion(CompteUtilisateur empty) {
-		rb.run();
-	}
 	
 	//Méthode de test
 	/*

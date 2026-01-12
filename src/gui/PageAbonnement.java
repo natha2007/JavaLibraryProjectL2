@@ -3,13 +3,49 @@ package gui;
 import javax.swing.JLabel;
 import javax.swing.*;
 
-public class PageAbonnement extends JPanel {
-	private Runnable conn;
+public class PageAbonnement extends JPanel implements IPage {
 	
-	public PageAbonnement(Runnable conn) {
-		this.conn = conn;
-		JLabel test = new JLabel("abonnements");
-		add(test);
+	private Runnable rb;
+	private CompteUtilisateur user;
+	
+	private JLabel mainText;
+	
+	public PageAbonnement(Runnable rb) {
+		this.rb = rb;
+		initialiserUI();
+		majUI();
+	}
+
+	/**
+	 * Récupère les infos de l'utilisateur connecté
+	 * @param user utilisateur (client ou bibliothecaire)
+	 */
+	@Override
+	public void setUser(CompteUtilisateur user) {
+		this.user = user;
+		majUI();
+	}
+	
+
+	/**
+	 * Initialise les éléments de l'interface "dynamiques" (dépendant de l'utilisateur)
+	 * Et crée les éléments "statiques".
+	 */
+	private void initialiserUI() {
+		mainText = new JLabel();
+		add(mainText);
+	}
+	
+	/**
+	 * Crée les élements dynamiques (dépendant de l'utilisateur)
+	 */
+	private void majUI() {
+		if (user == null) {
+			mainText.setText("En attente de connexion");
+		} else {
+			mainText.setText("Abonnement ici");
+			//compléter ici pour les choses qui nécéssitent les infos de l'utilisateur
+		}
 	}
 	
 	

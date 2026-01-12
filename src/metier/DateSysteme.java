@@ -21,7 +21,6 @@ public class DateSysteme {
 		 */
 	}
 
-	
 	public DateSysteme(Integer dateId, Timestamp dateDuJour, boolean dateManuelle) {
 		this.dateId = dateId;
 		this.dateDuJour = dateDuJour;

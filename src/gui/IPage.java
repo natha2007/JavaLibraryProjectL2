@@ -1,5 +1,5 @@
 package gui;
 
 public interface IPage {
-	//eventuellement à implémenter par les différentes classes de Page
+	public void setUser(CompteUtilisateur user);
 }

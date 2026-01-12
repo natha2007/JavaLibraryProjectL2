@@ -109,18 +109,10 @@ public class PageClient extends JPanel {
 
 			tabRes.addRow(ligne);
 		}
-		
-		revalidate();
-		repaint();
 			
 			
 	//		JPanel body = new JPanel(new GridLayout(10,1));
 	//		add(body, BorderLayout.CENTER);
-			
-	
-
-			
-		
 	}
 	
 	public PageClient(Runnable rb) {

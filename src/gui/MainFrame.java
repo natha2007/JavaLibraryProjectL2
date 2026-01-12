@@ -53,13 +53,13 @@ public class MainFrame extends JFrame{
 	}
 	
 	public void showLogiciel(CompteUtilisateur user) {
-		if (user.getType().equals("bibliothecaire")) {
+		if (user.getType().equals("Bibliothécaire")) {
 			BibliothecaireDAO bd = new BibliothecaireDAO();
 			Integer bibliothecaireId = bd.readByCompteId(user.getCompteId()).getBibliothecaireId();
 			user.setBibliothecaireId(bibliothecaireId);
 			bp.setUser(user);
 			crd.show(root, "Bibliothecaire");
-		} else if (user.getType().equals("client")) {
+		} else if (user.getType().equals("Client")) {
 			ClientDAO cd = new ClientDAO();
 			Integer clientId = cd.getClientFromCompte(user.getCompteId());
 			user.setClientId(clientId);

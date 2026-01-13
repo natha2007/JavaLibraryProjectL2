@@ -15,6 +15,7 @@ import metier.Compte;
 
 public class Main {
 	public static void main(String[] args) {
+
 		MainFrame mf = new MainFrame("Gestionnaire de bibliothèque");
 		mf.setVisible(true);
 		mf.setMinimumSize(new Dimension(900,600));
@@ -75,6 +76,5 @@ public class Main {
 		ed.create(e5);
 		
 		*/
-		
 	}
 }

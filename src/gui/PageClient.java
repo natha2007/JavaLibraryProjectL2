@@ -4,6 +4,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,7 +28,9 @@ public class PageClient extends JPanel {
     private ObjetDAO od;
     private AbonnementDAO ad;
 
+    private Abonnement ab;
     private Client cl;
+    private JLabel abonnementTxt;
 
     private Runnable rb;
 
@@ -42,7 +45,10 @@ public class PageClient extends JPanel {
         majUI();
     }
 
+    
     private void initialiserUI() {
+    	
+    	
         setLayout(new BorderLayout());
 
         cd = new ClientDAO();
@@ -81,6 +87,8 @@ public class PageClient extends JPanel {
         tabRes = new DefaultTableModel(colonnes, 0);
         table = new JTable(tabRes);
 
+        table.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
         table.setRowHeight(40);
         table.setFont(new Font("Arial", Font.PLAIN, 14));
         table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
@@ -89,10 +97,25 @@ public class PageClient extends JPanel {
         titreTable.setFont(new Font("Arial", Font.BOLD, 18));
         titreTable.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        body.add(titreTable, BorderLayout.NORTH);
-        
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+
+        abonnementTxt = new JLabel();
+        abonnementTxt.setFont(new Font("Arial", Font.PLAIN, 14));
+        abonnementTxt.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
+        abonnementTxt.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        titreTable.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        topPanel.add(abonnementTxt);
+        topPanel.add(titreTable);
+
+        body.add(topPanel, BorderLayout.NORTH);
+
         scroll = new JScrollPane(table);
         body.add(scroll, BorderLayout.CENTER);
+        scroll.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+
     }
 
     private void majUI() {
@@ -105,6 +128,10 @@ public class PageClient extends JPanel {
 
         cl = cd.read(user.getClientId());
         profilInfos.setText("Bonjour " + cl.getPrenom() + " " + cl.getNom());
+        ab=cl.getAbonnement();
+        
+        abonnementTxt.setText("Vous bénéficiez du forfait " + ab.getTypeAbonnement() 
+        + " à " + ab.getPrix() + "€. Vous pouvez faire jusqu'à " + ab.getNbEmpruntsMax() + " emprunts simultanément.");
 
         listeEmprunt = ed.getListeEmpruntsByClientId(user.getClientId());
         LocalDate today = LocalDate.now();
@@ -125,5 +152,6 @@ public class PageClient extends JPanel {
 
             tabRes.addRow(ligne);
         }
+        
     }
 }

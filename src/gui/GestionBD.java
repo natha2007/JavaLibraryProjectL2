@@ -31,4 +31,13 @@ public class GestionBD {
 			od.create(o);
 		}
 	}
+	
+	
+	
+	public static void main(String[] args) {
+		//GestionBD.genererObjets();
+		ObjetDAO od = new ObjetDAO();
+		od.delete(6);
+	}
+	
 }

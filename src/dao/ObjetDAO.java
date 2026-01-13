@@ -59,6 +59,18 @@ private ResultSet rs;
 		}
 	}
 	
+	public void delete(Integer id) {
+		String requete = "DELETE FROM objet"
+				+ " WHERE objetId= " + id;
+		try {
+			stmt.executeUpdate(requete);
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+				
+	}
+	
 	public Objet read(Integer id) {
 		Objet o1 = null;
 		String requete = "SELECT *"

@@ -152,6 +152,5 @@ public class PageClient extends JPanel {
 
             tabRes.addRow(ligne);
         }
-        
     }
 }

@@ -4,6 +4,9 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import dao.BibliothecaireDAO;
+import metier.Bibliothecaire;
+
 public class BibliothecairePage extends JPanel {
 	
 	private Runnable rb;
@@ -31,6 +34,9 @@ public class BibliothecairePage extends JPanel {
 	private PageRetours pr;
 	private JPanel pb;
 	private JLabel mainText;
+	
+	private JLabel title;
+	private BibliothecaireDAO bd;
 	
 	// FOOT
 	
@@ -79,8 +85,20 @@ public class BibliothecairePage extends JPanel {
 	private void majUI() {
 		if (user == null) {
 			mainText.setText("En attente de connexion");
+			title.setText("");
 		} else {
-			mainText.setText("salut je suis le logiciel bibliothèque");
+			
+			Bibliothecaire b = bd.readByCompteId(user.getCompteId());
+			title.setText("Bienvenue " + b.getPrenom() + " " + b.getNom());
+			mainText.setText(
+					"<html>"
+					+ "<div style='width:500px;'>"
+					+ "Ce gestionnaire de bibliothèque vous permet de gérer "
+					+ "les emprunts des clients, les retours, leurs abonnements, ainsi que de"
+					+ "gérer les commandes et les stocks "
+					+ "</div>"
+					+ "</html>");
+			
 			//compléter ici si on a besoin des infos de l'utilisateur
 		}
 	}
@@ -169,15 +187,21 @@ public class BibliothecairePage extends JPanel {
 		cl = new CardLayout();
 		body = new JPanel(cl);
 		
+		bd = new BibliothecaireDAO();
+		
 		pa = new PageAbonnement(this::retournerAccueil);
 		pe = new PageEmprunts(this::retournerAccueil);
 		pc = new PageCommandes(this::retournerAccueil);
 		ps = new PageStocks(this::retournerAccueil);
 		pr = new PageRetours(this::retournerAccueil);
 		
-		pb = new JPanel();
+		pb = new JPanel(new BorderLayout());
 		mainText = new JLabel();
-		pb.add(mainText);
+		mainText.setHorizontalAlignment(SwingConstants.CENTER);
+		title = new JLabel();
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		pb.add(title, BorderLayout.NORTH);
+		pb.add(mainText, BorderLayout.CENTER);
 		
 		body.add(pa,"Abonnements");
 		body.add(pe,"Emprunts");

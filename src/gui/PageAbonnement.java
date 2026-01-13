@@ -5,13 +5,11 @@ import javax.swing.*;
 
 public class PageAbonnement extends JPanel implements IPage {
 	
-	private Runnable rb;
 	private CompteUtilisateur user;
 	
 	private JLabel mainText;
 	
-	public PageAbonnement(Runnable rb) {
-		this.rb = rb;
+	public PageAbonnement() {
 		initialiserUI();
 		majUI();
 	}

@@ -189,11 +189,11 @@ public class BibliothecairePage extends JPanel {
 		
 		bd = new BibliothecaireDAO();
 		
-		pa = new PageAbonnement(this::retournerAccueil);
-		pe = new PageEmprunts(this::retournerAccueil);
-		pc = new PageCommandes(this::retournerAccueil);
-		ps = new PageStocks(this::retournerAccueil);
-		pr = new PageRetours(this::retournerAccueil);
+		pa = new PageAbonnement();
+		pe = new PageEmprunts();
+		pc = new PageCommandes();
+		ps = new PageStocks();
+		pr = new PageRetours();
 		
 		pb = new JPanel(new BorderLayout());
 		mainText = new JLabel();

@@ -4,12 +4,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PageCommandes extends JPanel implements IPage {
-	private Runnable rb;
 	private CompteUtilisateur user;
 	private JLabel mainText;
 
-	public PageCommandes(Runnable rb) {
-		this.rb = rb;
+	public PageCommandes() {
 		initialiserUI();
 		majUI();
 	}

@@ -4,12 +4,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PageEmprunts extends JPanel implements IPage{
-	private Runnable rb;
 	private CompteUtilisateur user;
 	private JLabel mainText;
 
-	public PageEmprunts(Runnable rb) {
-		this.rb = rb;
+	public PageEmprunts() {
 		initialiserUI();
 		majUI();
 	}

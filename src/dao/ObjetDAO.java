@@ -3,7 +3,10 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import metier.Client;
+import metier.Emprunt;
 import metier.Objet;
 
 
@@ -88,5 +91,24 @@ private ResultSet rs;
 			e.printStackTrace();
 		}
 		return o1;
+	}
+	
+	public ArrayList<Objet> getListeObjet(){
+		ArrayList<Objet> liste = new ArrayList<Objet>();
+		Objet o = null;
+		String requete = "SELECT *"
+						+ " FROM objet";
+						
+		try {
+			this.rs = stmt.executeQuery(requete);
+			while (rs.next()) {
+				o = new Objet(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),rs.getInt(6),rs.getString(7));
+				liste.add(o);
+			}
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+		return liste;
 	}
 }

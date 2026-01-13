@@ -4,12 +4,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PageRetours extends JPanel implements IPage {
-	private Runnable rb;
+
 	private CompteUtilisateur user;
 	private JLabel mainText;
 
-	public PageRetours(Runnable rb) {
-		this.rb = rb;
+	public PageRetours() {
 		initialiserUI();
 		majUI();
 	}

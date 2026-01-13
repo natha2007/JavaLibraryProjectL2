@@ -16,6 +16,7 @@ public class MainFrame extends JFrame{
 	private JPanel root;
 	private PageClient pg;
 	private BibliothecairePage bp;
+	private PageCreationCompte pcc;
 	
 	public MainFrame(String s) {
 		super(s);
@@ -26,34 +27,24 @@ public class MainFrame extends JFrame{
 		root.setPreferredSize(new Dimension(900,600));
 		setContentPane(root);
 		
-		// Lambda permet de ne pas créer de dépendances entre les pages
-		// et donc de, entre autres, pouvoir tester les classes seules.
-		// Par exemple, au lieu de mettre en paramètre du constructeur
-		// de ConnexionPage un MainFrame (couplage fort),
-		// on lui passe un lambda représentant l’action à effectuer
-		// quand la page veut changer d’écran.
-		// La page ne sait pas qui fait le changement ni comment,
-		// elle sait juste quand déclencher l’action.
-		
-		/*
-		 * un lambda permet de passer une fonction en paramètre plutôt qu'une variable ?
-		 */
-		
 		ConnexionPage connexion = new ConnexionPage(this::showLogiciel);
-		bp = new BibliothecairePage(this::seDeconnecter); // Quand quelqu’un appellera run(), alors on exécutera showConnexion() sur cet obje
-		pg = new PageClient(this::showConnexion); //== () -> this.showConnexion()
-
+		bp = new BibliothecairePage(this::seDeconnecter);
+		pg = new PageClient(this::seDeconnecter); //enlever 
+		pcc = new PageCreationCompte();
 		
 		root.add(connexion, "Connexion");
 		root.add(bp, "Bibliothecaire");
 		root.add(pg, "Client");
+		root.add(pcc, "creerCompte");
 		
 		pack();
 		//setSize(600,600);
 	}
 	
 	public void showLogiciel(CompteUtilisateur user) {
-		if (user.getType().equals("Bibliothécaire")) {
+		if (user == null) {
+			crd.show(root, "creerCompte");
+		} else if (user.getType().equals("Bibliothécaire")) {
 			BibliothecaireDAO bd = new BibliothecaireDAO();
 			Integer bibliothecaireId = bd.readByCompteId(user.getCompteId()).getBibliothecaireId();
 			user.setBibliothecaireId(bibliothecaireId);
@@ -66,11 +57,6 @@ public class MainFrame extends JFrame{
 			pg.setUser(user);
 			crd.show(root, "Client");
 		}
-		
-	}
-	
-	public void showConnexion() {
-		crd.show(root, "Connexion");
 	}
 	
 	public void seDeconnecter() {

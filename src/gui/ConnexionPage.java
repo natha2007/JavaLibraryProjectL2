@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.function.Consumer;
 
 import javax.swing.*;
@@ -10,66 +12,106 @@ import dao.CompteDAO;
 import metier.Compte;
 
 public class ConnexionPage extends JPanel {
+	
+	private Consumer<CompteUtilisateur> conn;
+	
 	private JTextField champId = new JTextField(30);
 	private JPasswordField champMdp = new JPasswordField(30);
-	private Consumer<CompteUtilisateur> conn;
 	private Integer IdClientActuel;
+	
+	
+	//Un composant est un attribut uniquement si son état est modifié ailleurs que dans son initialisation.
 	
 	public ConnexionPage(Consumer<CompteUtilisateur> conn) {
 		this.conn = conn;
-		
-		JPanel head = new JPanel(new GridBagLayout());
+		initialiserUI();
+	}
+	
+	private void initialiserUI() {
 		setLayout(new BorderLayout());
+		
+		CardLayout crd = new CardLayout();
+		JPanel root = new JPanel(crd);
+		
+		add(root);
+		
+		JPanel head = new JPanel(new GridLayout(1,3));
+		JPanel body = new JPanel(new GridBagLayout());
+		JPanel foot = new JPanel(new GridBagLayout());
+		
+		add(head, BorderLayout.NORTH);
+		add(body, BorderLayout.CENTER);
+		add(foot, BorderLayout.SOUTH);
+		
+		head.add(Box.createGlue()); //1ere colonne est vide
+		
 		JLabel titre = new JLabel("Bienvenue");
 		titre.setHorizontalAlignment(SwingConstants.CENTER);
 		titre.setFont(new Font(titre.getFont().getName(), Font.BOLD, 40));
-		add(head, BorderLayout.NORTH);
 		head.add(titre);
 		
-		JPanel body = new JPanel(new GridBagLayout());
-		add(body, BorderLayout.CENTER);
+		JButton creerCompte = new JButton("Créer un compte");
+		//creerCompte.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		//creerCompte.setBackground(new Color(226,94,94,0));
+		creerCompte.setBorderPainted(false);
+		creerCompte.setContentAreaFilled(false);
+		creerCompte.setFocusPainted(false);
+		creerCompte.setOpaque(false);
+		head.add(creerCompte);
+		creerCompte.addActionListener(e -> {
+			conn.accept(null);
+		});
+		
+		creerCompte.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseEntered(MouseEvent e) {
+		        creerCompte.setForeground(new Color(200,200,200,255));
+		    }
+
+		    @Override
+		    public void mouseExited(MouseEvent e) {
+		        creerCompte.setForeground(new Color(100,100,100,255));
+		    }
+		});
 		
 		GridBagConstraints ctr = new GridBagConstraints();
 		
-		
-		ctr.insets = new Insets(100,0,0,200); //tlbr
+		ctr.insets = new Insets(100,0,0,540); //tlbr
 		ctr.gridx = 0;
 		ctr.gridy = 0;
+		ctr.weightx = 1.0; 
 		JLabel id = new JLabel("Identifiant");
 		id.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
 		body.add(id, ctr);
 		
 		ctr.insets = new Insets(0,100,25,100);
 		ctr.gridy = 1;
-		
 		champId.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
 		body.add(champId, ctr);
 		
-		ctr.insets = new Insets(25,0,0,200);
+		ctr.insets = new Insets(25,0,0,500);
 		ctr.gridy = 2;
+		ctr.weightx = 1.0;
 		JLabel mdp = new JLabel("Mot de passe");
 		mdp.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
 		body.add(mdp, ctr);
 		
 		ctr.insets = new Insets(0,100,100,100);
 		ctr.gridy = 3;
-		
 		champMdp.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
 		body.add(champMdp, ctr);
-	 	
-		JButton connexionBtn = new JButton("Se connecter");
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.insets = new Insets(0,100,100,100);
+		JButton connexionBtn = new JButton("Se connecter");
 		
-		JPanel foot = new JPanel(new GridBagLayout());
-		
-		add(foot, BorderLayout.SOUTH);
 		foot.add(connexionBtn, gbc);
 		connexionBtn.addActionListener(e -> verifInfos());
 		
 	}
+	
+	//Pas besoin de majUI car dépend pas de l'user comme les autres pages
 	
 	public String getIdResult() {
 		return champId.getText();
@@ -133,4 +175,10 @@ public class ConnexionPage extends JPanel {
 		return verif;
 	}
 	//vérifier qu'un nom d'utilisateur soit unique
+	
+	public void creerCompte() {
+		CompteUtilisateur user = null;
+		conn.accept(user);
+	}
+	
 }

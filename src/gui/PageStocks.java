@@ -1,10 +1,18 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -101,15 +109,43 @@ public class PageStocks extends JPanel implements IPage {
         	tabRes.addRow(ligne);
         }
 		
-		scroll = new JScrollPane(table);
 		JPanel center = new JPanel(new GridLayout(1,2));
+		add(center, BorderLayout.CENTER);
+		
+		scroll = new JScrollPane(table);
 		JLabel test = new JLabel("test");
+		
 		center.add(scroll);
 		JPanel partieDroite = new JPanel(new BorderLayout());
+		
 		center.add(partieDroite);
-		JTextField barreRecherche = new JTextField(50);
-		partieDroite.add(barreRecherche, BorderLayout.NORTH);
-		add(center, BorderLayout.CENTER);
+		
+		JPanel recherche = new JPanel(new GridBagLayout());
+		partieDroite.add(recherche, BorderLayout.NORTH);
+		
+		
+		JTextField barreRecherche = new JTextField(40);
+		JButton loupe = new JButton();
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 0.9;
+		recherche.add(barreRecherche, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.weightx = 0.1;
+		recherche.add(loupe, gbc);
+		
+		BufferedImage myPicture = null;
+		try {
+			myPicture = ImageIO.read(new File("loupe.png"));
+		} catch (IOException e) {
+			System.out.println("Fichier introuvable");
+			e.printStackTrace();
+		}
+		ImageIcon image = new ImageIcon(myPicture);
 		
 	}
 	

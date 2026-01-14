@@ -93,6 +93,24 @@ private ResultSet rs;
 		return o1;
 	}
 	
+	public Objet read(String reference) {
+		Objet o1 = null;
+		String requete = "SELECT *"
+				+ " FROM objet"
+				+ " WHERE reference= '" + reference + "'";
+		try {
+			this.rs = stmt.executeQuery(requete);
+			if (rs.first()) {
+				o1 = new Objet(rs.getInt(1),rs.getString(2),
+						rs.getString(3), rs.getFloat(4),
+						rs.getString(5), rs.getInt(6), rs.getString(7));
+			}
+		} catch (SQLException e) {
+			System.out.println("");//pour éviter d'afficher des erreurs dans la console quand ce qui est écrit dans la barre de recherche est mauvais
+		}
+		return o1;
+	}
+	
 	public ArrayList<Objet> getListeObjet(){
 		ArrayList<Objet> liste = new ArrayList<Objet>();
 		Objet o = null;

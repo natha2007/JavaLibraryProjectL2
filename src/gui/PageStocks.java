@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,8 @@ public class PageStocks extends JPanel implements IPage {
 	private JLabel mainText;
 	private JScrollPane scroll;
 	private JList liste;
+	private JTextField barreRecherche;
+	private JLabel resultat;
 
 	public PageStocks() {
 		initialiserUI();
@@ -124,28 +127,43 @@ public class PageStocks extends JPanel implements IPage {
 		partieDroite.add(recherche, BorderLayout.NORTH);
 		
 		
-		JTextField barreRecherche = new JTextField(40);
-		JButton loupe = new JButton();
-		GridBagConstraints gbc = new GridBagConstraints();
+		JLabel titreRecherche = new JLabel("Rechercher référence objet");
+		barreRecherche = new JTextField(40);
 		
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.weightx = 0.9;
-		recherche.add(barreRecherche, gbc);
+		resultat = new JLabel("");
+		partieDroite.add(resultat, BorderLayout.CENTER);
 		
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.weightx = 0.1;
-		recherche.add(loupe, gbc);
-		
-		BufferedImage myPicture = null;
+		BufferedImage loupeFic = null;
 		try {
-			myPicture = ImageIO.read(new File("loupe.png"));
+			loupeFic = ImageIO.read(new File("img/loupe.png"));
 		} catch (IOException e) {
 			System.out.println("Fichier introuvable");
 			e.printStackTrace();
 		}
-		ImageIcon image = new ImageIcon(myPicture);
+		ImageIcon imageLoupe = new ImageIcon(loupeFic);
+		Image img = imageLoupe.getImage().getScaledInstance(16, 12, Image.SCALE_SMOOTH);
+		JButton loupe = new JButton(new ImageIcon(img));
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		recherche.add(titreRecherche, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.9;
+		recherche.add(barreRecherche, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.weightx = 0.1;
+		recherche.add(loupe, gbc);
+		
+		loupe.addActionListener(e -> {
+			rechercherObjet();
+		});
+		
 		
 	}
 	
@@ -158,6 +176,26 @@ public class PageStocks extends JPanel implements IPage {
 		} else {
 			mainText.setText("Stock actuel de la bibliothèque");
 			//compléter ici pour les choses qui nécéssitent les infos de l'utilisateur
+		}
+	}
+	
+	
+	private void rechercherObjet() {
+		ObjetDAO od = new ObjetDAO();
+		String recherche = barreRecherche.getText();
+		Objet o = od.read(recherche);
+		if (o == null) {
+			resultat.setText("aucun objet trouvé");
+		} else {
+			String disponibilite = "";
+			if (o.getDisponibilite() == 1) {
+				disponibilite = "disponible";
+			} else {
+				disponibilite = "non disponible";
+			}
+			resultat.setText(o.getObjetId() + " " + o.getNom() + " " + o.getAuteur()
+							+ " " + o.getPrix() + " " + o.getTypeObjet() + " " + disponibilite
+							+ " " + o.getReference());
 		}
 	}
 	

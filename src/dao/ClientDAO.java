@@ -23,7 +23,7 @@ public class ClientDAO extends DAO<Client>{
 	        ps.setString(1, cl.getNom());
 	        ps.setString(2, cl.getPrenom());
 
-	        // abonnement nullable
+	        // abonnement null quand on le cré ou quand le modifie
 	        if (cl.getAbonnement() == null) {
 	            ps.setNull(3, Types.INTEGER);
 	        } else {

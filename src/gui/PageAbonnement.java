@@ -1,6 +1,13 @@
 package gui;
 
 import javax.swing.JLabel;
+
+import dao.ClientDAO;
+import dao.CompteDAO;
+import metier.*;
+
+import java.awt.*;
+
 import javax.swing.*;
 
 public class PageAbonnement extends JPanel implements IPage {
@@ -8,6 +15,14 @@ public class PageAbonnement extends JPanel implements IPage {
 	private CompteUtilisateur user;
 	
 	private JLabel mainText;
+	private JTextField champNom;
+	private JTextField champPrenom;
+	private JTextField champCompte;
+	private JTextField champNom1;
+	private JTextField champPrenom1;
+	private JTextField champCompte1;
+	
+
 	
 	public PageAbonnement() {
 		initialiserUI();
@@ -30,8 +45,169 @@ public class PageAbonnement extends JPanel implements IPage {
 	 * Et crée les éléments "statiques".
 	 */
 	private void initialiserUI() {
+		setLayout(new BorderLayout());
+		
 		mainText = new JLabel();
-		add(mainText);
+		mainText.setHorizontalAlignment(SwingConstants.CENTER);
+		add(mainText, BorderLayout.NORTH);
+		
+		
+		
+		
+		JPanel grid = new JPanel(new GridLayout(1,2));
+		JPanel gauche = new JPanel(new GridBagLayout());
+		JPanel droite = new JPanel(new GridBagLayout());
+		grid.add(gauche);
+		grid.add(droite);
+		add(grid, BorderLayout.CENTER);
+		
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.insets = new Insets(0,0,35,0);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 0.2;
+		JLabel titreGauche = new JLabel("Ajouter/modifier un abonnement :");
+		gauche.add(titreGauche, gbc);
+		
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridy = 1;
+		gbc.weightx = 1;
+		JLabel nom = new JLabel("Nom du client");
+		gauche.add(nom, gbc);
+
+		gbc.gridy = 2;
+		gbc.weightx = 1.0;
+		gbc.insets = new Insets(0,0,50,0);
+		champNom = new JTextField(30);
+		champNom.setMinimumSize(new Dimension(600,20));
+		champNom.setPreferredSize(new Dimension(600,20));
+		gauche.add(champNom, gbc);
+		
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridy = 3;
+		gbc.weightx = 1.0;
+		JLabel prenom = new JLabel("Prénom du client");
+		gauche.add(prenom, gbc);
+		
+		
+		gbc.insets = new Insets(0,0,50,0);
+		gbc.gridy = 4;
+		gbc.weightx = 1.0;
+		champPrenom = new JTextField(30);
+		champPrenom.setMinimumSize(new Dimension(600,20));
+		champPrenom.setPreferredSize(new Dimension(600,20));
+		gauche.add(champPrenom, gbc);
+		
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridy = 5;
+		gbc.weightx = 1.0;
+		JLabel compte = new JLabel("Identifiant du compte client");
+		gauche.add(compte, gbc);
+		
+		
+		gbc.insets = new Insets(0,0,25,0);
+		gbc.gridy = 6;
+		gbc.weightx = 1.0;
+		champCompte = new JTextField(30);
+		champCompte.setMinimumSize(new Dimension(600,20));
+		champCompte.setPreferredSize(new Dimension(600,20));
+		gauche.add(champCompte, gbc);
+		
+		
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridy = 7;
+		gbc.weightx = 1;
+		JLabel abonnement = new JLabel("Abonnement");
+		gauche.add(abonnement, gbc);
+		
+		gbc.insets = new Insets(0,0,35,0);
+		gbc.gridy = 8;
+		gbc.weightx = 1;
+		String[] listeAbonnement = {"Classique","Etudiant","Premium"};
+		JComboBox choixAbonnement = new JComboBox(listeAbonnement);
+		gauche.add(choixAbonnement, gbc);
+		
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridy = 9;
+		gbc.weightx = 1;
+		JButton ajouter = new JButton("Ajouter");
+		gauche.add(ajouter, gbc);
+		
+		ajouter.addActionListener(e -> ajouterAbonnement());
+		
+		
+		// DROITE
+		
+		GridBagConstraints gbc1 = new GridBagConstraints();
+		
+		gbc1.insets = new Insets(0,0,75,0);
+		gbc1.gridx = 0;
+		gbc1.gridy = 0;
+		gbc1.weightx = 0.2;
+		JLabel titreDroite = new JLabel("Supprimer un abonnement : ");
+		droite.add(titreDroite, gbc1);
+		
+		gbc1.insets = new Insets(0,0,0,0);
+		gbc1.gridy = 1;
+		gbc1.weightx = 1;
+		JLabel nom1 = new JLabel("Nom du client");
+		droite.add(nom1, gbc1);
+
+		gbc1.gridy = 2;
+		gbc1.weightx = 1.0;
+		gbc1.insets = new Insets(0,0,50,0);
+		champNom1 = new JTextField(30);
+		champNom1.setMinimumSize(new Dimension(600,20));
+		champNom1.setPreferredSize(new Dimension(600,20));
+		droite.add(champNom1, gbc1);
+		
+		gbc1.insets = new Insets(0,0,0,0);
+		gbc1.gridy = 3;
+		gbc1.weightx = 1.0;
+		JLabel prenom1 = new JLabel("Prénom du client");
+		droite.add(prenom1, gbc1);
+		
+		
+		gbc1.insets = new Insets(0,0,50,0);
+		gbc1.gridy = 4;
+		gbc1.weightx = 1.0;
+		champPrenom1 = new JTextField(30);
+		champPrenom1.setMinimumSize(new Dimension(600,20));
+		champPrenom1.setPreferredSize(new Dimension(600,20));
+		droite.add(champPrenom1, gbc1);
+		
+		gbc1.insets = new Insets(0,0,0,0);
+		gbc1.gridy = 5;
+		gbc1.weightx = 1.0;
+		JLabel compte1 = new JLabel("Identifiant du compte client");
+		droite.add(compte1, gbc1);
+		
+		
+		gbc1.insets = new Insets(0,0,50,0);
+		gbc1.gridy = 6;
+		gbc1.weightx = 1.0;
+		champCompte1 = new JTextField(30);
+		champCompte1.setMinimumSize(new Dimension(600,20));
+		champCompte1.setPreferredSize(new Dimension(600,20));
+		droite.add(champCompte1, gbc1);
+		
+		
+		gbc1.insets = new Insets(0,0,0,0);
+		gbc1.gridy = 7;
+		gbc1.weightx = 1;
+		JLabel abonnement1 = new JLabel("Abonnement");
+		droite.add(abonnement1, gbc1);
+		
+		gbc1.insets = new Insets(0,0,0,0);
+		gbc1.gridy = 8;
+		gbc1.weightx = 1;
+		JButton supprimer = new JButton("Supprimer");
+		droite.add(supprimer, gbc1);
+		
+		supprimer.addActionListener(e -> supprimerAbonnement());
+		
 	}
 	
 	/**
@@ -41,10 +217,24 @@ public class PageAbonnement extends JPanel implements IPage {
 		if (user == null) {
 			mainText.setText("En attente de connexion");
 		} else {
-			mainText.setText("Abonnement ici");
+			mainText.setText("Ici, gérez l'abonnement des clients");
 			//compléter ici pour les choses qui nécéssitent les infos de l'utilisateur
 		}
 	}
 	
+	private void ajouterAbonnement() {
+		String nom = champNom.getText();
+		String prenom = champPrenom.getText();
+		String compte = champCompte.getText();
+		ClientDAO cld = new ClientDAO();
+		CompteDAO cd = new CompteDAO();
+		Compte c = cd.read(compte);
+		Integer id = cld.getClientFromCompte(c.getCompteId());
+		Client cl = cld.read(id);
+	}
+	
+	private void supprimerAbonnement() {
+		
+	}
 	
 }

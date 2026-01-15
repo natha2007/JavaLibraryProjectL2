@@ -19,7 +19,7 @@ CREATE TABLE client (
 	clientId INT AUTO_INCREMENT NOT NULL,
 	nom VARCHAR(80) NOT NULL,
 	prenom VARCHAR(30) NOT NULL,
-	abonnementId INT NOT NULL,
+	abonnementId INT,
 	compteId INT NOT NULL,
 	CONSTRAINT pkClientId PRIMARY KEY (clientId),
 	CONSTRAINT fkAbonnementId1 FOREIGN KEY (abonnementId)
@@ -32,7 +32,7 @@ CREATE TABLE objet(
 	objetId INT AUTO_INCREMENT NOT NULL,
 	nom VARCHAR(100) NOT NULL, -- titre pour un livre, modele pour un ordinateur, titre d'un CD...
 	auteur VARCHAR(100), -- auteur du livre, du DVD, constructeur de l'ordinateur...
-	prix DECIMAL(4,2),
+	prix DECIMAL(8,2),
 	typeObjet VARCHAR(20) NOT NULL, -- JeuSociete, Ordinateur, Livre, CD, DVD
 	disponibilite BOOLEAN NOT NULL DEFAULT 1,
 	reference VARCHAR(100) NOT NULL, -- Pour un livre ISBN, pour les autres code barre ou qqch comme ça qui identifie dans le cas où on aurait deux objets de même nom

@@ -13,6 +13,7 @@ public class PageCommandes extends JPanel implements IPage {
 	private JLabel mainText;
 	private JLabel nom;
 	private JTextField champNom;
+	private JLabel erreurNom;
 	private JLabel auteur;
 	private JTextField champAuteur;
 	private JLabel prix;
@@ -64,6 +65,7 @@ public class PageCommandes extends JPanel implements IPage {
 		zoneNom.setLayout(new BoxLayout(zoneNom, BoxLayout.Y_AXIS));
 		nom = new JLabel("nom/titre : ");
 		champNom = new JTextField(30);
+		erreurNom = new JLabel("");
 		Dimension d = champNom.getPreferredSize();
         d.height = 25;
         champNom.setMaximumSize(d);
@@ -75,6 +77,7 @@ public class PageCommandes extends JPanel implements IPage {
 		grid.add(zoneNom);
 		zoneNom.add(nom);
 		zoneNom.add(champNom);
+		zoneNom.add(erreurNom);
 		
 		JPanel zoneAuteur= new JPanel();
 		zoneAuteur.setLayout(new BoxLayout(zoneAuteur, BoxLayout.Y_AXIS));
@@ -149,11 +152,16 @@ public class PageCommandes extends JPanel implements IPage {
 //        d.height = 25;
 //        commande.setMaximumSize(d);
 //        commande.setPreferredSize(d);
-        JPanel boutonLayout = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		commande.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel boutonLayout = new JPanel();
+		boutonLayout.setLayout(new BoxLayout(boutonLayout, BoxLayout.Y_AXIS));
         confirmation = new JLabel("");
+        confirmation.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //confirmation.setForeground(new Color(255,0,0,255));
         
-        add(confirmation, BorderLayout.SOUTH);
+        
         boutonLayout.add(commande);
+        boutonLayout.add(confirmation);
 		grid.add(boutonLayout);
 		
 		commande.addActionListener(e -> ajouterCommande());
@@ -173,25 +181,90 @@ public class PageCommandes extends JPanel implements IPage {
 	}
 	
 	private void ajouterCommande() {
+		try {
+			validerSaisie();
+			creerCommande();
+		} catch (SaisieInvalideException s) {
+			afficherErreur(s.getMessage());
+		}
+	}
+	
+	private void creerCommande() {
 		String nom = champNom.getText();
 		String auteur = champAuteur.getText();
 		Number n = (Number) champPrix.getValue();
-		float prix;
-		if (n != null) {
-			prix = n.floatValue();
-		} else {
-			prix = 0f;
-		}
+		float prix = n.floatValue();
 		String typeObjet = champTypeObjet.getText();
 		String reference = champReference.getText();
 		ObjetDAO od = new ObjetDAO();
+		
 		Objet o = new Objet(nom, auteur, prix, typeObjet,1,reference);
 		od.create(o);
-		confirmation.setText("vous avez bien commandé le livre : " + od.read(reference).getNom());
 		champNom.setText(null);
 		champAuteur.setText(null);
 		champPrix.setText(null);
 		champTypeObjet.setText(null);
 		champReference.setText(null);
+		confirmation.setText("vous avez bien commandé le " + typeObjet + " : " + od.read(reference).getNom());
+	}
+	
+	private void afficherErreur(String message) {
+	    confirmation.setForeground(Color.RED);
+	    confirmation.setText(message);
+	}
+	
+	private void validerSaisie() throws SaisieInvalideException {
+		validerNom();
+		validerPrix();
+		validerAuteur();
+		validerTypeObjet();
+		validerReference();
+	}
+	
+	private void validerNom() throws SaisieInvalideException {
+		String t = champNom.getText();
+		if (t.isEmpty()) {
+			throw new SaisieInvalideException("Vous devez saisir un nom");
+		}
+		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
+			throw new SaisieInvalideException("Caractères invalides");
+		}
+	}
+	
+	private void validerPrix() throws SaisieInvalideException {
+		Number n = (Number) champPrix.getValue();
+		if (n == null || n.floatValue() <= 0) {
+			throw new SaisieInvalideException("Le prix doit être supérieur ou égal à 0");
+		}
+	}
+	
+	private void validerAuteur() throws SaisieInvalideException {
+		String t = champAuteur.getText();
+		if (t.isEmpty()) {
+			throw new SaisieInvalideException("Vous devez saisir un auteur");
+		}
+		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
+			throw new SaisieInvalideException("Caractères invalides");
+		}
+	}
+	
+	private void validerTypeObjet() throws SaisieInvalideException {
+		String t = champTypeObjet.getText();
+		if (t.isEmpty()) {
+			throw new SaisieInvalideException("Vous devez saisir un type d'objet");
+		}
+		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
+			throw new SaisieInvalideException("Caractères invalides");
+		}
+	}
+	
+	private void validerReference() throws SaisieInvalideException {
+		String t = champReference.getText();
+		if (champReference.getText().isEmpty()) {
+			throw new SaisieInvalideException("Vous devez saisir un champ référence");
+		}
+		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
+			throw new SaisieInvalideException("Caractères invalides");
+		}
 	}
 }

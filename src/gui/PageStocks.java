@@ -37,6 +37,10 @@ public class PageStocks extends JPanel implements IPage {
 
 	private DefaultTableModel tabRes;
 	private ArrayList<Objet> listeObjets;
+	private JPanel center;
+	private JLabel titreRecherche;
+	
+	private int count = 0;
 
 	public PageStocks(Runnable rb) {
 		this.rb = rb;
@@ -120,7 +124,7 @@ public class PageStocks extends JPanel implements IPage {
         
        
 		
-		JPanel center = new JPanel(new BorderLayout());
+		center = new JPanel(new BorderLayout());
 		add(center, BorderLayout.CENTER);
 		
 		
@@ -136,7 +140,7 @@ public class PageStocks extends JPanel implements IPage {
 		
 		
 		
-		JLabel titreRecherche = new JLabel("Rechercher référence objet");
+		titreRecherche = new JLabel("Rechercher référence objet");
 		barreRecherche = new JTextField(40);
 		barreRecherche.setMinimumSize(new Dimension(100,20));
 		barreRecherche.setMaximumSize(new Dimension(200,20));
@@ -176,7 +180,13 @@ public class PageStocks extends JPanel implements IPage {
 		recherche.add(loupe, gbc);
 		*/
 		loupe.addActionListener(e -> {
-			rb.run();
+			count++;
+			if (count%2 == 0) {
+				rb.run();
+			} else {
+				majUI();
+				titreRecherche.setText("Rechercher référence objet");
+			}
 		});
 		
 		
@@ -217,8 +227,8 @@ public class PageStocks extends JPanel implements IPage {
 		String recherche = barreRecherche.getText();
 		Objet o1 = od.read(recherche);
 		if (o1 == null) {
-			//resultat.setText("aucun objet trouvé");
-			System.out.println("à modif");
+			tabRes.setRowCount(0);
+			titreRecherche.setText("Aucun objet trouvé");
 		} else {
 			listeObjets = od.getListeObjet(recherche);
 			tabRes.setRowCount(0);

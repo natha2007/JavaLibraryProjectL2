@@ -73,5 +73,22 @@ public class AbonnementDAO extends DAO<Abonnement>{
 		}
 		return ab;
 	}
+	
+	public Abonnement read(String identifiant) {
+		Abonnement ab = null;
+		String requete = "SELECT *"
+				+ " FROM abonnement"
+				+ " WHERE identifiant= " + identifiant;
+		try {
+			rs = stmt.executeQuery(requete);
+			if (rs.first()) {
+				ab = new Abonnement(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4));
+			}
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+		return ab;
+	}
 
 }

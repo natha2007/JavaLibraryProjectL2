@@ -26,4 +26,12 @@ public class GestionMdp {
 		}
 		
 	}
+	
+	public static String getMdpResultHash(char[] pwdTab) {
+		String pwd = "";
+		for (int i = 0; i<pwdTab.length; i++) {
+			pwd += pwdTab[i];
+		}
+		return GestionMdp.hash(pwd);
+	}
 }

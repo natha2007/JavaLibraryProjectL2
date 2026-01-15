@@ -1,8 +1,10 @@
 package dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 
 import metier.Abonnement;
 import metier.Client;
@@ -13,21 +15,38 @@ public class ClientDAO extends DAO<Client>{
 
 	@Override
 	public Client create(Client cl) {
-		String requete = "INSERT INTO client(nom, prenom, abonnementId, compteId)"
-				+ " VALUES('" + cl.getNom() + "', '" + cl.getPrenom() + "', " + cl.getAbonnement().getAbonnementId()
-				+ ", " + cl.getCompte().getCompteId() + ")";
-		try {
-			stmt.executeUpdate(requete, Statement.RETURN_GENERATED_KEYS);
-			rs = stmt.getGeneratedKeys();
-			if (rs.next()) {
-				cl.setClientId(rs.getInt(1));
-			}
-		} catch (SQLException e) {
-			System.out.println("erreur requête SQL");
-			e.printStackTrace();
-		}
-		return cl;
+
+	    String sql = "INSERT INTO client(nom, prenom, abonnementId, compteId) VALUES (?, ?, ?, ?)";
+
+	    try (PreparedStatement ps = connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+	        ps.setString(1, cl.getNom());
+	        ps.setString(2, cl.getPrenom());
+
+	        // abonnement nullable
+	        if (cl.getAbonnement() == null) {
+	            ps.setNull(3, Types.INTEGER);
+	        } else {
+	            ps.setInt(3, cl.getAbonnement().getAbonnementId());
+	        }
+
+	        ps.setInt(4, cl.getCompte().getCompteId());
+
+	        ps.executeUpdate();
+
+	        ResultSet rs = ps.getGeneratedKeys();
+	        if (rs.next()) {
+	            cl.setClientId(rs.getInt(1));
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println("Erreur SQL ClientDAO.create");
+	        e.printStackTrace();
+	    }
+
+	    return cl;
 	}
+
 
 	@Override
 	public Client update(Client cl) {

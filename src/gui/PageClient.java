@@ -115,7 +115,16 @@ public class PageClient extends JPanel {
         scroll = new JScrollPane(table);
         body.add(scroll, BorderLayout.CENTER);
         scroll.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-
+        
+        JPanel foot = new JPanel();
+        add(foot, BorderLayout.SOUTH);
+        JButton deconnexion = new JButton("Se déconnecter");
+        foot.add(deconnexion);
+        deconnexion.addActionListener(e -> seDeconnecter(user));
+    }
+    
+    public void seDeconnecter(CompteUtilisateur empty) {
+    	rb.run();
     }
 
     private void majUI() {
@@ -130,9 +139,12 @@ public class PageClient extends JPanel {
         profilInfos.setText("Bonjour " + cl.getPrenom() + " " + cl.getNom());
         ab=cl.getAbonnement();
         
-        abonnementTxt.setText("Vous bénéficiez du forfait " + ab.getTypeAbonnement() 
-        + " à " + ab.getPrix() + "€. Vous pouvez faire jusqu'à " + ab.getNbEmpruntsMax() + " emprunts simultanément.");
-
+       if (ab == null) {
+    	   abonnementTxt.setText("Vous n'avez aucun abonnement actif (aucun emprunt possible)");
+       } else {
+    	   abonnementTxt.setText("Vous bénéficiez du forfait " + ab.getTypeAbonnement() 
+           + " à " + ab.getPrix() + "€. Vous pouvez faire jusqu'à " + ab.getNbEmpruntsMax() + " emprunts simultanément.");
+       }
         listeEmprunt = ed.getListeEmpruntsByClientId(user.getClientId());
         LocalDate today = LocalDate.now();
 

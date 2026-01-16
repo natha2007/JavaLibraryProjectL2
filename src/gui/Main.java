@@ -35,8 +35,8 @@ public class Main {
 		
 		BibliothecaireDAO bd = new BibliothecaireDAO();
 		
-		Compte c = new Compte("MercierB", GestionMdp.hash("122007"),"2026-01-03","Client");
-		Compte c2 = new Compte("MercierN", GestionMdp.hash("122007"),"2026-01-12","Bibliothécaire");
+		Compte c = new Compte("MercierW", GestionMdp.hash("122007"),"2026-01-03","Client");
+		Compte c2 = new Compte("MercierV", GestionMdp.hash("122007"),"2026-01-12","Bibliothécaire");
 		cd.create(c);
 		cd.create(c2);
 		Abonnement ab = new Abonnement("Etudiant", 7.50f, 10);
@@ -70,8 +70,6 @@ public class Main {
 		ed.create(e1);
 		ed.create(e2);
 		ed.create(e3);
-		ed.create(e4);
-		ed.create(e5);
 		ed.create(e4);
 		ed.create(e5);
 		

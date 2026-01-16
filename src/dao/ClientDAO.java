@@ -23,7 +23,7 @@ public class ClientDAO extends DAO<Client>{
 	        ps.setString(1, cl.getNom());
 	        ps.setString(2, cl.getPrenom());
 
-	        // abonnement nullable
+	        // abonnement null quand on le cré ou quand le modifie
 	        if (cl.getAbonnement() == null) {
 	            ps.setNull(3, Types.INTEGER);
 	        } else {
@@ -50,10 +50,20 @@ public class ClientDAO extends DAO<Client>{
 
 	@Override
 	public Client update(Client cl) {
+		Integer abonnementId = null;
+		if (cl.getAbonnement() != null) {
+			abonnementId = cl.getAbonnement().getAbonnementId();
+		}
+		String aboVal;
+		if (abonnementId == null) {
+			aboVal = "NULL";
+		} else {
+			aboVal =  abonnementId.toString();
+		}
 		String requete = "UPDATE client"
 				+ " SET nom ='" + cl.getNom()
 				+ "', prenom ='" + cl.getPrenom()
-				+ "', abonnementId =" + cl.getAbonnement().getAbonnementId()
+				+ "', abonnementId =" + aboVal
 				+ ", compteId =" + cl.getCompte().getCompteId()
 				+ " WHERE clientId =" + cl.getClientId();
 		try {

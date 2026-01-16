@@ -65,8 +65,14 @@ public class Client {
 
 	@Override
 	public String toString() {
-		return "Client [clientId=" + clientId + ", nom=" + nom + ", prenom=" + prenom + ", abonnementId=" + this.abonnement.getAbonnementId() + "]";
+	    String abonnementId;
+	    if (this.getAbonnement() == null || this.getAbonnement().getAbonnementId() == null) {
+	        abonnementId = "NULL";
+	    } else {
+	        abonnementId = this.getAbonnement().getAbonnementId().toString();
+	    }
+	    return "Client [clientId=" + clientId + ", nom=" + nom + ", prenom=" + prenom + ", abonnementId=" + abonnementId + "]";
 	}
-	
+
 	
 }

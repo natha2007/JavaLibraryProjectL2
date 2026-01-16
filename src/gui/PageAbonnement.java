@@ -25,6 +25,10 @@ public class PageAbonnement extends JPanel implements IPage {
 	private JComboBox choixAbonnement;
 	private JLabel confirmationCreation;
 	private JLabel confirmationSuppression;
+	private final ClientDAO cld = new ClientDAO();
+	private final CompteDAO cd = new CompteDAO();
+	private final AbonnementDAO abd = new AbonnementDAO();
+
 	
 	public PageAbonnement() {
 		initialiserUI();
@@ -263,6 +267,7 @@ public class PageAbonnement extends JPanel implements IPage {
 	}
 	
 	private void validerNom() throws SaisieInvalideException {
+		confirmationSuppression.setText(null);
 		String t = champNom.getText();
 		if (t.isEmpty()) {
 			throw new SaisieInvalideException("Vous devez saisir un nom");
@@ -286,9 +291,6 @@ public class PageAbonnement extends JPanel implements IPage {
 		String nom = champNom.getText();
 		String prenom = champPrenom.getText();
 		String compte = champCompte.getText();
-		ClientDAO cld = new ClientDAO();
-		CompteDAO cd = new CompteDAO();
-		AbonnementDAO abd = new AbonnementDAO();
 		Compte c = cd.read(compte);
 		if (c != null) {
 			Integer id = cld.getClientFromCompte(c.getCompteId());
@@ -305,8 +307,20 @@ public class PageAbonnement extends JPanel implements IPage {
 			if (cl != null && cl.getNom().equals(nom) && cl.getPrenom().equals(prenom)) {
 				cl.setAbonnement(ab);
 				cld.update(cl);
-				confirmationCreation.setText("Le client " + cl.getNom() + " " + cl.getPrenom() + " a désormais l'abonnement " + cl.getAbonnement().getTypeAbonnement());
+				String texteAbonnement;
+				if (cl.getAbonnement() != null) {
+				    texteAbonnement = cl.getAbonnement().getTypeAbonnement();
+				} else {
+				    texteAbonnement = "Aucun abonnement";
+				}
+
+				confirmationCreation.setText(
+				    "Le client " + cl.getNom() + " " + cl.getPrenom()
+				    + " a désormais l'abonnement " + texteAbonnement);
 				confirmationCreation.setForeground(Color.black);
+				champNom.setText(null);
+				champPrenom.setText(null);
+				champCompte.setText(null);
 			}
 			cl = cld.read(id);
 			System.out.println(cl);
@@ -316,6 +330,7 @@ public class PageAbonnement extends JPanel implements IPage {
 	}
 	
 	private void validerNomSupp() throws SaisieInvalideException {
+		confirmationCreation.setText("");
 		String t = champNom1.getText();
 		if (t.isEmpty()) {
 			throw new SaisieInvalideException("Vous devez saisir un nom");
@@ -339,9 +354,6 @@ public class PageAbonnement extends JPanel implements IPage {
 		String nom = champNom1.getText();
 		String Prenom = champPrenom1.getText();
 		String compte = champCompte1.getText();
-		ClientDAO cld = new ClientDAO();
-		CompteDAO cd = new CompteDAO();
-		AbonnementDAO abd = new AbonnementDAO();
 		Compte c = cd.read(compte);
 		if (c != null) {
 			Integer id = cld.getClientFromCompte(c.getCompteId());
@@ -357,6 +369,9 @@ public class PageAbonnement extends JPanel implements IPage {
 				cld.update(cl);
 				confirmationSuppression.setText("L'abonnement de " + cl.getNom() + " " + cl.getPrenom() + " a bien été supprimé");
 				confirmationSuppression.setForeground(Color.black);
+				champNom1.setText(null);
+				champPrenom1.setText(null);
+				champCompte1.setText(null);
 			}
 			cl = cld.read(id);
 			System.out.println(cl);

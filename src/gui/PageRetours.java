@@ -14,7 +14,7 @@ public class PageRetours extends JPanel implements IPage {
 	}
 
 	/**
-	 * Récupère les infos de l'utilisateur connecté
+	 * Récupère les infos de l'utilisateur connectés$ 
 	 * @param user utilisateur (client ou bibliothecaire)
 	 */
 	@Override

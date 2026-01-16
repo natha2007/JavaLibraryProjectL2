@@ -21,13 +21,8 @@ public class Main {
 		MainFrame mf = new MainFrame("Gestionnaire de bibliothèque");
 		mf.setVisible(true);
 		mf.setMinimumSize(new Dimension(900,600));
-		DateSystemeDAO dsd = new DateSystemeDAO();
-		if (!dsd.exists(LocalDate.now())) {
-			dsd.create(new DateSysteme(LocalDate.now(),false));
-		} else {
-			dsd.delete(dsd.read());
-			dsd.create(new DateSysteme(LocalDate.now(),false));
-		}
+		GestionDate.majDate();
+		System.out.println(GestionDate.getDateJour());
 		
 		// Après avoir importé la bonne base de donnée (dernière en date)
 		// décommenter le code en dessous, l'exécuter puis le recommenter avant d'exécuter

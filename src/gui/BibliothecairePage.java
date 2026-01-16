@@ -45,9 +45,11 @@ public class BibliothecairePage extends JPanel {
 	// FOOT
 	
 	private JLabel footText;
+	private JLabel dateDuJour;
 	private JButton accueil;
 	private JButton connexion;
 	private JPanel footGrid;
+	private JPanel footGrid2;
 	
 	public BibliothecairePage(Runnable rb) {
 		this.rb = rb;
@@ -266,11 +268,17 @@ public class BibliothecairePage extends JPanel {
 		connexion.addActionListener(e -> retournerPageConnexion(user));
 		
 		footGrid = new JPanel(new GridLayout(1,2));
+		footGrid2 = new JPanel(new GridLayout(1,3));
+		
+		dateDuJour = new JLabel(GestionDate.getDateJour().toString());
 		
 		footGrid.add(accueil);
 		footGrid.add(connexion);
 		
-		foot.add(footText);
+		footGrid2.add(footText);
+		footGrid2.add(dateDuJour);
+		
+		foot.add(footGrid2);
 		foot.add(footGrid);
 		
 		add(foot, BorderLayout.SOUTH);

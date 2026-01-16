@@ -24,7 +24,7 @@ public class Main {
 		// décommenter le code en dessous, l'exécuter puis le recommenter avant d'exécuter
 		// une seconde fois
 		
-		/*
+		
 		
 		ClientDAO cld = new ClientDAO();
 		EmpruntDAO ed = new EmpruntDAO();
@@ -47,7 +47,7 @@ public class Main {
 		Bibliothecaire b = new Bibliothecaire("Mercier","Nathanaël",c2);
 		bd.create(b);
 		
-		
+		/* 
 		Objet o1 = new Objet("Les misérables Tome 1", "Victor Hugo", 12.90f, "Livre", 1, "1041426186");
 		Objet o2 = new Objet("Les misérables Tome 2", "Victor Hugo", 11.95f, "Livre", 1, "1041427158");
 		Objet o3 = new Objet("Les misérables Tome 3", "Victor Hugo", 13.99f, "Livre", 1, "2322205508");

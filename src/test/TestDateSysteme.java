@@ -8,7 +8,7 @@ import metier.DateSysteme;
 public class TestDateSysteme {
 
 	public static void main(String[] args) {
-
+		/*
 		DateSystemeDAO dateDAO = new DateSystemeDAO();
 
 		// 1️ CREATE
@@ -36,5 +36,6 @@ public class TestDateSysteme {
 		//dateDAO.delete(dsRead);
 		
 		System.out.println("Ca suprimé");
+		*/
 	}
 } 

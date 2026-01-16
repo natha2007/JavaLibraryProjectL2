@@ -1,15 +1,15 @@
 package metier;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class DateSysteme {
 
 	private Integer dateId; 
-	private Timestamp dateDuJour;
+	private LocalDate dateDuJour;
 	private boolean dateManuelle;
 
 	
-	public DateSysteme(Timestamp dateDuJour, boolean dateManuelle) {
+	public DateSysteme(LocalDate dateDuJour, boolean dateManuelle) {
 		this.dateDuJour = dateDuJour;
 		this.dateManuelle = dateManuelle;
 		
@@ -21,7 +21,7 @@ public class DateSysteme {
 		 */
 	}
 
-	public DateSysteme(Integer dateId, Timestamp dateDuJour, boolean dateManuelle) {
+	public DateSysteme(Integer dateId, LocalDate dateDuJour, boolean dateManuelle) {
 		this.dateId = dateId;
 		this.dateDuJour = dateDuJour;
 		this.dateManuelle = dateManuelle;
@@ -35,11 +35,11 @@ public class DateSysteme {
 		this.dateId = dateId;
 	}
 
-	public Timestamp getDateDuJour() {
+	public LocalDate getDateDuJour() {
 		return dateDuJour;
 	}
 
-	public void setDateDuJour(Timestamp dateDuJour) {
+	public void setDateDuJour(LocalDate dateDuJour) {
 		this.dateDuJour = dateDuJour;
 	}
 

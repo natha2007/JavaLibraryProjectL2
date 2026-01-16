@@ -1,7 +1,11 @@
 package gui;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import dao.BibliothecaireDAO;
@@ -90,11 +94,12 @@ public class BibliothecairePage extends JPanel {
 			
 			Bibliothecaire b = bd.readByCompteId(user.getCompteId());
 			title.setText("Bienvenue " + b.getPrenom() + " " + b.getNom());
+			title.setFont(new Font("Serif", Font.BOLD, 30));
 			mainText.setText(
 					"<html>"
 					+ "<div style='width:500px;'>"
 					+ "Ce gestionnaire de bibliothèque vous permet de gérer "
-					+ "les emprunts des clients, les retours, leurs abonnements, ainsi que de"
+					+ "les emprunts des clients, les retours, leurs abonnements, ainsi que de "
 					+ "gérer les commandes et les stocks "
 					+ "</div>"
 					+ "</html>");
@@ -200,13 +205,39 @@ public class BibliothecairePage extends JPanel {
 		ps = new PageStocks(this::rechercherStock);
 		pr = new PageRetours();
 		
-		pb = new JPanel(new BorderLayout());
-		mainText = new JLabel();
-		mainText.setHorizontalAlignment(SwingConstants.CENTER);
+		pb = new JPanel(new GridBagLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.insets = new Insets(20,0,0,0);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 1;
 		title = new JLabel();
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		pb.add(title, BorderLayout.NORTH);
-		pb.add(mainText, BorderLayout.CENTER);
+		pb.add(title, gbc);
+		
+		gbc.insets = new Insets(10,0,0,0);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 1;
+		BufferedImage bibliFic = null;
+		try {
+			bibliFic = ImageIO.read(new File("img/bibliotheque.jpg"));
+		} catch (IOException e) {
+			System.out.println("Fichier introuvable");
+			e.printStackTrace();
+		}
+		ImageIcon bibli = new ImageIcon(bibliFic);
+		pb.add(new JLabel(bibli), gbc);
+		
+		gbc.insets = new Insets(10,0,0,0);
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.weightx = 1;
+		mainText = new JLabel();
+		mainText.setHorizontalAlignment(SwingConstants.CENTER);
+		pb.add(mainText, gbc);
 		
 		body.add(pa,"Abonnements");
 		body.add(pe,"Emprunts");

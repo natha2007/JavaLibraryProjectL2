@@ -1,12 +1,14 @@
 package gui;
 
 import java.awt.Dimension;
+import java.time.LocalDate;
 
 import dao.AbonnementDAO;
 import dao.BibliothecaireDAO;
 import metier.*;
 import dao.ClientDAO;
 import dao.CompteDAO;
+import dao.DateSystemeDAO;
 import dao.EmpruntDAO;
 import dao.ObjetDAO;
 import metier.Abonnement;
@@ -19,6 +21,13 @@ public class Main {
 		MainFrame mf = new MainFrame("Gestionnaire de bibliothèque");
 		mf.setVisible(true);
 		mf.setMinimumSize(new Dimension(900,600));
+		DateSystemeDAO dsd = new DateSystemeDAO();
+		if (!dsd.exists(LocalDate.now())) {
+			dsd.create(new DateSysteme(LocalDate.now(),false));
+		} else {
+			dsd.delete(dsd.read());
+			dsd.create(new DateSysteme(LocalDate.now(),false));
+		}
 		
 		// Après avoir importé la bonne base de donnée (dernière en date)
 		// décommenter le code en dessous, l'exécuter puis le recommenter avant d'exécuter

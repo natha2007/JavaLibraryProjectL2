@@ -74,11 +74,11 @@ public class AbonnementDAO extends DAO<Abonnement>{
 		return ab;
 	}
 	
-	public Abonnement read(String identifiant) {
+	public Abonnement read(String typeAbonnement) {
 		Abonnement ab = null;
 		String requete = "SELECT *"
 				+ " FROM abonnement"
-				+ " WHERE identifiant= " + identifiant;
+				+ " WHERE typeAbonnement= '" + typeAbonnement + "'";
 		try {
 			rs = stmt.executeQuery(requete);
 			if (rs.first()) {

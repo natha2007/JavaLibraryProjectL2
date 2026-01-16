@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.JLabel;
 
+import dao.AbonnementDAO;
 import dao.ClientDAO;
 import dao.CompteDAO;
 import metier.*;
@@ -21,8 +22,9 @@ public class PageAbonnement extends JPanel implements IPage {
 	private JTextField champNom1;
 	private JTextField champPrenom1;
 	private JTextField champCompte1;
-	
-
+	private JComboBox choixAbonnement;
+	private JLabel confirmationCreation;
+	private JLabel confirmationSuppression;
 	
 	public PageAbonnement() {
 		initialiserUI();
@@ -50,9 +52,6 @@ public class PageAbonnement extends JPanel implements IPage {
 		mainText = new JLabel();
 		mainText.setHorizontalAlignment(SwingConstants.CENTER);
 		add(mainText, BorderLayout.NORTH);
-		
-		
-		
 		
 		JPanel grid = new JPanel(new GridLayout(1,2));
 		JPanel gauche = new JPanel(new GridBagLayout());
@@ -126,7 +125,7 @@ public class PageAbonnement extends JPanel implements IPage {
 		gbc.gridy = 8;
 		gbc.weightx = 1;
 		String[] listeAbonnement = {"Classique","Etudiant","Premium"};
-		JComboBox choixAbonnement = new JComboBox(listeAbonnement);
+		choixAbonnement = new JComboBox(listeAbonnement);
 		gauche.add(choixAbonnement, gbc);
 		
 		gbc.insets = new Insets(0,0,0,0);
@@ -134,6 +133,11 @@ public class PageAbonnement extends JPanel implements IPage {
 		gbc.weightx = 1;
 		JButton ajouter = new JButton("Ajouter");
 		gauche.add(ajouter, gbc);
+		
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridy = 10;
+		confirmationCreation = new JLabel("");
+		gauche.add(confirmationCreation, gbc);
 		
 		ajouter.addActionListener(e -> ajouterAbonnement());
 		
@@ -206,6 +210,11 @@ public class PageAbonnement extends JPanel implements IPage {
 		JButton supprimer = new JButton("Supprimer");
 		droite.add(supprimer, gbc1);
 		
+		gbc1.insets = new Insets(0,0,0,0);
+		gbc1.gridy = 9;
+		confirmationSuppression = new JLabel("");
+		droite.add(confirmationSuppression, gbc);
+		
 		supprimer.addActionListener(e -> supprimerAbonnement());
 		
 	}
@@ -223,18 +232,137 @@ public class PageAbonnement extends JPanel implements IPage {
 	}
 	
 	private void ajouterAbonnement() {
+		try {
+			validerNom();
+			validerPrenom();
+			validerCompteClient();
+		} catch (SaisieInvalideException e) {
+			afficherErreurCreation(e.getMessage());
+		}
+		
+	}
+	
+	private void supprimerAbonnement() {
+		try {
+			validerNomSupp();
+			validerPrenomSupp();
+			validerCompteClientSupp();
+		} catch (SaisieInvalideException e) {
+			afficherErreurSuppression(e.getMessage());
+		}
+	}
+	
+	private void afficherErreurCreation(String message) {
+		confirmationCreation.setForeground(Color.RED);
+		confirmationCreation.setText(message);
+	}
+	
+	private void afficherErreurSuppression(String message) {
+		confirmationSuppression.setForeground(Color.RED);
+		confirmationSuppression.setText(message);
+	}
+	
+	private void validerNom() throws SaisieInvalideException {
+		String t = champNom.getText();
+		if (t.isEmpty()) {
+			throw new SaisieInvalideException("Vous devez saisir un nom");
+		}
+		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
+			throw new SaisieInvalideException("Caractères invalides");
+		}
+	}
+	
+	private void validerPrenom() throws SaisieInvalideException {
+		String t = champPrenom.getText();
+		if (t.isEmpty()) {
+			throw new SaisieInvalideException("Vous devez saisir un prénom");
+		}
+		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
+			throw new SaisieInvalideException("Caractères invalides");
+		}
+	}
+	
+	private void validerCompteClient() throws SaisieInvalideException {
 		String nom = champNom.getText();
 		String prenom = champPrenom.getText();
 		String compte = champCompte.getText();
 		ClientDAO cld = new ClientDAO();
 		CompteDAO cd = new CompteDAO();
+		AbonnementDAO abd = new AbonnementDAO();
 		Compte c = cd.read(compte);
-		Integer id = cld.getClientFromCompte(c.getCompteId());
-		Client cl = cld.read(id);
+		if (c != null) {
+			Integer id = cld.getClientFromCompte(c.getCompteId());
+			Client cl = cld.read(id);
+			String abonnement = choixAbonnement.getSelectedItem().toString();
+			Abonnement ab = abd.read(abonnement);
+			System.out.println(ab);
+			if (cl == null) {
+				throw new SaisieInvalideException("Le compte client n'existe pas");
+			}
+			if (cl != null && (!(cl.getNom().equals(nom)) || !(cl.getPrenom().equals(prenom)))) {
+				throw new SaisieInvalideException("Le client ne correspond pas au compte");
+			}
+			if (cl != null && cl.getNom().equals(nom) && cl.getPrenom().equals(prenom)) {
+				cl.setAbonnement(ab);
+				cld.update(cl);
+				confirmationCreation.setText("Le client " + cl.getNom() + " " + cl.getPrenom() + " a désormais l'abonnement " + cl.getAbonnement().getTypeAbonnement());
+				confirmationCreation.setForeground(Color.black);
+			}
+			cl = cld.read(id);
+			System.out.println(cl);
+		} else {
+			throw new SaisieInvalideException("Le compte n'existe pas");
+		}
 	}
 	
-	private void supprimerAbonnement() {
-		
+	private void validerNomSupp() throws SaisieInvalideException {
+		String t = champNom1.getText();
+		if (t.isEmpty()) {
+			throw new SaisieInvalideException("Vous devez saisir un nom");
+		}
+		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
+			throw new SaisieInvalideException("Caractères invalides");
+		}
+	}
+	
+	private void validerPrenomSupp() throws SaisieInvalideException {
+		String t = champPrenom1.getText();
+		if (t.isEmpty()) {
+			throw new SaisieInvalideException("Vous devez saisir un prénom");
+		}
+		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
+			throw new SaisieInvalideException("Caractères invalides");
+		}
+	}
+	
+	private void validerCompteClientSupp() throws SaisieInvalideException {
+		String nom = champNom1.getText();
+		String Prenom = champPrenom1.getText();
+		String compte = champCompte1.getText();
+		ClientDAO cld = new ClientDAO();
+		CompteDAO cd = new CompteDAO();
+		AbonnementDAO abd = new AbonnementDAO();
+		Compte c = cd.read(compte);
+		if (c != null) {
+			Integer id = cld.getClientFromCompte(c.getCompteId());
+			Client cl = cld.read(id);
+			if (cl == null) {
+				throw new SaisieInvalideException("Le compte client n'existe pas");
+			}
+			if (cl != null && (!cl.getNom().equals(nom) || !cl.getPrenom().equals(Prenom))) {
+				throw new SaisieInvalideException("Le client ne correspond pas au compte");
+			}
+			if (cl != null && cl.getNom().equals(nom) && cl.getPrenom().equals(Prenom)) {
+				cl.setAbonnement(null);
+				cld.update(cl);
+				confirmationSuppression.setText("L'abonnement de " + cl.getNom() + " " + cl.getPrenom() + " a bien été supprimé");
+				confirmationSuppression.setForeground(Color.black);
+			}
+			cl = cld.read(id);
+			System.out.println(cl);
+		} else {
+			throw new SaisieInvalideException("Le compte n'existe pas");
+		}
 	}
 	
 }

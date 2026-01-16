@@ -10,7 +10,6 @@ import metier.Emprunt;
 import metier.Client;
 import metier.Objet;
 
-
 public class EmpruntDAO extends DAO<Emprunt> {
 	private ResultSet rs;
 	
@@ -58,8 +57,7 @@ public class EmpruntDAO extends DAO<Emprunt> {
 	
 	@Override
 	public void delete(Emprunt e1) {
-		String requete = "DELETE FROM emprunt"
-				+ " WHERE empruntId =" + e1.getEmpruntId();
+		String requete = "DELETE FROM emprunt WHERE empruntId =" + e1.getEmpruntId();
 		try {
 			stmt.executeUpdate(requete);
 		} catch (SQLException e) {
@@ -74,9 +72,7 @@ public class EmpruntDAO extends DAO<Emprunt> {
 		Objet o1 = null;
 		ClientDAO cd = new ClientDAO();
 		ObjetDAO od = new ObjetDAO();
-		String requete = "SELECT *"
-				+ " FROM emprunt"
-				+ " WHERE empruntId =" + id;
+		String requete = "SELECT * FROM emprunt WHERE empruntId =" + id;
 		try {
 			this.rs = stmt.executeQuery(requete);
 			if (rs.first()) {
@@ -97,9 +93,7 @@ public class EmpruntDAO extends DAO<Emprunt> {
 		Objet o1 = null;
 		ClientDAO cd = new ClientDAO();
 		ObjetDAO od = new ObjetDAO();
-		String requete = "SELECT *"
-						+ " FROM emprunt"
-						+ " WHERE clientId= " + clientId;
+		String requete = "SELECT * FROM emprunt WHERE clientId= " + clientId;
 		try {
 			this.rs = stmt.executeQuery(requete);
 			while (rs.next()) {

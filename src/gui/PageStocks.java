@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -27,14 +28,22 @@ import metier.Objet;
 
 public class PageStocks extends JPanel implements IPage {
 	
+	private Runnable rb;
 	private CompteUtilisateur user;
 	private JLabel mainText;
 	private JScrollPane scroll;
 	private JList liste;
 	private JTextField barreRecherche;
-	private JLabel resultat;
 
-	public PageStocks() {
+	private DefaultTableModel tabRes;
+	private ArrayList<Objet> listeObjets;
+	private JPanel center;
+	private JLabel titreRecherche;
+	
+	private int count = 0;
+
+	public PageStocks(Runnable rb) {
+		this.rb = rb;
 		initialiserUI();
 		majUI();
 	}
@@ -63,7 +72,7 @@ public class PageStocks extends JPanel implements IPage {
 		
 		
 		ObjetDAO od = new ObjetDAO();
-		ArrayList<Objet> listeObjets = od.getListeObjet();
+		listeObjets = od.getListeObjet();
 		
 
         String[] colonnes = {
@@ -76,7 +85,7 @@ public class PageStocks extends JPanel implements IPage {
             "Référence"
         };
         
-        DefaultTableModel tabRes = new DefaultTableModel(colonnes, 0);
+        tabRes = new DefaultTableModel(colonnes, 0);
         JTable table = new JTable(tabRes);
 		
 		/*
@@ -98,40 +107,46 @@ public class PageStocks extends JPanel implements IPage {
 		}
 		*/
         
-        for (Objet o : listeObjets) {
-        	Object[] ligne = {
-        			o.getObjetId(),
-        			o.getNom(),
-        			o.getAuteur(),
-        			o.getPrix(),
-        			o.getTypeObjet(),
-        			o.getDisponibilite(),
-        			o.getReference()
-        	};
-        	
-        	tabRes.addRow(ligne);
-        }
+
+		 for (Objet o : listeObjets) {
+	        	Object[] ligne = {
+	        			o.getObjetId(),
+	        			o.getNom(),
+	        			o.getAuteur(),
+	        			o.getPrix(),
+	        			o.getTypeObjet(),
+	        			o.getDisponibilite(),
+	        			o.getReference()
+	        	};
+	        	
+	        	tabRes.addRow(ligne);
+	        }
+        
+       
 		
-		JPanel center = new JPanel(new GridLayout(1,2));
+		center = new JPanel(new BorderLayout());
 		add(center, BorderLayout.CENTER);
+		
 		
 		scroll = new JScrollPane(table);
 		JLabel test = new JLabel("test");
 		
-		center.add(scroll);
-		JPanel partieDroite = new JPanel(new BorderLayout());
+		center.add(scroll, BorderLayout.CENTER);
+		JPanel nord = new JPanel(new GridLayout(1,3));
 		
-		center.add(partieDroite);
+		center.add(nord, BorderLayout.NORTH);
 		
-		JPanel recherche = new JPanel(new GridBagLayout());
-		partieDroite.add(recherche, BorderLayout.NORTH);
+		//JPanel recherche = new JPanel(new GridBagLayout());
 		
 		
-		JLabel titreRecherche = new JLabel("Rechercher référence objet");
+		
+		titreRecherche = new JLabel("Rechercher référence objet");
 		barreRecherche = new JTextField(40);
-		
-		resultat = new JLabel("");
-		partieDroite.add(resultat, BorderLayout.CENTER);
+		barreRecherche.setMinimumSize(new Dimension(100,20));
+		barreRecherche.setMaximumSize(new Dimension(200,20));
+		//barreRecherche.setPreferredSize(new Dimension(50,20));
+		nord.add(titreRecherche);
+		nord.add(barreRecherche);		
 		
 		BufferedImage loupeFic = null;
 		try {
@@ -144,6 +159,9 @@ public class PageStocks extends JPanel implements IPage {
 		Image img = imageLoupe.getImage().getScaledInstance(16, 12, Image.SCALE_SMOOTH);
 		JButton loupe = new JButton(new ImageIcon(img));
 		
+		nord.add(loupe);
+		
+		/*
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.gridx = 0;
@@ -158,44 +176,76 @@ public class PageStocks extends JPanel implements IPage {
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.weightx = 0.1;
-		recherche.add(loupe, gbc);
 		
+		recherche.add(loupe, gbc);
+		*/
 		loupe.addActionListener(e -> {
-			rechercherObjet();
+			count++;
+			if (count%2 == 0) {
+				rb.run();
+			} else {
+				majUI();
+				titreRecherche.setText("Rechercher référence objet");
+			}
 		});
 		
 		
 	}
 	
 	/**
-	 * Crée les élements dynamiques (dépendant de l'utilisateur)
+	 * Crée les élements dynamiques (dépendant de l'utilisateur) ou qui doivent se mettre à jour au lancement de la page
 	 */
-	private void majUI() {
+	public void majUI() {
 		if (user == null) {
 			mainText.setText("En attente de connexion");
 		} else {
 			mainText.setText("Stock actuel de la bibliothèque");
 			//compléter ici pour les choses qui nécéssitent les infos de l'utilisateur
+			ObjetDAO od = new ObjetDAO();
+			listeObjets = od.getListeObjet();
+			tabRes.setRowCount(0);
+			
+			 for (Objet o : listeObjets) {
+		        	Object[] ligne = {
+		        			o.getObjetId(),
+		        			o.getNom(),
+		        			o.getAuteur(),
+		        			o.getPrix(),
+		        			o.getTypeObjet(),
+		        			o.getDisponibilite(),
+		        			o.getReference()
+		        	};
+		        	
+		        	tabRes.addRow(ligne);
+		        }
 		}
 	}
 	
 	
-	private void rechercherObjet() {
+	public void rechercherObjet() {
 		ObjetDAO od = new ObjetDAO();
 		String recherche = barreRecherche.getText();
-		Objet o = od.read(recherche);
-		if (o == null) {
-			resultat.setText("aucun objet trouvé");
+		Objet o1 = od.read(recherche);
+		if (o1 == null) {
+			tabRes.setRowCount(0);
+			titreRecherche.setText("Aucun objet trouvé");
 		} else {
-			String disponibilite = "";
-			if (o.getDisponibilite() == 1) {
-				disponibilite = "disponible";
-			} else {
-				disponibilite = "non disponible";
-			}
-			resultat.setText(o.getObjetId() + " " + o.getNom() + " " + o.getAuteur()
-							+ " " + o.getPrix() + " " + o.getTypeObjet() + " " + disponibilite
-							+ " " + o.getReference());
+			listeObjets = od.getListeObjet(recherche);
+			tabRes.setRowCount(0);
+			
+			 for (Objet o : listeObjets) {
+		        	Object[] ligne = {
+		        			o.getObjetId(),
+		        			o.getNom(),
+		        			o.getAuteur(),
+		        			o.getPrix(),
+		        			o.getTypeObjet(),
+		        			o.getDisponibilite(),
+		        			o.getReference()
+		        	};
+		        	
+		        	tabRes.addRow(ligne);
+		        }
 		}
 	}
 	

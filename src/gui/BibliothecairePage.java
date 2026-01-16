@@ -135,7 +135,12 @@ public class BibliothecairePage extends JPanel {
 	 * Switch sur la "page" Stocks
 	 */
 	public void showStocks() {
+		ps.majUI();
 		cl.show(body, "Stocks");
+	}
+	
+	public void rechercherStock() {
+		ps.rechercherObjet();
 	}
 	
 	/*
@@ -192,7 +197,7 @@ public class BibliothecairePage extends JPanel {
 		pa = new PageAbonnement();
 		pe = new PageEmprunts();
 		pc = new PageCommandes();
-		ps = new PageStocks();
+		ps = new PageStocks(this::rechercherStock);
 		pr = new PageRetours();
 		
 		pb = new JPanel(new BorderLayout());

@@ -23,6 +23,7 @@ public class PageCommandes extends JPanel implements IPage {
 	private JLabel reference;
 	private JTextField champReference;
 	private JLabel confirmation;
+	private JPanel suiteMsg;
 	
 	public PageCommandes() {
 		initialiserUI();
@@ -39,7 +40,6 @@ public class PageCommandes extends JPanel implements IPage {
 		majUI();
 	}
 	
-
 	/**
 	 * Initialise les éléments de l'interface "dynamiques" (dépendant de l'utilisateur)
 	 * Et crée les éléments "statiques".
@@ -161,9 +161,12 @@ public class PageCommandes extends JPanel implements IPage {
         
         
         boutonLayout.add(commande);
+        suiteMsg = new JPanel();
+        suiteMsg.setLayout(new BoxLayout(suiteMsg, BoxLayout.Y_AXIS));
         boutonLayout.add(confirmation);
+        boutonLayout.add(suiteMsg);
 		grid.add(boutonLayout);
-		
+		suiteMsg.add(confirmation);
 		commande.addActionListener(e -> ajouterCommande());
 		
 	}
@@ -205,12 +208,29 @@ public class PageCommandes extends JPanel implements IPage {
 		champPrix.setText(null);
 		champTypeObjet.setText(null);
 		champReference.setText(null);
-		confirmation.setText("vous avez bien commandé le " + typeObjet + " : " + od.read(reference).getNom());
+		confirmation.setText("vous avez bien commandé le " + typeObjet + " : " + nom);
 	}
 	
 	private void afficherErreur(String message) {
 	    confirmation.setForeground(Color.RED);
-	    confirmation.setText(message);
+	    if (message.length() < 89) {
+	    	confirmation.setText(message);
+	    } else {
+	    	String newMessage = "";
+	    	String newMessage2 = "";
+	    	for (int i = 0; i < (message.length()/2)-1;i++) {
+	    		newMessage += message.charAt(i);
+	    	}
+	    	for (int i = (message.length()/2)-1; i < message.length();i++) {
+	    		newMessage2 += message.charAt(i);
+	    	}
+	    	confirmation.setText(newMessage);
+	    	JLabel nm2 = new JLabel(newMessage2);
+	    	nm2.setForeground(Color.red);
+	    	nm2.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    	suiteMsg.add(nm2);
+	    }
+	    
 	}
 	
 	private void validerSaisie() throws SaisieInvalideException {
@@ -259,12 +279,36 @@ public class PageCommandes extends JPanel implements IPage {
 	}
 	
 	private void validerReference() throws SaisieInvalideException {
+		ObjetDAO od = new ObjetDAO();
 		String t = champReference.getText();
+		String nom = champNom.getText();
+		Number n = (Number) champPrix.getValue();
+		float prix = Math.round(n.floatValue() * 100) / 100f;
+		String auteur = champAuteur.getText();
+		String typeObjet = champTypeObjet.getText();
+		Objet o = od.read(t);
+		
 		if (champReference.getText().isEmpty()) {
 			throw new SaisieInvalideException("Vous devez saisir un champ référence");
 		}
 		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
 			throw new SaisieInvalideException("Caractères invalides");
+		}
+		if (o.getNom() != nom ) {
+			System.out.println("pb nom");
+		}
+		if (o.getAuteur() != auteur ) {
+			System.out.println("pb prix");
+		}
+		if ((Math.round(o.getPrix() * 100) / 100f) != prix) {
+			System.out.println("pb prix");
+		}
+		if (o.getTypeObjet() != typeObjet) {
+			System.out.println("problème objet");
+		}
+		if (o != null && (!(o.getNom().equals(nom)) || !(o.getAuteur().equals(auteur)) || (Math.round(o.getPrix() * 100) / 100f) != prix || !(o.getTypeObjet().equals(typeObjet)))){
+			System.out.println("différent");
+			throw new SaisieInvalideException("" + (Math.round(o.getPrix() * 100) / 100f) + " " + prix);
 		}
 	}
 }

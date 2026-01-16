@@ -26,7 +26,7 @@ public class Abonnement {
 		this.nbEmpruntsMax=nbEmpruntsMax;
 	}
 	
-	public int getAbonnementId() {
+	public Integer getAbonnementId() {
 		return abonnementId;
 	}
 	

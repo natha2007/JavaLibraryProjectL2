@@ -24,7 +24,7 @@ public class Main {
 		// décommenter le code en dessous, l'exécuter puis le recommenter avant d'exécuter
 		// une seconde fois
 		
-		
+		/*
 		
 		ClientDAO cld = new ClientDAO();
 		EmpruntDAO ed = new EmpruntDAO();
@@ -72,5 +72,7 @@ public class Main {
 		ed.create(e3);
 		ed.create(e4);
 		ed.create(e5);
+		
+		*/
 	}
 }

@@ -294,18 +294,6 @@ public class PageCommandes extends JPanel implements IPage {
 		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
 			throw new SaisieInvalideException("Caractères invalides");
 		}
-		if (o.getNom() != nom ) {
-			System.out.println("pb nom");
-		}
-		if (o.getAuteur() != auteur ) {
-			System.out.println("pb prix");
-		}
-		if ((Math.round(o.getPrix() * 100) / 100f) != prix) {
-			System.out.println("pb prix");
-		}
-		if (o.getTypeObjet() != typeObjet) {
-			System.out.println("problème objet");
-		}
 		if (o != null && (!(o.getNom().equals(nom)) || !(o.getAuteur().equals(auteur)) || (Math.round(o.getPrix() * 100) / 100f) != prix || !(o.getTypeObjet().equals(typeObjet)))){
 			System.out.println("différent");
 			throw new SaisieInvalideException("" + (Math.round(o.getPrix() * 100) / 100f) + " " + prix);

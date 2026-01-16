@@ -38,9 +38,9 @@ public class PageCreationCompte extends JPanel {
    	
    	private JPasswordField txtMdp;
    	private JPasswordField txtConfirm;
-   	private CompteDAO cd;
+   	private CompteDAO cd = new CompteDAO();
    	private Compte c;
-   	private ClientDAO cld;
+   	private ClientDAO cld=new ClientDAO();
    	private JPanel footer;
    	private JPanel header;
    	private JPanel body;
@@ -75,13 +75,10 @@ public class PageCreationCompte extends JPanel {
     }
 
     public void initialiserUI() {
-    	AbonnementDAO ad=new AbonnementDAO();
-    	CompteDAO cd = new CompteDAO();
-    	ClientDAO cld = new ClientDAO();
 
         setLayout(new BorderLayout());
 
-        JPanel header = new JPanel();
+        header = new JPanel();
         header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
         header.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
         add(header, BorderLayout.NORTH);
@@ -91,7 +88,7 @@ public class PageCreationCompte extends JPanel {
         titreCreaCmt.setAlignmentX(Component.LEFT_ALIGNMENT);
         header.add(titreCreaCmt);
 
-        JPanel body = new JPanel(new GridLayout(3, 2, 15, 15));
+        body = new JPanel(new GridLayout(3, 2, 15, 15));
         body.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(body, BorderLayout.CENTER);
 
@@ -122,6 +119,10 @@ public class PageCreationCompte extends JPanel {
         //footer.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
         add(footer, BorderLayout.SOUTH);
         
+        JButton retour=new JButton("Retour");
+        footer.add(retour);
+        retour.addActionListener(e->rb.run());
+        
         JButton valider=new JButton("Valider");
         footer.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
         footer.add(valider);
@@ -134,10 +135,10 @@ public class PageCreationCompte extends JPanel {
 			validerSaisie();
 			creerCompte();
 			creerClient();
+			pageConfirmation();
 		} catch (SaisieInvalideException s) {
 			afficherErreur(s.getMessage());
 		}
-		pageConfirmation();
 	}
 	
     private void creerCompte() {
@@ -161,20 +162,41 @@ public class PageCreationCompte extends JPanel {
     }
     
     private void pageConfirmation() {
-    	header.removeAll();
-    	body.removeAll();
-    	footer.removeAll();
+        removeAll();
+        setLayout(new BorderLayout());
 
-    	header.revalidate();
-    	body.revalidate();
-    	footer.revalidate();
+        JLabel message = new JLabel(
+            "Compte créé avec succès.",
+            JLabel.CENTER
+        );
+        message.setFont(new Font("Arial", Font.BOLD, 16));
 
-    	header.repaint();
-    	body.repaint();
-    	footer.repaint();
+        JButton retour = new JButton("Retour");
+        retour.addActionListener(e -> resetPage());
 
-    	body.add(new JLabel("gg la tiktoquerie"));
+        JPanel centre = new JPanel(new BorderLayout());
+        centre.add(message, BorderLayout.CENTER);
+
+        JPanel bas = new JPanel();
+        bas.add(retour);
+
+        add(centre, BorderLayout.CENTER);
+        add(bas, BorderLayout.SOUTH);
+
+        revalidate();
+        repaint();
     }
+
+    
+    public void resetPage() {
+        removeAll();
+        revalidate();
+        repaint();
+
+        initialiserUI();
+        rb.run();
+    }
+
     
 	private void afficherErreur(String message) {
 	    confirmation.setForeground(Color.RED);
@@ -210,17 +232,20 @@ public class PageCreationCompte extends JPanel {
 	
 	private void validerIdentifiant() throws SaisieInvalideException {
 		String t = txtIde.getText();
+		if (cd.exists(t)) {
+			throw new SaisieInvalideException("L'identifiant est déjà affecté");
+		}
+		
 		if (t.isEmpty()) {
 			throw new SaisieInvalideException("Vous devez saisir un identifiant");
 		}
+		
 		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
 			throw new SaisieInvalideException("Caractères invalides (pas de '\\;/) ");
 		}
 	}
 	
 	private void validerMDP() throws SaisieInvalideException {
-		char[] mdp = txtMdp.getPassword();
-		char[] verif = txtConfirm.getPassword();
 		String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w\\s])\\S{12,}$";
 		String mdpTxt = new String(txtMdp.getPassword());
 		String verifTxt = new String(txtConfirm.getPassword());
@@ -235,8 +260,16 @@ public class PageCreationCompte extends JPanel {
 			throw new SaisieInvalideException("Les deux mots de passe sont différents.");
 		}
 		
-		if (mdpTxt.matches(regex)) {
-			throw new SaisieInvalideException("Mot de passe invalide");
+		if (!(mdpTxt.matches(regex))) {
+			throw new SaisieInvalideException(
+				"<html>" +
+				"Mot de passe invalide<br>" +
+				"• 12 caractères minimum<br>" +
+				"• 1 majuscule<br>" +
+				"• 1 chiffre<br>" +
+				"• 1 caractère spécial" +
+				"</html>"
+				);
 		}
 	}	
 }

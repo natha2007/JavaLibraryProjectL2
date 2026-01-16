@@ -24,6 +24,8 @@ import metier.Emprunt;
 
 public class PageRetours extends JPanel implements IPage {
 
+    private CompteUtilisateur user;
+
     private ClientDAO clientDAO = new ClientDAO();
     private EmpruntDAO empruntDAO = new EmpruntDAO();
     private CompteDAO compteDAO = new CompteDAO();
@@ -40,6 +42,7 @@ public class PageRetours extends JPanel implements IPage {
 
     @Override
     public void setUser(CompteUtilisateur user) {
+        this.user = user;
         majUI();
     }
 
@@ -123,7 +126,13 @@ public class PageRetours extends JPanel implements IPage {
     }
 
     private void majUI() {
-        btnRetourner.setEnabled(true);
+        if (user == null) {
+            mainText.setText("En attente de connexion");
+            btnRetourner.setEnabled(false);
+        } else {
+            mainText.setText("Gestion des retours");
+            btnRetourner.setEnabled(true);
+        }
     }
 
     private void traiterRetour() {

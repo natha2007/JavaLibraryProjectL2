@@ -30,7 +30,9 @@ public class MainFrame extends JFrame{
 		ConnexionPage connexion = new ConnexionPage(this::showLogiciel);
 		bp = new BibliothecairePage(this::seDeconnecter);
 		pg = new PageClient(this::seDeconnecter); //enlever 
-		pcc = new PageCreationCompte();
+		pcc = new PageCreationCompte(() -> {
+			System.out.println("ne fait rien pour l'instant");
+		});
 		
 		root.add(connexion, "Connexion");
 		root.add(bp, "Bibliothecaire");

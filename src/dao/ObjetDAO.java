@@ -104,11 +104,29 @@ private ResultSet rs;
 				o1 = new Objet(rs.getInt(1),rs.getString(2),
 						rs.getString(3), rs.getFloat(4),
 						rs.getString(5), rs.getInt(6), rs.getString(7));
+			} else {
+				o1 = null;
 			}
 		} catch (SQLException e) {
 			System.out.println("");//pour éviter d'afficher des erreurs dans la console quand ce qui est écrit dans la barre de recherche est mauvais
 		}
 		return o1;
+	}
+	
+	public boolean exists(String reference) {
+		boolean verif = false;
+		String requete = "SELECT *"
+				+ " FROM objet"
+				+ " WHERE reference= '" + reference + "'";
+		try {
+			this.rs = stmt.executeQuery(requete);
+			if (rs.first()) {
+				verif = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("");//pour éviter d'afficher des erreurs dans la console quand ce qui est écrit dans la barre de recherche est mauvais
+		}
+		return verif;
 	}
 	
 	public ArrayList<Objet> getListeObjet(){
@@ -129,4 +147,25 @@ private ResultSet rs;
 		}
 		return liste;
 	}
+	
+	public ArrayList<Objet> getListeObjet(String reference){
+		ArrayList<Objet> liste = new ArrayList<Objet>();
+		Objet o = null;
+		String requete = "SELECT *"
+						+ " FROM objet"
+						+ " WHERE reference ='" + reference + "'";
+						
+		try {
+			this.rs = stmt.executeQuery(requete);
+			while (rs.next()) {
+				o = new Objet(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),rs.getInt(6),rs.getString(7));
+				liste.add(o);
+			}
+		} catch (SQLException e) {
+			System.out.println("erreur requête SQL");
+			e.printStackTrace();
+		}
+		return liste;
+	}
+	
 }

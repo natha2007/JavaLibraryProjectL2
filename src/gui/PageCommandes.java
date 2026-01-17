@@ -19,7 +19,7 @@ public class PageCommandes extends JPanel implements IPage {
 	private JLabel prix;
 	private JFormattedTextField champPrix;
 	private JLabel typeObjet;
-	private JTextField champTypeObjet;
+	private JComboBox champTypeObjet;
 	private JLabel reference;
 	private JTextField champReference;
 	private JLabel confirmation;
@@ -118,7 +118,8 @@ public class PageCommandes extends JPanel implements IPage {
 		JPanel zoneObjet = new JPanel();
 		zoneObjet.setLayout(new BoxLayout(zoneObjet, BoxLayout.Y_AXIS));
 		typeObjet = new JLabel("typeObjet");
-		champTypeObjet = new JTextField(30);
+		String[] listeTypeObjet = {"Livre","CD","DVD","JeuSociete","Ordinateur"};
+		champTypeObjet = new JComboBox(listeTypeObjet);
 		typeObjet.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    champTypeObjet.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    typeObjet.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -197,7 +198,7 @@ public class PageCommandes extends JPanel implements IPage {
 		String auteur = champAuteur.getText();
 		Number n = (Number) champPrix.getValue();
 		float prix = n.floatValue();
-		String typeObjet = champTypeObjet.getText();
+		String typeObjet = champTypeObjet.getSelectedItem().toString();
 		String reference = champReference.getText();
 		ObjetDAO od = new ObjetDAO();
 		
@@ -206,7 +207,6 @@ public class PageCommandes extends JPanel implements IPage {
 		champNom.setText(null);
 		champAuteur.setText(null);
 		champPrix.setText(null);
-		champTypeObjet.setText(null);
 		champReference.setText(null);
 		confirmation.setText("vous avez bien commandé le " + typeObjet + " : " + nom);
 	}
@@ -237,7 +237,6 @@ public class PageCommandes extends JPanel implements IPage {
 		validerNom();
 		validerPrix();
 		validerAuteur();
-		validerTypeObjet();
 		validerReference();
 	}
 	
@@ -268,6 +267,7 @@ public class PageCommandes extends JPanel implements IPage {
 		}
 	}
 	
+	/*
 	private void validerTypeObjet() throws SaisieInvalideException {
 		String t = champTypeObjet.getText();
 		if (t.isEmpty()) {
@@ -277,6 +277,7 @@ public class PageCommandes extends JPanel implements IPage {
 			throw new SaisieInvalideException("Caractères invalides");
 		}
 	}
+	*/
 	
 	private void validerReference() throws SaisieInvalideException {
 		ObjetDAO od = new ObjetDAO();
@@ -285,7 +286,6 @@ public class PageCommandes extends JPanel implements IPage {
 		Number n = (Number) champPrix.getValue();
 		float prix = Math.round(n.floatValue() * 100) / 100f;
 		String auteur = champAuteur.getText();
-		String typeObjet = champTypeObjet.getText();
 		Objet o = od.read(t);
 		
 		if (champReference.getText().isEmpty()) {
@@ -294,7 +294,7 @@ public class PageCommandes extends JPanel implements IPage {
 		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
 			throw new SaisieInvalideException("Caractères invalides");
 		}
-		if (o != null && (!(o.getNom().equals(nom)) || !(o.getAuteur().equals(auteur)) || (Math.round(o.getPrix() * 100) / 100f) != prix || !(o.getTypeObjet().equals(typeObjet)))){
+		if (o != null && (!(o.getNom().equals(nom)) || !(o.getAuteur().equals(auteur)) || (Math.round(o.getPrix() * 100) / 100f) != prix )){
 			System.out.println("différent");
 			throw new SaisieInvalideException("" + (Math.round(o.getPrix() * 100) / 100f) + " " + prix);
 		}

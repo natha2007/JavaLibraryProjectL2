@@ -48,11 +48,11 @@ public class PageCommandes extends JPanel implements IPage {
 		setLayout(new BorderLayout());
 		
 		JPanel head = new JPanel(new FlowLayout());
-		head.setPreferredSize(new Dimension(0, 150));
+		head.setPreferredSize(new Dimension(0, 50));
 		add(head, BorderLayout.NORTH);
 		
 		mainText = new JLabel();
-		mainText.setPreferredSize(new Dimension(1000,150));
+		//mainText.setPreferredSize(new Dimension(1000,150));
 		mainText.setHorizontalAlignment(SwingConstants.CENTER);
 		mainText.setVerticalAlignment(SwingConstants.CENTER);
 		head.add(mainText);

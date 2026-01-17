@@ -207,22 +207,22 @@ public class BibliothecairePage extends JPanel {
 		ps = new PageStocks(this::rechercherStock);
 		pr = new PageRetours();
 		
-		pb = new JPanel(new GridBagLayout());
+		pb = new JPanel(new BorderLayout());
 		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		gbc.insets = new Insets(20,0,0,0);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.weightx = 1;
+//		GridBagConstraints gbc = new GridBagConstraints();
+//		
+//		gbc.insets = new Insets(20,0,0,0);
+//		gbc.gridx = 0;
+//		gbc.gridy = 0;
+//		gbc.weightx = 1;
 		title = new JLabel();
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		pb.add(title, gbc);
+		pb.add(title, BorderLayout.NORTH);
 		
-		gbc.insets = new Insets(10,0,0,0);
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.weightx = 1;
+//		gbc.insets = new Insets(10,0,0,0);
+//		gbc.gridx = 0;
+//		gbc.gridy = 1;
+//		gbc.weightx = 1;
 		BufferedImage bibliFic = null;
 		try {
 			bibliFic = ImageIO.read(new File("img/bibliotheque.jpg"));
@@ -231,15 +231,15 @@ public class BibliothecairePage extends JPanel {
 			e.printStackTrace();
 		}
 		ImageIcon bibli = new ImageIcon(bibliFic);
-		pb.add(new JLabel(bibli), gbc);
+		pb.add(new JLabel(bibli), BorderLayout.CENTER);
 		
-		gbc.insets = new Insets(10,0,0,0);
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.weightx = 1;
+//		gbc.insets = new Insets(10,0,0,0);
+//		gbc.gridx = 0;
+//		gbc.gridy = 2;
+//		gbc.weightx = 1;
 		mainText = new JLabel();
 		mainText.setHorizontalAlignment(SwingConstants.CENTER);
-		pb.add(mainText, gbc);
+		pb.add(mainText, BorderLayout.SOUTH);
 		
 		body.add(pa,"Abonnements");
 		body.add(pe,"Emprunts");
@@ -257,7 +257,7 @@ public class BibliothecairePage extends JPanel {
 	private void initFoot() {
 		foot = new JPanel(new GridLayout(2,1,0,0));
 
-		footText = new JLabel("Gestionnaire bibliothèque - 2026 Tous droits réservés");
+		footText = new JLabel("Gestionnaire bibliothèque - 2026");
 		footText.setHorizontalAlignment(getWidth());
 		footText.setFont(new Font("Serif", Font.BOLD, 20));
 		
@@ -269,10 +269,9 @@ public class BibliothecairePage extends JPanel {
 		connexion.addActionListener(e -> retournerPageConnexion(user));
 		
 		footGrid = new JPanel(new GridLayout(1,2));
-		footGrid2 = new JPanel(new GridBagLayout());
-
+		footGrid2 = new JPanel(new GridLayout(1,2));
 		JPanel footGrid3 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		
+		JPanel footGrid4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		String message = "";
 		dateDuJour = new JLabel("pas de date a afficher");
@@ -285,22 +284,20 @@ public class BibliothecairePage extends JPanel {
 		footGrid.add(accueil);
 		footGrid.add(connexion);
 		
-		GridBagConstraints gbc = new GridBagConstraints();
 		
-		gbc.insets = new Insets(0,175,0,0);
+		/*
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 1;
-		footGrid2.add(footText, gbc);
 		
-		gbc.insets = new Insets(0,100,0,0);
+		
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		gbc.weightx = 1;
-		footGrid2.add(footGrid3, gbc);
-
+		*/
+		
+		footGrid2.add(Box.createGlue());
+		footGrid2.add(footGrid3);
 		footGrid3.add(dateDuJour);
-
 		
 		foot.add(footGrid2);
 		foot.add(footGrid);

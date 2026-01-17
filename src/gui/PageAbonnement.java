@@ -60,8 +60,12 @@ public class PageAbonnement extends JPanel implements IPage {
 		JPanel grid = new JPanel(new GridLayout(1,2));
 		JPanel gauche = new JPanel(new GridBagLayout());
 		JPanel droite = new JPanel(new GridBagLayout());
-		grid.add(gauche);
-		grid.add(droite);
+		JScrollPane scrollGauche = new JScrollPane(gauche);
+		JScrollPane scrollDroite = new JScrollPane(droite);
+		scrollGauche.setBorder(BorderFactory.createEmptyBorder());
+		scrollDroite.setBorder(BorderFactory.createEmptyBorder());
+		grid.add(scrollGauche);
+		grid.add(scrollDroite);
 		add(grid, BorderLayout.CENTER);
 		
 		

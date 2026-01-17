@@ -63,15 +63,17 @@ public class ConnexionPage extends JPanel {
 
         GridBagConstraints ctr = new GridBagConstraints();
 
-        ctr.insets = new Insets(100, 75, 0, 0); //tlbr
+        ctr.insets = new Insets(100, 100, 0, 0); //tlbr
         ctr.gridx = 0;
         ctr.gridy = 0;
-        ctr.weightx = 1.0;
+        ctr.weightx = 1;
+        ctr.anchor = GridBagConstraints.WEST; 
+        ctr.fill = GridBagConstraints.NONE; 
         JLabel id = new JLabel("Identifiant");
         id.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
         body.add(id, ctr);
 
-        ctr.insets = new Insets(0, 100, 25, 100);
+        ctr.insets = new Insets(0, 100, 50, 100);
         ctr.gridx = 0;
         ctr.gridy = 1;
         ctr.weightx = 1.0;                 
@@ -79,10 +81,12 @@ public class ConnexionPage extends JPanel {
         champIdentifiant.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
         body.add(champIdentifiant, ctr);
 
-        ctr.insets = new Insets(25, 75, 0, 500);
+        ctr.insets = new Insets(25, 100, 0, 0);
         ctr.gridx = 0;
         ctr.gridy = 2;
-        ctr.weightx = 1.0;
+        ctr.weightx = 1;
+        ctr.anchor = GridBagConstraints.WEST; 
+        ctr.fill = GridBagConstraints.NONE; 
         JLabel mdp = new JLabel("Mot de passe");
         mdp.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
         body.add(mdp, ctr);
@@ -96,7 +100,7 @@ public class ConnexionPage extends JPanel {
         body.add(champMdp, ctr);
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(0, 100, 100, 100);
+        gbc.insets = new Insets(0, 100, 50, 100);
         JButton connexionBtn = new JButton("Se connecter");
         foot.add(connexionBtn, gbc);
         connexionBtn.addActionListener(e -> verifInfos());

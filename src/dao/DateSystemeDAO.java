@@ -14,8 +14,8 @@ public class DateSystemeDAO extends DAO<DateSysteme> {
 
 	@Override
 	public DateSysteme create(DateSysteme ds) {
-		String requete = "INSERT INTO date_systeme(dateDuJour, dateManuelle) "
-				+ "VALUES('" + ds.getDateDuJour() + "', " + ds.isDateManuelle() + ")";
+		String requete = "INSERT INTO date_systeme(dateDuJour) "
+				+ "VALUES('" + ds.getDateDuJour() + "')";
 		try {
 			stmt.executeUpdate(requete, Statement.RETURN_GENERATED_KEYS);
 			rs = stmt.getGeneratedKeys();
@@ -32,9 +32,8 @@ public class DateSystemeDAO extends DAO<DateSysteme> {
 	@Override
 	public DateSysteme update(DateSysteme ds) {
 		String requete = "UPDATE date_systeme "
-				+ "SET dateDuJour = '" + ds.getDateDuJour() + "', "
-				+ "dateManuelle = " + ds.isDateManuelle()
-				+ " WHERE dateId = " + ds.getDateId();
+				+ "SET dateDuJour = '" + ds.getDateDuJour() 
+				+ "' WHERE dateId = " + ds.getDateId();
 		try {
 			stmt.executeUpdate(requete);
 		} catch (SQLException e) {
@@ -64,8 +63,7 @@ public class DateSystemeDAO extends DAO<DateSysteme> {
 			if (rs.first()) {
 				ds = new DateSysteme(
 						rs.getInt("dateId"),
-						rs.getObject("dateDuJour", LocalDate.class),
-						rs.getBoolean("dateManuelle")
+						rs.getObject("dateDuJour", LocalDate.class)
 				);
 			}
 		} catch (SQLException e) {
@@ -83,8 +81,7 @@ public class DateSystemeDAO extends DAO<DateSysteme> {
 			if (rs.first()) {
 				ds = new DateSysteme(
 						rs.getInt("dateId"),
-						rs.getObject("dateDuJour", LocalDate.class),
-						rs.getBoolean("dateManuelle")
+						rs.getObject("dateDuJour", LocalDate.class)
 				);
 			}
 		} catch (SQLException e) {

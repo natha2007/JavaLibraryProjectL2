@@ -15,10 +15,10 @@ public class GestionDate {
 		DateSystemeDAO dsd = new DateSystemeDAO();
 		dateJour = LocalDate.now();
 		if (!dsd.exists(dateJour)) {
-			dsd.create(new DateSysteme(dateJour,false));
+			dsd.create(new DateSysteme(dateJour));
 		} else {
 			dsd.delete(dsd.read());
-			dateSysteme = new DateSysteme(dateJour,false);
+			dateSysteme = new DateSysteme(dateJour);
 			dsd.create(dateSysteme);
 		}
 	}
@@ -30,9 +30,6 @@ public class GestionDate {
 	public static DateSysteme getDateSysteme() {
 		return dateSysteme;
 	}
-	
-	public static void dateManuelle() {
-		dateSysteme.setDateManuelle(true);
-	}
+
 	
 }

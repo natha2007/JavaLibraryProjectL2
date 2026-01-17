@@ -6,12 +6,10 @@ public class DateSysteme {
 
 	private Integer dateId; 
 	private LocalDate dateDuJour;
-	private boolean dateManuelle;
 
 	
-	public DateSysteme(LocalDate dateDuJour, boolean dateManuelle) {
+	public DateSysteme(LocalDate dateDuJour) {
 		this.dateDuJour = dateDuJour;
-		this.dateManuelle = dateManuelle;
 		
 		/*
 		 * dateId sera géré dans la méthode create
@@ -21,10 +19,9 @@ public class DateSysteme {
 		 */
 	}
 
-	public DateSysteme(Integer dateId, LocalDate dateDuJour, boolean dateManuelle) {
+	public DateSysteme(Integer dateId, LocalDate dateDuJour) {
 		this.dateId = dateId;
 		this.dateDuJour = dateDuJour;
-		this.dateManuelle = dateManuelle;
 	}
 
 	public Integer getDateId() {
@@ -43,17 +40,11 @@ public class DateSysteme {
 		this.dateDuJour = dateDuJour;
 	}
 
-	public boolean isDateManuelle() {
-		return dateManuelle;
-	}
 
-	public void setDateManuelle(boolean dateManuelle) {
-		this.dateManuelle = dateManuelle;
-	}
 
 	@Override
 	public String toString() {
 		return "DateSysteme [dateId=" + dateId + ", dateDuJour=" + dateDuJour
-				+ ", dateManuelle=" + dateManuelle + "]";
+				+ "]";
 	}
 }

@@ -66,7 +66,6 @@ CREATE TABLE bibliothecaire(
 CREATE TABLE date_systeme (
 	dateId INT AUTO_INCREMENT NOT NULL,
 	dateDuJour DATETIME DEFAULT CURRENT_TIMESTAMP,
-	dateManuelle BOOLEAN DEFAULT FALSE, -- permet de changer la date manuellement si true
 	CONSTRAINT pkDateId PRIMARY KEY (dateId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

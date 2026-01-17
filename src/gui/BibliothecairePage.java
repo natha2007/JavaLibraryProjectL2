@@ -259,6 +259,7 @@ public class BibliothecairePage extends JPanel {
 
 		footText = new JLabel("Gestionnaire bibliothèque - 2026 Tous droits réservés");
 		footText.setHorizontalAlignment(getWidth());
+		footText.setFont(new Font("Serif", Font.BOLD, 20));
 		
 		
 		accueil = new JButton("Accueil");
@@ -268,26 +269,45 @@ public class BibliothecairePage extends JPanel {
 		connexion.addActionListener(e -> retournerPageConnexion(user));
 		
 		footGrid = new JPanel(new GridLayout(1,2));
-		footGrid2 = new JPanel(new GridLayout(1,3));
+		footGrid2 = new JPanel(new GridBagLayout());
+
+		JPanel footGrid3 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		
 		
 		String message = "";
 		dateDuJour = new JLabel("pas de date a afficher");
 		if (GestionDate.getDateJour() != null) {
 			dateDuJour.setText(GestionDate.getDateJour().toString());
 		}
-		
+		dateDuJour.setAlignmentX(RIGHT_ALIGNMENT);
+		dateDuJour.setFont(new Font("Serif", Font.BOLD, 20));
 		
 		footGrid.add(accueil);
 		footGrid.add(connexion);
 		
-		footGrid2.add(footText);
-		footGrid2.add(dateDuJour);
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.insets = new Insets(0,175,0,0);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 1;
+		footGrid2.add(footText, gbc);
+		
+		gbc.insets = new Insets(0,100,0,0);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.weightx = 1;
+		footGrid2.add(footGrid3, gbc);
+
+		footGrid3.add(dateDuJour);
+
 		
 		foot.add(footGrid2);
 		foot.add(footGrid);
 		
 		add(foot, BorderLayout.SOUTH);
 	}
+	
 	
 	
 	

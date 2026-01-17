@@ -1,6 +1,7 @@
 package test;
 
 import dao.*;
+import gui.GestionDate;
 import metier.*;
 
 public class TestEmprunt {
@@ -10,11 +11,12 @@ public class TestEmprunt {
 		ClientDAO cd = new ClientDAO();
 		CompteDAO cpd = new CompteDAO();
 		AbonnementDAO ad = new AbonnementDAO();
+		GestionDate.majDate();
 		
 		Objet o = od.read(5);
 		
 		Abonnement ab = ad.read(5);
-		Compte c = new Compte("nathmrc","876557656757576...","2026-01-04","client");
+		Compte c = new Compte("nathmrc","876557656757576...",GestionDate.getDateFromLocalDate(),"client");
 		Client cl = cd.read(2);
 		
 		Emprunt e = new Emprunt("2026-01-04","2026-02-04",30f,cl,o);

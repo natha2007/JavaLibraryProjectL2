@@ -1,18 +1,23 @@
 package test;
 
+import java.sql.Date;
+
 import dao.*;
+import gui.GestionDate;
 import metier.*;
 
 public class TestCompte {
 	public static void main(String[] args) {
 		CompteDAO test1 = new CompteDAO();
-		Compte c = new Compte("Natha36","mdp","2025-12-24","client");
+		GestionDate.majDate();
+		Date date = GestionDate.getDateFromLocalDate();
+		Compte c = new Compte("Natha36","mdp",date,"client");
 		//attention à utiliser le constructeur sans l'id pour un create
 		
 		test1.create(c);
 		//ok 
 		
-		Compte c2 = new Compte(1, "Natha37", "mdp", "2025-12-24", "client");
+		Compte c2 = new Compte(1, "Natha37", "mdp", date, "client");
 		test1.update(c2);
 		//ok
 		
@@ -23,7 +28,7 @@ public class TestCompte {
 		System.out.println(c3);
 		//ok
 		
-		Compte c4 = new Compte("Michel37","mdp","20","bibliothécaire");
+		Compte c4 = new Compte("Michel37","mdp",date,"bibliothécaire");
 		test1.create(c4);
 		
 		//ok

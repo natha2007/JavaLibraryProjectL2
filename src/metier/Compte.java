@@ -1,16 +1,18 @@
 package metier;
 
+import java.sql.Date;
+
 public class Compte {
 	private Integer compteId;
 	private String identifiant;
 	private String mdpHash;
-	private String dateCreation;
+	private Date dateCreation;
 	private String typeCompte;
 	//penser à vérifier que dateCreation est bien une date,
 	//que la taille des String ne dépasse pas la limite max
 	//des VARCHAR
 	
-	public Compte(String identifiant, String mdpHash, String dateCreation, String typeCompte) {
+	public Compte(String identifiant, String mdpHash, Date dateCreation, String typeCompte) {
 		this.identifiant = identifiant;
 		this.mdpHash = mdpHash;
 		this.dateCreation = dateCreation;
@@ -19,7 +21,7 @@ public class Compte {
 
 	//penser à transformer le hash du mdp, où ? peut être dans l'UI
 
-	public Compte(Integer compteId, String identifiant, String mdpHash, String dateCreation, String typeCompte) {
+	public Compte(Integer compteId, String identifiant, String mdpHash, Date dateCreation, String typeCompte) {
 		this.identifiant = identifiant;
 		this.mdpHash = mdpHash;
 		this.dateCreation = dateCreation;
@@ -52,11 +54,11 @@ public class Compte {
 		this.mdpHash = mdpHash;
 	}
 
-	public String getDateCreation() {
+	public Date getDateCreation() {
 		return dateCreation;
 	}
 
-	public void setDateCreation(String dateCreation) {
+	public void setDateCreation(Date dateCreation) {
 		this.dateCreation = dateCreation;
 	}
 

@@ -1,7 +1,10 @@
 package test;
 
+import java.sql.Date;
+
 import dao.BibliothecaireDAO;
 import dao.CompteDAO;
+import gui.GestionDate;
 import gui.GestionMdp;
 import metier.Bibliothecaire;
 import metier.Compte;
@@ -15,10 +18,10 @@ public class TestBibliothecaire {
 		Bibliothecaire b = null;
 		Compte c = null;
 		CompteDAO cd = new CompteDAO();
-		
+		GestionDate.majDate();
 		
 		if (!(cd.exists("Biblio1"))) {
-			c = new Compte("Biblio1",GestionMdp.hash("biblio1mdp"),"2026-01-10","bibliothecaire");
+			c = new Compte("Biblio1",GestionMdp.hash("biblio1mdp"),GestionDate.getDateFromLocalDate(),"bibliothecaire");
 			cd.create(c);
 			System.out.println("je suis appelé #cd.exists");
 		} else {
@@ -38,7 +41,7 @@ public class TestBibliothecaire {
 		Compte c2 = null;
 		
 		if (!(cd.exists("Biblio2"))) {
-			c2 = new Compte("Biblio2",GestionMdp.hash("biblio2mdp"),"2026-01-10","bibliothecaire");
+			c2 = new Compte("Biblio2",GestionMdp.hash("biblio2mdp"),GestionDate.getDateFromLocalDate(),"bibliothecaire");
 			cd.create(c2);
 		} else {
 			c2 = cd.read("Biblio2");

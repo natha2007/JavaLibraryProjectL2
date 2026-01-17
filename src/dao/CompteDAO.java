@@ -65,7 +65,7 @@ public class CompteDAO extends DAO<Compte> {
 		try {
 			rs = stmt.executeQuery(requete);
 			if (rs.first()) {
-				c = new Compte(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+				c = new Compte(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5));
 				//index commencent à 1
 			}
 		} catch (SQLException e) {
@@ -83,7 +83,7 @@ public class CompteDAO extends DAO<Compte> {
 		try {
 			rs = stmt.executeQuery(requete);
 			if (rs.first()) {
-				c = new Compte(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+				c = new Compte(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5));
 				//index commencent à 1
 			}
 		} catch (SQLException e) {
@@ -138,7 +138,7 @@ public class CompteDAO extends DAO<Compte> {
 		try {
 			rs = stmt.executeQuery(requete);
 			if (rs.first()) {
-				c = new Compte(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+				c = new Compte(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5));
 			}
 		} catch (SQLException e) {
 			System.out.println("erreur requête SQL");

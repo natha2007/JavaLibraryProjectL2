@@ -69,9 +69,6 @@ CREATE TABLE date_systeme (
 	CONSTRAINT pkDateId PRIMARY KEY (dateId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- a chaque lancement de l'application pour que la date se mette à jour
--- UPDATE system_date
--- SET current_date = CURRENT_DATE
--- WHERE id = 1;
-
--- pouvoir changer la date manuellement pour pouvoir tester
+INSERT INTO abonnement(typeAbonnement, prix, nbEmpruntsMax) VALUES ('Classique', 10, 10);
+INSERT INTO abonnement(typeAbonnement, prix, nbEmpruntsMax) VALUES ('Premium', 15, 20);
+INSERT INTO abonnement(typeAbonnement, prix, nbEmpruntsMax) VALUES ('Etudiant', 7.50, 10);

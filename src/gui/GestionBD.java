@@ -37,6 +37,17 @@ public class GestionBD {
 		}
 	}
 	
+	public static void genererBibliothecaire(String identifiant, String mdp, String nom, String prenom) {
+		CompteDAO cd = new CompteDAO();
+		BibliothecaireDAO bd = new BibliothecaireDAO();
+		Compte c = new Compte(identifiant,GestionMdp.hash(mdp),GestionDate.getDateFromLocalDate(),"Bibliothécaire");
+		Bibliothecaire b = new Bibliothecaire(nom, prenom, c);
+		if (!cd.exists(identifiant)) {
+			cd.create(c);
+			bd.create(b);
+		} 
+	}
+	
 	
 	/*
 	public static void main(String[] args) {

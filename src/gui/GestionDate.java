@@ -1,5 +1,6 @@
 package gui;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import dao.DateSystemeDAO;
@@ -29,6 +30,11 @@ public class GestionDate {
 	
 	public static DateSysteme getDateSysteme() {
 		return dateSysteme;
+	}
+	
+	public static Date getDateFromLocalDate() {
+		Date date = Date.valueOf(GestionDate.getDateJour());
+		return date;
 	}
 
 	

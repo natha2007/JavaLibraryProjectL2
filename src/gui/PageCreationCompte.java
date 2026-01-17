@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -142,14 +143,11 @@ public class PageCreationCompte extends JPanel {
 	}
 	
     private void creerCompte() {
-    	LocalDate today = LocalDate.now();
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    	String ajd = today.format(formatter);
     	String identifiant=txtIde.getText();
     	char[] mdp1=txtMdp.getPassword();
        	// char[] mdp2=txtConfirm.getPassword();
        	String mdp1s=GestionMdp.getMdpResultHash(mdp1);
-       	c=new Compte(identifiant, mdp1s, ajd, "Client");      	
+       	c=new Compte(identifiant, mdp1s, GestionDate.getDateFromLocalDate(), "Client");      	
        	cd.create(c);
     }
 

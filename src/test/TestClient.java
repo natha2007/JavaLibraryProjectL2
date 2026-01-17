@@ -1,6 +1,7 @@
 package test;
 
 import dao.*;
+import gui.GestionDate;
 import metier.*;
 
 public class TestClient {
@@ -9,8 +10,9 @@ public class TestClient {
 		ClientDAO cld = new ClientDAO();
 		AbonnementDAO abd = new AbonnementDAO();
 		CompteDAO cd = new CompteDAO();
+		GestionDate.majDate();
 		Abonnement ab = new Abonnement("classique",2.5f, 10);
-		Compte c = new Compte("nathanael_mercier","mdp","2025-12-27","client");
+		Compte c = new Compte("nathanael_mercier","mdp",GestionDate.getDateFromLocalDate(),"client");
 		Client cl = new Client("Nathanaël","MERCIER",ab,c);
 		
 		abd.create(ab);

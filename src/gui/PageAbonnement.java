@@ -233,8 +233,10 @@ public class PageAbonnement extends JPanel implements IPage {
 	private void majUI() {
 		if (user == null) {
 			mainText.setText("En attente de connexion");
+			mainText.setFont(new Font("Arial", Font.BOLD, 24));
 		} else {
-			mainText.setText("Ici, gérez l'abonnement des clients");
+			mainText.setText("Gestion abonnements des clients");
+			mainText.setFont(new Font("Arial", Font.BOLD, 24));
 			//compléter ici pour les choses qui nécéssitent les infos de l'utilisateur
 		}
 	}

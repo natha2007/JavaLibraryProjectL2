@@ -5,10 +5,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,9 +33,10 @@ public class PageRetours extends JPanel implements IPage {
     private CompteDAO compteDAO = new CompteDAO();
 
     private JLabel mainText;
-    private JTextField tfPrenom, tfNom, tfIdentifiant, tfTypeObjet, tfReference;
+    private JTextField tfPrenom, tfNom, tfIdentifiant, tfReference;
     private JButton btnRetourner;
     private JLabel labelResultat;
+    private JComboBox tfTypeObjet;
 
     public PageRetours() {
         initialiserUI();
@@ -48,6 +51,8 @@ public class PageRetours extends JPanel implements IPage {
 
     private void initialiserUI() {
         setLayout(new BorderLayout(10, 10));
+        JPanel grid = new JPanel(new GridLayout(1,2));
+        add(grid, BorderLayout.CENTER);
 
         // titre
         mainText = new JLabel("Gestion des retours", SwingConstants.CENTER);
@@ -57,72 +62,112 @@ public class PageRetours extends JPanel implements IPage {
         // panel gauche
         JPanel panelGauche = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(5, 5, 5, 5);
-        c.fill = GridBagConstraints.HORIZONTAL;
+        
 
-        Dimension fieldSize = new Dimension(220, 22);
+        Dimension fieldSize = new Dimension(600, 22);
 
-        // Identifiant
-        c.gridx = 0; c.gridy = 0;
-        panelGauche.add(new JLabel("Identifiant :"), c);
-        c.gridx = 1;
-        tfIdentifiant = new JTextField();
-        tfIdentifiant.setPreferredSize(fieldSize);
-        panelGauche.add(tfIdentifiant, c);
-
-        // nom 
-        c.gridx = 0; c.gridy++;
+        
+        // Nom
+        c.insets = new Insets(0, 50, 0, 0);
+        ///c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0; 
+        c.gridy = 0;
+        c.weightx = 1.0;
+        
         panelGauche.add(new JLabel("Nom :"), c);
-        c.gridx = 1;
-        tfNom = new JTextField();
+        c.insets = new Insets(0,50,100,0);
+        c.gridx = 0; 
+        c.gridy = 1;
+        c.weightx = 1.0;
+        tfNom = new JTextField(30);
         tfNom.setPreferredSize(fieldSize);
         panelGauche.add(tfNom, c);
-
-        // prenom
+       
+		
+        
+        // Prenom
+        c.insets = new Insets(0, 50, 0, 0);
         c.gridx = 0; c.gridy++;
+        c.weightx = 1.0;
         panelGauche.add(new JLabel("Prénom :"), c);
-        c.gridx = 1;
-        tfPrenom = new JTextField();
+        c.insets = new Insets(0,50,0,0);
+        c.gridy++;
+        c.weightx = 1.0;
+        tfPrenom = new JTextField(30);
         tfPrenom.setPreferredSize(fieldSize);
         panelGauche.add(tfPrenom, c);
+       
+        // prenom
+        
+        //c.gridx = 0; c.gridy++;
+        
+        //c.gridx = 1;
+       
 
         // type d'objet
+        /*
         c.gridx = 0; c.gridy++;
         panelGauche.add(new JLabel("Type objet :"), c);
         c.gridx = 1;
-        tfTypeObjet = new JTextField();
+        String[] listeTypeObjet = {"Livre","CD","DVD","JeuSociete","Ordinateur"};
+		tfTypeObjet = new JComboBox(listeTypeObjet);
         tfTypeObjet.setPreferredSize(fieldSize);
         panelGauche.add(tfTypeObjet, c);
-
-        add(panelGauche, BorderLayout.WEST);
+         */
+        grid.add(panelGauche);
 
         // panel droit 
         JPanel panelDroit = new JPanel(new GridBagLayout());
         GridBagConstraints d = new GridBagConstraints();
-        d.insets = new Insets(5, 5, 5, 5);
-        d.fill = GridBagConstraints.HORIZONTAL;
-
-        // Référence
+       
+       
+        d.insets = new Insets(0, 0, 0, 50);
+        
+        // Identifiant
         d.gridx = 0; d.gridy = 0;
+        d.weightx = 1.0;
+        panelDroit.add(new JLabel("Identifiant :"), d);
+        d.insets = new Insets(0,0,100,50);
+        d.gridy = 1;
+        d.weightx = 1.0;
+        tfIdentifiant = new JTextField(30);
+        tfIdentifiant.setPreferredSize(fieldSize);
+        panelDroit.add(tfIdentifiant, d);
+        
+        // Référence
+        d.insets = new Insets(0, 0, 0, 50);
+        d.gridx = 0; d.gridy = 2;
+        d.weightx = 1.0;
         panelDroit.add(new JLabel("Référence :"), d);
-        d.gridx = 1;
-        tfReference = new JTextField();
+        d.insets = new Insets(0,0,0,50);
+        d.gridy = 3;
+        d.weightx = 1.0;
+        tfReference = new JTextField(30);
         tfReference.setPreferredSize(fieldSize);
         panelDroit.add(tfReference, d);
 
         // Bouton Retourner
-        d.gridx = 0; d.gridy = 1; d.gridwidth = 2;
+        JPanel foot = new JPanel(new GridBagLayout());
+        add(foot, BorderLayout.SOUTH);
+
+        GridBagConstraints e = new GridBagConstraints();
+        
         btnRetourner = new JButton("Retourner");
         btnRetourner.setPreferredSize(new Dimension(200, 45));
-        panelDroit.add(btnRetourner, d);
-
-        add(panelDroit, BorderLayout.EAST);
+        e.gridx = 0;
+        e.gridy = 0;
+        foot.add(btnRetourner, e);
+        
 
         // Résultat au centre
         labelResultat = new JLabel(" ", SwingConstants.CENTER);
-        add(labelResultat, BorderLayout.CENTER);
+        e.gridx = 0;
+        e.gridy = 1;
+        foot.add(labelResultat, e);
+        
+        grid.add(panelDroit);
 
-        btnRetourner.addActionListener(e -> traiterRetour());
+        btnRetourner.addActionListener(f -> gererErreurs());
     }
 
     private void majUI() {
@@ -134,36 +179,40 @@ public class PageRetours extends JPanel implements IPage {
             btnRetourner.setEnabled(true);
         }
     }
+    
+    private void gererErreurs() {
+    	try {
+    		traiterRetour();
+    	} catch (SaisieInvalideException s) {
+    		labelResultat.setText(s.getMessage());
+    	}
+    }
 
-    private void traiterRetour() {
+    private void traiterRetour() throws SaisieInvalideException{
         String identifiant = tfIdentifiant.getText().trim();
         if (identifiant.isEmpty()) {
-            labelResultat.setText("Veuillez entrer un identifiant");
-            return;
+            throw new SaisieInvalideException("Veuillez entrer un identifiant");
         }
 
         String nom = tfNom.getText().trim();
         String prenom = tfPrenom.getText().trim();
-        String typeObjet = tfTypeObjet.getText().trim();
         String reference = tfReference.getText().trim();
 
         if (nom.isEmpty() || prenom.isEmpty() || reference.isEmpty()) {
-            labelResultat.setText("Veuillez remplir tous les champs obligatoires");
-            return;
+            throw new SaisieInvalideException("Veuillez remplir tous les champs obligatoires");
         }
 
         // Récupérer le compte via identifiant
         Compte compte = compteDAO.read(identifiant);
         if (compte == null) {
-            labelResultat.setText("Compte introuvable");
-            return;
+            throw new SaisieInvalideException("Compte introuvable");
+
         }
 
         // Récupérer client via compteId
         Integer clientIdFromCompte = clientDAO.getClientFromCompte(compte.getCompteId());
         if (clientIdFromCompte == null) {
-            labelResultat.setText("Client introuvable");
-            return;
+            throw new SaisieInvalideException("Client introuvable");
         }
 
         Client client = clientDAO.read(clientIdFromCompte);
@@ -177,8 +226,7 @@ public class PageRetours extends JPanel implements IPage {
         }
 
         if (correspondants.isEmpty()) {
-            labelResultat.setText("Aucun emprunt correspondant trouvé");
-            return;
+            throw new SaisieInvalideException("Aucun emprunt correspondant trouvé");
         }
 
         Emprunt aSupprimer;

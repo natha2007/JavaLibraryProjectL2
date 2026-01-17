@@ -15,7 +15,7 @@ public class PageClient extends JPanel {
 
     private CompteUtilisateur user;
 
-    private JLabel profilInfos;
+    private JTextArea profilInfos;
     private JPanel body;
     private JTable table;
     private JScrollPane scroll;
@@ -56,20 +56,42 @@ public class PageClient extends JPanel {
         od = new ObjetDAO();
         ad = new AbonnementDAO();
 
-        JPanel header = new JPanel();
-        header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
-        header.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
+        JPanel header = new JPanel(new GridLayout(2,1));
+        //header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
+        //header.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
         add(header, BorderLayout.NORTH);
 
+        JPanel headerPremLigne = new JPanel(new GridLayout(1,3));
+        JPanel PremLigne1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel PremLigne3 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JLabel titreProfil = new JLabel("Profil");
-        titreProfil.setFont(new Font("Arial", Font.BOLD, 14));
+    	JLabel dateDuJour = new JLabel("pas de date a afficher");
+		if (GestionDate.getDateJour() != null) {
+			dateDuJour.setText(GestionDate.getDateJour().toString());
+		}
+		dateDuJour.setAlignmentX(RIGHT_ALIGNMENT);
+		dateDuJour.setFont(new Font("Serif", Font.BOLD, 20));
+		dateDuJour.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        titreProfil.setFont(new Font("Serif", Font.BOLD, 20));
         titreProfil.setAlignmentX(Component.LEFT_ALIGNMENT);
-        header.add(titreProfil);
-        header.add(Box.createVerticalStrut(8));
-        profilInfos = new JLabel();
-        profilInfos.setFont(new Font("Arial", Font.PLAIN, 60));
+        
+        header.add(headerPremLigne);
+        headerPremLigne.add(PremLigne1);
+        headerPremLigne.add(Box.createGlue());
+        headerPremLigne.add(PremLigne3);
+        PremLigne1.add(titreProfil);
+        PremLigne3.add(dateDuJour);
+        //header.add(Box.createHorizontalStrut(30));
+        //header.add(Box.createVerticalStrut(8));
+        profilInfos = new JTextArea();
+        profilInfos.setFont(new Font("Arial", Font.PLAIN, 55));
         profilInfos.setAlignmentX(Component.LEFT_ALIGNMENT);
+        profilInfos.setLineWrap(true);       
+        profilInfos.setWrapStyleWord(true);
+        profilInfos.setEditable(false);       // reste non éditable comme un JLabel
+        profilInfos.setOpaque(false); 
         header.add(profilInfos);
+        
 
         body = new JPanel(new BorderLayout());
         add(body, BorderLayout.CENTER);

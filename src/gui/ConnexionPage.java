@@ -63,7 +63,7 @@ public class ConnexionPage extends JPanel {
 
         GridBagConstraints ctr = new GridBagConstraints();
 
-        ctr.insets = new Insets(100, 0, 0, 540); //tlbr
+        ctr.insets = new Insets(100, 75, 0, 0); //tlbr
         ctr.gridx = 0;
         ctr.gridy = 0;
         ctr.weightx = 1.0;
@@ -72,11 +72,15 @@ public class ConnexionPage extends JPanel {
         body.add(id, ctr);
 
         ctr.insets = new Insets(0, 100, 25, 100);
+        ctr.gridx = 0;
         ctr.gridy = 1;
+        ctr.weightx = 1.0;                 
+        ctr.fill = GridBagConstraints.HORIZONTAL;
         champIdentifiant.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
         body.add(champIdentifiant, ctr);
 
-        ctr.insets = new Insets(25, 0, 0, 500);
+        ctr.insets = new Insets(25, 75, 0, 500);
+        ctr.gridx = 0;
         ctr.gridy = 2;
         ctr.weightx = 1.0;
         JLabel mdp = new JLabel("Mot de passe");
@@ -84,7 +88,10 @@ public class ConnexionPage extends JPanel {
         body.add(mdp, ctr);
 
         ctr.insets = new Insets(0, 100, 100, 100);
+        ctr.gridx = 0;
         ctr.gridy = 3;
+        ctr.weightx = 1.0;                 
+        ctr.fill = GridBagConstraints.HORIZONTAL;
         champMdp.setFont(new Font(body.getFont().getName(), body.getFont().getStyle(), 25));
         body.add(champMdp, ctr);
 

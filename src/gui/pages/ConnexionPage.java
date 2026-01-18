@@ -11,6 +11,7 @@ import dao.CompteDAO;
 import gui.gestion.CompteUtilisateur;
 import gui.gestion.GestionMdp;
 import gui.gestion.GestionUIStyle;
+import gui.gestion.SaisieInvalideException;
 import metier.Compte;
 
 public class ConnexionPage extends JPanel {
@@ -30,6 +31,9 @@ public class ConnexionPage extends JPanel {
         initialiserUI();
     }
 
+    /**
+     * Initialiser et créer éléments de la page
+     */
     private void initialiserUI() {
         setLayout(new BorderLayout());
 
@@ -57,6 +61,7 @@ public class ConnexionPage extends JPanel {
         creerCompte.setContentAreaFilled(false);
         creerCompte.setFocusPainted(false);
         creerCompte.setOpaque(false);
+        
         head.add(creerCompte);
         creerCompte.addActionListener(e -> conn.accept(null));
 
@@ -116,17 +121,30 @@ public class ConnexionPage extends JPanel {
         connexionBtn.setBackground(btnColor);
         connexionBtn.setForeground(txtColor);
         foot.add(connexionBtn, gbc);
-        connexionBtn.addActionListener(e -> verifInfos());
+        connexionBtn.addActionListener(e -> gererErreur());
     }
 
+    /**
+     * Obtenir la saisie de l'utilisateur dans le champ identifiant
+     * @return saisie de l'utilisateur sous forme de String
+     */
     public String getIdentifiant() {
         return champIdentifiant.getText();
     }
 
+    /**
+     * Récupérer la saisie du mot de passe par l'utilisateur
+     * @return mot de passe saisie sous forme de tableau de char
+     */
     public char[] getMdpResult() {
         return champMdp.getPassword();
     }
 
+    /**
+     * Converti le mot de passe saisi par l'utilisateur récupéré en
+     * un mot de passe crypté 
+     * @return mot de passe crypté
+     */
     public String getMdpResultHash() {
         String pwd = "";
         for (int i = 0; i < this.getMdpResult().length; i++) {
@@ -135,29 +153,50 @@ public class ConnexionPage extends JPanel {
         return GestionMdp.hash(pwd);
     }
 
+    /**
+     * Obtenir le mot de passe attendu par rapport à l'utilisateur rentré
+     * @return mot de passe attendu
+     */
     public String getMdpAttendu() {
         CompteDAO cd = new CompteDAO();
         String mdpAttendu = "";
         if (cd.exists(getIdentifiant())) {
             mdpAttendu = cd.read(getIdentifiant()).getMdpHash();
-        } else {
-            System.out.println("utilisateur ou mot de passe incorrect #mdpAttendu");
         }
         return mdpAttendu;
     }
 
+    /*
     public void setClientIdFromCompteId() {
         CompteDAO cd = new CompteDAO();
         ClientDAO cld = new ClientDAO();
         Integer compteId = cd.read(getIdentifiant()).getCompteId();
         this.IdClientActuel = cld.getClientFromCompte(compteId);
     }
+    */
 
+    /*
     public Integer getIdClientActuel() {
         return this.IdClientActuel;
     }
+    */
+    
+    /**
+     * gérer l'affichage d'un message d'erreur en interceptant une
+     * SaisieInvalideException dans la méthode verifInfos()
+     */
+    private void gererErreur() {
+    	try {
+    		verifInfos();
+    	} catch (SaisieInvalideException s) {
+    		 JOptionPane.showMessageDialog(this,
+                     s.getMessage(),
+                     "Erreur de connexion",
+                     JOptionPane.ERROR_MESSAGE);
+    	}
+    }
 
-    public boolean verifInfos() {
+    public boolean verifInfos() throws SaisieInvalideException {
         boolean verif = false;
         if (this.getMdpAttendu().equals(this.getMdpResultHash())) {
             verif = true;
@@ -169,11 +208,7 @@ public class ConnexionPage extends JPanel {
                 conn.accept(user);
             }
         } else {
-            System.out.println("utilisateur ou mot de passe incorrect");
-            JOptionPane.showMessageDialog(this,
-                    "Identifiant ou mot de passe incorrect",
-                    "Erreur de connexion",
-                    JOptionPane.ERROR_MESSAGE);
+            throw new SaisieInvalideException("Identifiant ou mot de passe incorrect");
         }
         return verif;
     }

@@ -329,7 +329,7 @@ public class PageEmprunts extends JPanel implements IPageMaj {
     	String fe = finEmprunt.format(formatter);
     	
     	Objet o=od.read(objetId);
-    	Emprunt e=new Emprunt(ajd,fe,30f,cl,o);
+    	Emprunt e=new Emprunt(ajd,fe,cl,o);
     	ed.create(e);
     	od.updateDispo(o);
 	}

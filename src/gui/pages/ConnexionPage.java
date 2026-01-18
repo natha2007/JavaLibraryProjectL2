@@ -165,21 +165,6 @@ public class ConnexionPage extends JPanel {
         }
         return mdpAttendu;
     }
-
-    /*
-    public void setClientIdFromCompteId() {
-        CompteDAO cd = new CompteDAO();
-        ClientDAO cld = new ClientDAO();
-        Integer compteId = cd.read(getIdentifiant()).getCompteId();
-        this.IdClientActuel = cld.getClientFromCompte(compteId);
-    }
-    */
-
-    /*
-    public Integer getIdClientActuel() {
-        return this.IdClientActuel;
-    }
-    */
     
     /**
      * gérer l'affichage d'un message d'erreur en interceptant une
@@ -196,10 +181,13 @@ public class ConnexionPage extends JPanel {
     	}
     }
 
-    public boolean verifInfos() throws SaisieInvalideException {
-        boolean verif = false;
+    /**
+     * vérifie si le mot de passe et l'identifiant correspondent
+     * à ce qui se trouve en base de données
+     * @throws SaisieInvalideException
+     */
+    public void verifInfos() throws SaisieInvalideException {
         if (this.getMdpAttendu().equals(this.getMdpResultHash())) {
-            verif = true;
             System.out.println("connexion réussie");
             CompteDAO cd = new CompteDAO();
             Compte c = cd.read(getIdentifiant());
@@ -210,11 +198,5 @@ public class ConnexionPage extends JPanel {
         } else {
             throw new SaisieInvalideException("Identifiant ou mot de passe incorrect");
         }
-        return verif;
-    }
-
-    public void creerCompte() {
-        CompteUtilisateur user = null;
-        conn.accept(user);
     }
 }

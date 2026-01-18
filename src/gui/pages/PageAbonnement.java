@@ -20,18 +20,22 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 	private CompteUtilisateur user;
 	
 	private JLabel mainText;
+	
 	private JTextField champNom;
 	private JTextField champPrenom;
 	private JTextField champCompte;
+	private JComboBox choixAbonnement;
+	private JLabel confirmationCreation;
+	
 	private JTextField champNom1;
 	private JTextField champPrenom1;
 	private JTextField champCompte1;
-	private JComboBox choixAbonnement;
-	private JLabel confirmationCreation;
 	private JLabel confirmationSuppression;
+	
 	private final ClientDAO cld = new ClientDAO();
 	private final CompteDAO cd = new CompteDAO();
 	private final AbonnementDAO abd = new AbonnementDAO();
+	
 	private final Color btnColor = GestionUIStyle.getButtonColor();
 	private final Color bgColor = GestionUIStyle.getBgColor();
 	private final Color txtColor = GestionUIStyle.getTextColor();
@@ -60,25 +64,33 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 	public void initialiserUI() {
 		setLayout(new BorderLayout());
 		setBackground(bgColor);
+		
 		mainText = new JLabel();
 		mainText.setHorizontalAlignment(SwingConstants.CENTER);
 		add(mainText, BorderLayout.NORTH);
 		
 		JPanel grid = new JPanel(new GridLayout(1,2));
+		grid.setBackground(bgColor);
+		
 		JPanel gauche = new JPanel(new GridBagLayout());
-		JPanel droite = new JPanel(new GridBagLayout());
-		JScrollPane scrollGauche = new JScrollPane(gauche);
-		JScrollPane scrollDroite = new JScrollPane(droite);
 		gauche.setBackground(bgColor);
+		
+		JPanel droite = new JPanel(new GridBagLayout());
 		droite.setBackground(bgColor);
+		
+		JScrollPane scrollGauche = new JScrollPane(gauche);
 		scrollGauche.setBackground(bgColor);
-		scrollDroite.setBackground(bgColor);
 		scrollGauche.setBorder(BorderFactory.createEmptyBorder());
-		scrollDroite.setBorder(BorderFactory.createEmptyBorder());
 		grid.add(scrollGauche);
+		
+		JScrollPane scrollDroite = new JScrollPane(droite);
+		scrollDroite.setBackground(bgColor);
+		scrollDroite.setBorder(BorderFactory.createEmptyBorder());
 		grid.add(scrollDroite);
+		
 		add(grid, BorderLayout.CENTER);
 		
+		// Partie gauche
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -124,7 +136,6 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		JLabel compte = new JLabel("Identifiant du compte client");
 		gauche.add(compte, gbc);
 		
-		
 		gbc.insets = new Insets(0,0,25,0);
 		gbc.gridy = 6;
 		gbc.weightx = 1.0;
@@ -132,7 +143,6 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		champCompte.setMinimumSize(new Dimension(600,20));
 		champCompte.setPreferredSize(new Dimension(600,20));
 		gauche.add(champCompte, gbc);
-		
 		
 		gbc.insets = new Insets(0,0,0,0);
 		gbc.gridy = 7;
@@ -162,8 +172,7 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		
 		ajouter.addActionListener(e -> ajouterAbonnement());
 		
-		
-		// DROITE
+		// Partie Droite
 		
 		GridBagConstraints gbc1 = new GridBagConstraints();
 		
@@ -194,7 +203,6 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		JLabel prenom1 = new JLabel("Prénom du client");
 		droite.add(prenom1, gbc1);
 		
-		
 		gbc1.insets = new Insets(0,0,50,0);
 		gbc1.gridy = 4;
 		gbc1.weightx = 1.0;
@@ -209,7 +217,6 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		JLabel compte1 = new JLabel("Identifiant du compte client");
 		droite.add(compte1, gbc1);
 		
-		
 		gbc1.insets = new Insets(0,0,50,0);
 		gbc1.gridy = 6;
 		gbc1.weightx = 1.0;
@@ -217,7 +224,6 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		champCompte1.setMinimumSize(new Dimension(600,20));
 		champCompte1.setPreferredSize(new Dimension(600,20));
 		droite.add(champCompte1, gbc1);
-		
 		
 		gbc1.insets = new Insets(0,0,0,0);
 		gbc1.gridy = 7;
@@ -239,11 +245,10 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		droite.add(confirmationSuppression, gbc);
 		
 		supprimer.addActionListener(e -> supprimerAbonnement());
-		
 	}
 	
 	/**
-	 * Crée les élements dynamiques (dépendant de l'utilisateur)
+	 * Crée les élements dynamiques (dépendant de l'utilisateur ou nécessitant d'être mis à jour)
 	 */
 	@Override
 	public void majUI() {
@@ -257,6 +262,10 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * ajoute un abonnement en vérifiant toutes les contraintes
+	 * des champs de saisie
+	 */
 	private void ajouterAbonnement() {
 		try {
 			validerNom();
@@ -268,6 +277,10 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		
 	}
 	
+	/**
+	 * Supprime un abonnement en vérifiant toutes les contraintes
+	 * des champs de saisie
+	 */
 	private void supprimerAbonnement() {
 		try {
 			validerNomSupp();
@@ -278,16 +291,29 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * affichage du message d'erreur qui apparait lorsqu'on
+	 * essaye d'ajouter/modifier un abonnement
+	 * @param message message d'erreur
+	 */
 	private void afficherErreurCreation(String message) {
 		confirmationCreation.setForeground(Color.RED);
 		confirmationCreation.setText(message);
 	}
 	
+	/**
+	 * affichage du message d'erreur qui apparait lorsqu'on 
+	 * essaye de supprimer un abonnement
+	 */
 	private void afficherErreurSuppression(String message) {
 		confirmationSuppression.setForeground(Color.RED);
 		confirmationSuppression.setText(message);
 	}
 	
+	/**
+	 * Vérifie la validité du champ nom (partie ajout/modification)
+	 * @throws SaisieInvalideException
+	 */
 	private void validerNom() throws SaisieInvalideException {
 		confirmationSuppression.setText(null);
 		String t = champNom.getText();
@@ -299,6 +325,10 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * Vérifie la validité du champ Prenom (partie ajout/modification)
+	 * @throws SaisieInvalideException
+	 */
 	private void validerPrenom() throws SaisieInvalideException {
 		String t = champPrenom.getText();
 		if (t.isEmpty()) {
@@ -309,6 +339,10 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * Vérifie la validité du champ compte client (partie ajout/modification)
+	 * @throws SaisieInvalideException
+	 */
 	private void validerCompteClient() throws SaisieInvalideException {
 		String nom = champNom.getText();
 		String prenom = champPrenom.getText();
@@ -351,6 +385,10 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * Vérifie la validité du champ nom (partie suppression)
+	 * @throws SaisieInvalideException
+	 */
 	private void validerNomSupp() throws SaisieInvalideException {
 		confirmationCreation.setText("");
 		String t = champNom1.getText();
@@ -362,6 +400,10 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * Vérifie la validité du champ Prenom (partie suppression)
+	 * @throws SaisieInvalideException
+	 */
 	private void validerPrenomSupp() throws SaisieInvalideException {
 		String t = champPrenom1.getText();
 		if (t.isEmpty()) {
@@ -372,6 +414,10 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * Vérifie la validité du champ Compte client (partie suppression)
+	 * @throws SaisieInvalideException
+	 */
 	private void validerCompteClientSupp() throws SaisieInvalideException {
 		String nom = champNom1.getText();
 		String Prenom = champPrenom1.getText();
@@ -403,6 +449,11 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * vérifie que le client ait retourné tous ses emprunts avant de pouvoir supprimer son abonnement
+	 * @param c Compte client
+	 * @throws SaisieInvalideException
+	 */
 	private void verifierRetourEmpruntsSupp(Compte c) throws SaisieInvalideException {
 		EmpruntDAO ed = new EmpruntDAO();
 		//faire des DAO généraux pour pas en recréer tout le temps

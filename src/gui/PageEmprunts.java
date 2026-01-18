@@ -306,7 +306,7 @@ public class PageEmprunts extends JPanel implements IPage {
     	clientId = cld.getClientFromCompte(compteId);
     	cl=cld.read(clientId);
     	if (cl.getAbonnement()==null) {
-    		throw new SaisieInvalideException("Vous devez vous abonner auprès d'un bibliothécaire pour emprunter");
+    		throw new SaisieInvalideException("Le profil doit être abonné pour emprunter");
     	}
     	else if (ed.countAbonnement(cl)>=10) {
             throw new SaisieInvalideException(

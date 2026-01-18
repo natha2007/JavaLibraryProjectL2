@@ -66,6 +66,24 @@ public class EmpruntDAO extends DAO<Emprunt> {
 		}
 	}
 	
+	public int countAbonnement(Client c1) {
+	    int count = 0;
+	    String requete = "SELECT COUNT(*) FROM emprunt WHERE clientId = " + c1.getClientId();
+
+	    try {
+	        ResultSet rs = stmt.executeQuery(requete);
+	        if (rs.next()) {
+	            count = rs.getInt(1); // COUNT(*)
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("erreur requête SQL");
+	        e.printStackTrace();
+	    }
+
+	    return count;
+	}
+
+	
 	public Emprunt read(Integer id) {
 		Emprunt e1 = null;
 		Client c1 = null;

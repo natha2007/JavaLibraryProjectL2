@@ -30,6 +30,7 @@ import dao.EmpruntDAO;
 import dao.ClientDAO;
 import dao.ObjetDAO;
 import metier.Compte;
+import metier.Abonnement;
 import metier.Client;
 import metier.Emprunt;
 import metier.Objet;
@@ -53,8 +54,12 @@ public class PageEmprunts extends JPanel implements IPage {
 	private ClientDAO cld =new ClientDAO();
 	private ObjetDAO od = new ObjetDAO();
 	private EmpruntDAO ed = new EmpruntDAO();
+	private Compte c;
+	private Client cl;
 	private String identifiant;
 	private Integer objetId;
+	private Integer compteId;
+	private Integer clientId;
 	
 	private int count = 0;
 
@@ -269,6 +274,7 @@ public class PageEmprunts extends JPanel implements IPage {
 		try {
 			objetId = getObjetIdSelectionne();
 			idValide();
+			verifAbonnement();
 			creerEmprunt(objetId);
 			pageConfirmation();
 		} catch (SaisieInvalideException s) {
@@ -287,14 +293,26 @@ public class PageEmprunts extends JPanel implements IPage {
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     	String ajd = today.format(formatter);
     	String fe = finEmprunt.format(formatter);
-    	Compte c=cd.read(identifiant);
-    	Integer compteId=c.getCompteId(); 
-    	Integer clientId = cld.getClientFromCompte(compteId);
-    	Client cl=cld.read(clientId);
+    	
     	Objet o=od.read(objetId);
     	Emprunt e=new Emprunt(ajd,fe,30f,cl,o);
     	ed.create(e);
     	od.updateDispo(o);
+	}
+	
+	private void verifAbonnement() throws SaisieInvalideException{
+		c=cd.read(identifiant);
+    	compteId=c.getCompteId(); 
+    	clientId = cld.getClientFromCompte(compteId);
+    	cl=cld.read(clientId);
+    	if (cl.getAbonnement()==null) {
+    		throw new SaisieInvalideException("Vous devez vous abonner auprès d'un bibliothécaire pour emprunter");
+    	}
+    	else if (ed.countAbonnement(cl)>=10) {
+            throw new SaisieInvalideException(
+                    "Nombre maximum d'emprunts atteint (10)"
+            );
+    	}
 	}
 	
 	private int getObjetIdSelectionne() throws SaisieInvalideException {
@@ -321,10 +339,6 @@ public class PageEmprunts extends JPanel implements IPage {
 		if (("Bibliothécaire").equals(c.getTypeCompte())) {
 			throw new SaisieInvalideException("Cet identifiant appartient a un bibliothécaire");
 		};
-	}
-	
-	private void verifAbonnement() {
-		//à remplir mon petit samumumumumummumumumumumumummuumumumumumummumumumumumummumumumumumumumumumumumummumumumumumum
 	}
 	
 	private void pageConfirmation() {

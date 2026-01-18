@@ -81,15 +81,20 @@ private ResultSet rs;
 		}
 	}
 	
-	public void delete(Integer id) {
+	public int delete(Integer id) {
+		int add=0;
 		String requete = "DELETE FROM objet"
 				+ " WHERE objetId= " + id;
 		try {
-			stmt.executeUpdate(requete);
+			this.rs = stmt.executeQuery(requete);
+			if (rs.first()) {
+				add = rs.getInt(1);
+			}
 		} catch (SQLException e) {
 			System.out.println("erreur requête SQL");
 			e.printStackTrace();
 		}
+		return add;
 				
 	}
 	

@@ -75,6 +75,7 @@ public class PageCreationCompte extends JPanel {
         return p;
     }
 
+    
     public void initialiserUI() {
 
         setLayout(new BorderLayout());

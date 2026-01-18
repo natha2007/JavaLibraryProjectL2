@@ -25,7 +25,7 @@ import metier.Client;
 import metier.Compte;
 import metier.Emprunt;
 
-public class PageRetours extends JPanel implements IPage {
+public class PageRetours extends JPanel implements IPageMaj {
 
     private CompteUtilisateur user;
 
@@ -45,13 +45,15 @@ public class PageRetours extends JPanel implements IPage {
         majUI();
     }
 
-    @Override
+    
     public void setUser(CompteUtilisateur user) {
         this.user = user;
         majUI();
     }
 
-    private void initialiserUI() {
+    @Override
+    public void initialiserUI() {
+    	
         setLayout(new BorderLayout(10, 10));
         JPanel grid = new JPanel(new GridLayout(1,2));
         add(grid, BorderLayout.CENTER);
@@ -172,7 +174,8 @@ public class PageRetours extends JPanel implements IPage {
         btnRetourner.addActionListener(f -> gererErreurs());
     }
 
-    private void majUI() {
+    @Override
+    public void majUI() {
         if (user == null) {
             mainText.setText("En attente de connexion");
             btnRetourner.setEnabled(false);

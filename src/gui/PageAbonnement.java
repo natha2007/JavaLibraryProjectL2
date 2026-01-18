@@ -12,7 +12,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public class PageAbonnement extends JPanel implements IPage {
+public class PageAbonnement extends JPanel implements IPageMaj {
 	
 	private CompteUtilisateur user;
 	
@@ -40,7 +40,6 @@ public class PageAbonnement extends JPanel implements IPage {
 	 * Récupère les infos de l'utilisateur connecté
 	 * @param user utilisateur (client ou bibliothecaire)
 	 */
-	@Override
 	public void setUser(CompteUtilisateur user) {
 		this.user = user;
 		majUI();
@@ -51,7 +50,8 @@ public class PageAbonnement extends JPanel implements IPage {
 	 * Initialise les éléments de l'interface "dynamiques" (dépendant de l'utilisateur)
 	 * Et crée les éléments "statiques".
 	 */
-	private void initialiserUI() {
+	@Override
+	public void initialiserUI() {
 		setLayout(new BorderLayout());
 		
 		mainText = new JLabel();
@@ -231,7 +231,8 @@ public class PageAbonnement extends JPanel implements IPage {
 	/**
 	 * Crée les élements dynamiques (dépendant de l'utilisateur)
 	 */
-	private void majUI() {
+	@Override
+	public void majUI() {
 		if (user == null) {
 			mainText.setText("En attente de connexion");
 			mainText.setFont(new Font("Arial", Font.BOLD, 24));

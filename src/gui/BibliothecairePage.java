@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import dao.BibliothecaireDAO;
 import metier.Bibliothecaire;
@@ -77,7 +78,6 @@ public class BibliothecairePage extends JPanel {
 	 */
 	private void initialiserUI() {
 		setLayout(new BorderLayout());
-		
 		initHead();
 		initBody();
 		initFoot();
@@ -177,10 +177,15 @@ public class BibliothecairePage extends JPanel {
 		head.setPreferredSize(new Dimension(0,50));
 		
 		abonnements = new JButton("Abonnements");
+		abonnements.setContentAreaFilled(false);
 		emprunts = new JButton("Emprunts");
+		emprunts.setContentAreaFilled(false);
 		commandes = new JButton("Commandes");
+		commandes.setContentAreaFilled(false);
 		stocks = new JButton("Stocks");
+		stocks.setContentAreaFilled(false);
 		retours = new JButton("Retours");
+		retours.setContentAreaFilled(false);
 
 		head.add(abonnements);
 		head.add(emprunts);
@@ -203,6 +208,7 @@ public class BibliothecairePage extends JPanel {
 	private void initBody() {
 		cl = new CardLayout();
 		body = new JPanel(cl);
+		body.setBackground(new Color(255,255,153));
 		
 		bd = new BibliothecaireDAO();
 		
@@ -213,6 +219,7 @@ public class BibliothecairePage extends JPanel {
 		pr = new PageRetours();
 		
 		pb = new JPanel(new BorderLayout());
+		
 		
 //		GridBagConstraints gbc = new GridBagConstraints();
 //		
@@ -268,7 +275,9 @@ public class BibliothecairePage extends JPanel {
 		
 		
 		accueil = new JButton("Accueil");
+		accueil.setContentAreaFilled(false);
 		connexion = new JButton("Se déconnecter");
+		connexion.setContentAreaFilled(false);
 		
 		accueil.addActionListener(e -> retournerAccueil());
 		connexion.addActionListener(e -> retournerPageConnexion(user));

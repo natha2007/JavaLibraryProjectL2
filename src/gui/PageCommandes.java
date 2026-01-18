@@ -8,7 +8,7 @@ import javax.swing.*;
 import dao.ObjetDAO;
 import metier.Objet;
 
-public class PageCommandes extends JPanel implements IPage {
+public class PageCommandes extends JPanel implements IPageMaj {
 	private CompteUtilisateur user;
 	private JLabel mainText;
 	private JLabel nom;
@@ -34,7 +34,6 @@ public class PageCommandes extends JPanel implements IPage {
 	 * Récupère les infos de l'utilisateur connecté
 	 * @param user utilisateur (client ou bibliothecaire)
 	 */
-	@Override
 	public void setUser(CompteUtilisateur user) {
 		this.user = user;
 		majUI();
@@ -44,7 +43,8 @@ public class PageCommandes extends JPanel implements IPage {
 	 * Initialise les éléments de l'interface "dynamiques" (dépendant de l'utilisateur)
 	 * Et crée les éléments "statiques".
 	 */
-	private void initialiserUI() {
+	@Override
+	public void initialiserUI() {
 		setLayout(new BorderLayout());
 		
 		JPanel head = new JPanel(new FlowLayout());
@@ -175,7 +175,8 @@ public class PageCommandes extends JPanel implements IPage {
 	/**
 	 * Crée les élements dynamiques (dépendant de l'utilisateur)
 	 */
-	private void majUI() {
+	@Override
+	public void majUI() {
 		if (user == null) {
 			mainText.setText("En attente de connexion");
 		} else {

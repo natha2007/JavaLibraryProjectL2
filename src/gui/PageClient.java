@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import dao.*;
 import metier.*;
 
-public class PageClient extends JPanel {
+public class PageClient extends JPanel implements IPageMaj {
 
     private CompteUtilisateur user;
 
@@ -45,8 +45,8 @@ public class PageClient extends JPanel {
         majUI();
     }
 
-    
-    private void initialiserUI() {
+    @Override
+    public void initialiserUI() {
     	
     	
         setLayout(new BorderLayout());
@@ -149,7 +149,8 @@ public class PageClient extends JPanel {
     	rb.run();
     }
 
-    private void majUI() {
+    @Override
+    public void majUI() {
         tabRes.setRowCount(0);
 
         if (user == null) {

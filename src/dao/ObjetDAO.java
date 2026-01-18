@@ -50,6 +50,25 @@ private ResultSet rs;
 		return o1;
 	}
 	
+	
+	public Objet updateDispo(Objet o) {
+	    int nouvelleDispo = (o.getDisponibilite() == 1) ? 0 : 1;
+	    o.setDisponibilite(nouvelleDispo);
+	    
+	    String requete = "UPDATE objet SET disponibilite = " + nouvelleDispo
+	                    + " WHERE objetId = " + o.getObjetId();
+	    try {
+	        stmt.executeUpdate(requete);
+	    } catch (SQLException e) {
+	        System.out.println("Erreur requête SQL updateDispo");
+	        e.printStackTrace();
+	    }
+
+	    return o;
+	}
+
+
+	
 	@Override
 	public void delete(Objet o1) {
 		String requete = "DELETE FROM objet"

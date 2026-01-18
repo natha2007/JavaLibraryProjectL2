@@ -202,7 +202,7 @@ public class BibliothecairePage extends JPanel {
 		bd = new BibliothecaireDAO();
 		
 		pa = new PageAbonnement();
-		pe = new PageEmprunts();
+		pe = new PageEmprunts(this::rechercherStock);
 		pc = new PageCommandes();
 		ps = new PageStocks(this::rechercherStock);
 		pr = new PageRetours();

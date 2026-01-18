@@ -189,7 +189,7 @@ public class PageStocks extends JPanel implements IPage {
 			}
 		});
 		
-		
+		rechercherObjet();
 	}
 	
 	/**

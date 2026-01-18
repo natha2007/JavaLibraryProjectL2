@@ -4,8 +4,8 @@ import java.sql.Date;
 
 import dao.BibliothecaireDAO;
 import dao.CompteDAO;
-import gui.GestionDate;
-import gui.GestionMdp;
+import gui.gestion.GestionDate;
+import gui.gestion.GestionMdp;
 import metier.Bibliothecaire;
 import metier.Compte;
 

@@ -1,4 +1,4 @@
-package gui;
+package gui.pages;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,28 +10,29 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import dao.BibliothecaireDAO;
+import gui.gestion.CompteUtilisateur;
+import gui.gestion.GestionDate;
+import gui.gestion.GestionUIStyle;
 import metier.Bibliothecaire;
 
 public class BibliothecairePage extends JPanel implements IPageMaj {
 	
-	private Runnable rb;
-	private CardLayout cl;
-	private CompteUtilisateur user;
+	private Runnable rb; 
 	
-	private JPanel head;
-	private JPanel body;
-	private JPanel foot;
-	
-	// HEAD
-
-	private JButton abonnements;
-	private JButton emprunts;
-	private JButton commandes;
-	private JButton stocks;
-	private JButton retours;
 	private final Color btnColor = GestionUIStyle.getButtonColor();
 	private final Color bgColor = GestionUIStyle.getBgColor();
 	private final Color txtColor = GestionUIStyle.getTextColor();
+	
+	private CardLayout cl; 
+	private CompteUtilisateur user;
+	
+	//private JPanel head;
+	private JPanel body;
+	//private JPanel foot;
+	
+	// HEAD
+
+	
 	
 	// BODY
 	
@@ -44,7 +45,7 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 	private JLabel mainText;
 	
 	private JLabel title;
-	private BibliothecaireDAO bd;
+	private BibliothecaireDAO bd = new BibliothecaireDAO();
 	
 	// FOOT
 	
@@ -76,7 +77,8 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 	}
 	
 	/**
-	 * Initialise les éléments de l'interface "dynamiques" (dépendant de l'utilisateur)
+	 * Initialise les éléments de l'interface "dynamiques" (dépendant de l'utilisateur
+	 * ou nécessitant d'être "rafraichis")
 	 * Et crée les éléments "statiques".
 	 */
 	@Override
@@ -85,12 +87,11 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 		initHead();
 		initBody();
 		initFoot();
-		
 		cl.show(body, "Menu");
 	}
 	
 	/**
-	 * Crée les élements dynamiques (dépendant de l'utilisateur)
+	 * Crée les élements dynamiques (dépendant de l'utilisateur ou nécessitant d'être "rafraichis")
 	 */
 	@Override
 	public void majUI() {
@@ -98,7 +99,6 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 			mainText.setText("En attente de connexion");
 			title.setText("");
 		} else {
-			
 			Bibliothecaire b = bd.readByCompteId(user.getCompteId());
 			title.setText("Bienvenue " + b.getPrenom() + " " + b.getNom());
 			title.setFont(new Font("Serif", Font.BOLD, 30));
@@ -110,8 +110,6 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 					+ "gérer les commandes et les stocks "
 					+ "</div>"
 					+ "</html>");
-			
-			//compléter ici si on a besoin des infos de l'utilisateur
 		}
 	}
 	
@@ -152,10 +150,16 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 		cl.show(body, "Stocks");
 	}
 	
+	/*
+	 * Mettre à jour le tableau de stock dans la page stock
+	 */
 	public void rechercherStock() {
 		ps.rechercherObjet();
 	}
 	
+	/**
+	 * Mettre à jour le tableau de stocks disponibles dans la page Emprunt
+	 */
 	public void rechercherEmprunts() {
 		pe.rechercherObjet();
 	}
@@ -178,29 +182,28 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 	 * Initialisation de la partie "head" (supérieure) de la page
 	 */
 	private void initHead() {
-		head = new JPanel(new GridLayout(0,5,0,0)); //int rows, int cols, int hgap, int vgap
+		JPanel head = new JPanel(new GridLayout(0,5,0,0)); //int rows, int cols, int hgap, int vgap
 		head.setPreferredSize(new Dimension(0,50));
 		
-		abonnements = new JButton("Abonnements");
+		JButton abonnements = new JButton("Abonnements");
 		abonnements.setBackground(btnColor);
 		abonnements.setForeground(txtColor);
 		
-		emprunts = new JButton("Emprunts");
+		JButton emprunts = new JButton("Emprunts");
 		emprunts.setBackground(btnColor);
 		emprunts.setForeground(txtColor);
 		
-		commandes = new JButton("Commandes");
+		JButton commandes = new JButton("Commandes");
 		commandes.setBackground(btnColor);
 		commandes.setForeground(txtColor);
 
-		stocks = new JButton("Stocks");
+		JButton stocks = new JButton("Stocks");
 		stocks.setBackground(btnColor);
 		stocks.setForeground(txtColor);
 
-		retours = new JButton("Retours");
+		JButton retours = new JButton("Retours");
 		retours.setBackground(btnColor);
 		retours.setForeground(txtColor);
-
 
 		head.add(abonnements);
 		head.add(emprunts);
@@ -224,8 +227,6 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 		cl = new CardLayout();
 		body = new JPanel(cl);
 		
-		bd = new BibliothecaireDAO();
-		
 		pa = new PageAbonnement();
 		pe = new PageEmprunts(this::rechercherStock);
 		pc = new PageCommandes();
@@ -235,21 +236,10 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 		pb = new JPanel(new BorderLayout());
 		pb.setBackground(bgColor);
 		
-//		GridBagConstraints gbc = new GridBagConstraints();
-//		
-//		gbc.insets = new Insets(20,0,0,0);
-//		gbc.gridx = 0;
-//		gbc.gridy = 0;
-//		gbc.weightx = 1;
 		title = new JLabel();
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		
 		pb.add(title, BorderLayout.NORTH);
 		
-//		gbc.insets = new Insets(10,0,0,0);
-//		gbc.gridx = 0;
-//		gbc.gridy = 1;
-//		gbc.weightx = 1;
 		BufferedImage bibliFic = null;
 		try {
 			bibliFic = ImageIO.read(new File("img/bibliotheque.jpg"));
@@ -260,13 +250,8 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 		ImageIcon bibli = new ImageIcon(bibliFic);
 		pb.add(new JLabel(bibli), BorderLayout.CENTER);
 		
-//		gbc.insets = new Insets(10,0,0,0);
-//		gbc.gridx = 0;
-//		gbc.gridy = 2;
-//		gbc.weightx = 1;
 		mainText = new JLabel();
 		mainText.setHorizontalAlignment(SwingConstants.CENTER);
-		
 		pb.add(mainText, BorderLayout.SOUTH);
 		
 		body.add(pa,"Abonnements");
@@ -283,29 +268,38 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 	 * Initialisation de la partie "foot" (inférieure) de la page
 	 */
 	private void initFoot() {
-		foot = new JPanel(new GridLayout(2,1,0,0));
+		JPanel foot = new JPanel(new GridLayout(2,1,0,0));
 
-		footText = new JLabel("Gestionnaire bibliothèque - 2026");
+		JLabel footText = new JLabel("Gestionnaire bibliothèque - 2026");
 		footText.setHorizontalAlignment(getWidth());
 		footText.setFont(new Font("Serif", Font.BOLD, 20));
 		footText.setForeground(txtColor);
 		
-		accueil = new JButton("Accueil");
+		JButton accueil = new JButton("Accueil");
 		accueil.setBackground(btnColor);
 		accueil.setForeground(txtColor);
-		connexion = new JButton("Se déconnecter");
+		
+		JButton connexion = new JButton("Se déconnecter");
 		connexion.setBackground(btnColor);
 		connexion.setForeground(txtColor);
 		
 		accueil.addActionListener(e -> retournerAccueil());
 		connexion.addActionListener(e -> retournerPageConnexion(user));
 		
-		footGrid = new JPanel(new GridLayout(1,2));
+		JPanel footGrid = new JPanel(new GridLayout(1,2));
+		footGrid.setBackground(bgColor);
 		
-		footGrid2 = new JPanel(new GridLayout(1,2));
+		JPanel footGrid2 = new JPanel(new GridLayout(1,2));
 		footGrid2.setBackground(bgColor);
+		
 		JPanel footGrid3 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		footGrid3.setBackground(bgColor);
+		
+		footGrid.add(Box.createGlue());
+		footGrid.add(footGrid3);
+		
+		footGrid2.add(accueil);
+		footGrid2.add(connexion);
 		
 		String message = "";
 		dateDuJour = new JLabel("pas de date a afficher");
@@ -314,32 +308,13 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 		}
 		dateDuJour.setAlignmentX(RIGHT_ALIGNMENT);
 		dateDuJour.setFont(new Font("Serif", Font.BOLD, 20));
-		
-		footGrid.add(accueil);
-		footGrid.add(connexion);
-		
-		
-		/*
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.weightx = 1;
-		
-		
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		*/
-		
-		footGrid2.add(Box.createGlue());
-		footGrid2.add(footGrid3);
 		footGrid3.add(dateDuJour);
 		
-		foot.add(footGrid2);
 		foot.add(footGrid);
+		foot.add(footGrid2);
 		
 		add(foot, BorderLayout.SOUTH);
 	}
-	
-	
 	
 	
 	//Méthode de test

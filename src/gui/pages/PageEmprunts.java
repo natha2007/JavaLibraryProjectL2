@@ -1,4 +1,4 @@
-package gui;
+package gui.pages;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,6 +31,9 @@ import dao.CompteDAO;
 import dao.EmpruntDAO;
 import dao.ClientDAO;
 import dao.ObjetDAO;
+import gui.gestion.CompteUtilisateur;
+import gui.gestion.GestionUIStyle;
+import gui.gestion.SaisieInvalideException;
 import metier.Compte;
 import metier.Abonnement;
 import metier.Client;

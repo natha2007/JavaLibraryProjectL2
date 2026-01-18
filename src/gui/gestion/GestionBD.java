@@ -1,4 +1,4 @@
-package gui;
+package gui.gestion;
 import metier.*;
 
 import java.util.ArrayList;

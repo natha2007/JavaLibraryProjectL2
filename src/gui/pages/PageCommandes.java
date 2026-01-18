@@ -1,4 +1,4 @@
-package gui;
+package gui.pages;
 
 import java.awt.*;
 import java.text.NumberFormat;
@@ -6,6 +6,9 @@ import java.text.NumberFormat;
 import javax.swing.*;
 
 import dao.ObjetDAO;
+import gui.gestion.CompteUtilisateur;
+import gui.gestion.GestionUIStyle;
+import gui.gestion.SaisieInvalideException;
 import metier.Objet;
 
 public class PageCommandes extends JPanel implements IPageMaj {

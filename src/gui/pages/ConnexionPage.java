@@ -1,4 +1,4 @@
-package gui;
+package gui.pages;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -8,6 +8,9 @@ import javax.swing.*;
 
 import dao.ClientDAO;
 import dao.CompteDAO;
+import gui.gestion.CompteUtilisateur;
+import gui.gestion.GestionMdp;
+import gui.gestion.GestionUIStyle;
 import metier.Compte;
 
 public class ConnexionPage extends JPanel {
@@ -17,6 +20,7 @@ public class ConnexionPage extends JPanel {
     private JTextField champIdentifiant = new JTextField(30);
     private JPasswordField champMdp = new JPasswordField(30);
     private Integer IdClientActuel;
+    
 	private final Color btnColor = GestionUIStyle.getButtonColor();
 	private final Color bgColor = GestionUIStyle.getBgColor();
 	private final Color txtColor = GestionUIStyle.getTextColor();
@@ -41,7 +45,7 @@ public class ConnexionPage extends JPanel {
         add(body, BorderLayout.CENTER);
         add(foot, BorderLayout.SOUTH);
 
-        head.add(Box.createGlue()); //1ere colonne est vide
+        head.add(Box.createGlue()); 
 
         JLabel titre = new JLabel("Bienvenue");
         titre.setHorizontalAlignment(SwingConstants.CENTER);

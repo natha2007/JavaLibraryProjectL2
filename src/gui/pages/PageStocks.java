@@ -1,4 +1,4 @@
-package gui;
+package gui.pages;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,6 +27,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import dao.ObjetDAO;
+import gui.gestion.CompteUtilisateur;
+import gui.gestion.GestionUIStyle;
 import metier.Objet;
 
 public class PageStocks extends JPanel implements IPageMaj {

@@ -1,4 +1,4 @@
-package gui;
+package gui.main;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,6 +16,8 @@ import dao.CompteDAO;
 import dao.DateSystemeDAO;
 import dao.EmpruntDAO;
 import dao.ObjetDAO;
+import gui.gestion.GestionBD;
+import gui.gestion.GestionDate;
 import metier.Abonnement;
 import metier.Client;
 import metier.Compte;

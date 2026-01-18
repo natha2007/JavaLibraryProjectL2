@@ -1,4 +1,4 @@
-package gui;
+package gui.gestion;
 
 public class CompteUtilisateur {
 	private final Integer compteId;

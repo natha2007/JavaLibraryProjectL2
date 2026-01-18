@@ -1,4 +1,4 @@
-package gui;
+package gui.pages;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -10,6 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import dao.*;
+import gui.gestion.CompteUtilisateur;
+import gui.gestion.GestionDate;
+import gui.gestion.GestionUIStyle;
 import metier.*;
 
 public class PageClient extends JPanel implements IPageMaj {

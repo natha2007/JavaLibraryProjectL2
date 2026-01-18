@@ -1,4 +1,4 @@
-package gui;
+package gui.pages;
 
 import javax.swing.JLabel;
 
@@ -6,6 +6,9 @@ import dao.AbonnementDAO;
 import dao.ClientDAO;
 import dao.CompteDAO;
 import dao.EmpruntDAO;
+import gui.gestion.CompteUtilisateur;
+import gui.gestion.GestionUIStyle;
+import gui.gestion.SaisieInvalideException;
 import metier.*;
 
 import java.awt.*;

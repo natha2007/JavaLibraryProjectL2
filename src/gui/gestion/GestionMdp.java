@@ -1,4 +1,4 @@
-package gui;
+package gui.gestion;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

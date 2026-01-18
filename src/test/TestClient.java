@@ -1,7 +1,7 @@
 package test;
 
 import dao.*;
-import gui.GestionDate;
+import gui.gestion.GestionDate;
 import metier.*;
 
 public class TestClient {

@@ -1,4 +1,4 @@
-package gui;
+package gui.main;
 
 import java.awt.*;
 import javax.swing.*;
@@ -7,6 +7,11 @@ import javax.swing.border.EmptyBorder;
 import dao.BibliothecaireDAO;
 import dao.ClientDAO;
 import dao.CompteDAO;
+import gui.gestion.CompteUtilisateur;
+import gui.pages.BibliothecairePage;
+import gui.pages.ConnexionPage;
+import gui.pages.PageClient;
+import gui.pages.PageCreationCompte;
 
 //idées lambda : transformer un resultSet en collection Java grâce à un lambdaStream
 //on peut mettre un abonnement bibliothécaire, vu que l'abonnement crée le compte

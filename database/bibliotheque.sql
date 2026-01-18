@@ -43,7 +43,6 @@ CREATE TABLE emprunt(
 	empruntId INT AUTO_INCREMENT NOT NULL,
 	dateDebut DATE NOT NULL,
 	dateFin DATE NOT NULL,
-	dureeMaximaleEmprunt DECIMAL(8,4), -- durée en jours, si on devait mettre des durées de moins d'1 jour, il faudrait choisir des heures multiples de 3 (3h = 0,125 jour)
 	clientId INT NOT NULL,
 	objetId INT NOT NULL,
 	CONSTRAINT pkEmpruntId PRIMARY KEY (empruntId),

@@ -19,7 +19,7 @@ public class TestEmprunt {
 		Compte c = new Compte("nathmrc","876557656757576...",GestionDate.getDateFromLocalDate(),"client");
 		Client cl = cd.read(2);
 		
-		Emprunt e = new Emprunt("2026-01-04","2026-02-04",30f,cl,o);
+		Emprunt e = new Emprunt("2026-01-04","2026-02-04",cl,o);
 		
 		//test create
 		

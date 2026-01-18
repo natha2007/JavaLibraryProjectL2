@@ -20,17 +20,16 @@ public class PageClient extends JPanel implements IPageMaj {
     private CompteUtilisateur user;
 
     private JTextArea profilInfos;
-    private JPanel body;
     private JTable table;
     private JScrollPane scroll;
     private DefaultTableModel tabRes;
 
     private ArrayList<Emprunt> listeEmprunt;
 
-    private ClientDAO cd;
-    private EmpruntDAO ed;
-    private ObjetDAO od;
-    private AbonnementDAO ad;
+    private ClientDAO cd = new ClientDAO();
+    private EmpruntDAO ed = new EmpruntDAO();
+    private ObjetDAO od = new ObjetDAO();
+    private AbonnementDAO ad = new AbonnementDAO();
 
     private Abonnement ab;
     private Client cl;
@@ -55,28 +54,31 @@ public class PageClient extends JPanel implements IPageMaj {
 
     @Override
     public void initialiserUI() {
-    	setBackground(bgColor);
-    	
         setLayout(new BorderLayout());
-
-        cd = new ClientDAO();
-        ed = new EmpruntDAO();
-        od = new ObjetDAO();
-        ad = new AbonnementDAO();
+    	setBackground(bgColor);
 
         JPanel header = new JPanel(new GridLayout(2,1));
         header.setBackground(bgColor);
-        //header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
-        //header.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
         add(header, BorderLayout.NORTH);
 
         JPanel headerPremLigne = new JPanel(new GridLayout(1,3));
         headerPremLigne.setBackground(bgColor);
+        header.add(headerPremLigne);
+        
         JPanel PremLigne1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         PremLigne1.setBackground(bgColor);
+        headerPremLigne.add(PremLigne1);
+        
         JPanel PremLigne3 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         PremLigne3.setBackground(bgColor);
+        headerPremLigne.add(Box.createGlue());
+        headerPremLigne.add(PremLigne3);
+        
         JLabel titreProfil = new JLabel("Profil");
+        titreProfil.setFont(new Font("Serif", Font.BOLD, 20));
+        titreProfil.setAlignmentX(Component.LEFT_ALIGNMENT);
+        PremLigne1.add(titreProfil);
+        
     	JLabel dateDuJour = new JLabel("pas de date a afficher");
 		if (GestionDate.getDateJour() != null) {
 			dateDuJour.setText(GestionDate.getDateJour().toString());
@@ -84,17 +86,8 @@ public class PageClient extends JPanel implements IPageMaj {
 		dateDuJour.setAlignmentX(RIGHT_ALIGNMENT);
 		dateDuJour.setFont(new Font("Serif", Font.BOLD, 20));
 		dateDuJour.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        titreProfil.setFont(new Font("Serif", Font.BOLD, 20));
-        titreProfil.setAlignmentX(Component.LEFT_ALIGNMENT);
-        
-        header.add(headerPremLigne);
-        headerPremLigne.add(PremLigne1);
-        headerPremLigne.add(Box.createGlue());
-        headerPremLigne.add(PremLigne3);
-        PremLigne1.add(titreProfil);
-        PremLigne3.add(dateDuJour);
-        //header.add(Box.createHorizontalStrut(30));
-        //header.add(Box.createVerticalStrut(8));
+		PremLigne3.add(dateDuJour);
+       
         profilInfos = new JTextArea();
         profilInfos.setFont(new Font("Arial", Font.PLAIN, 55));
         profilInfos.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -104,8 +97,7 @@ public class PageClient extends JPanel implements IPageMaj {
         profilInfos.setOpaque(false); 
         header.add(profilInfos);
         
-
-        body = new JPanel(new BorderLayout());
+        JPanel body = new JPanel(new BorderLayout());
         body.setBackground(bgColor);
         add(body, BorderLayout.CENTER);
 
@@ -120,12 +112,11 @@ public class PageClient extends JPanel implements IPageMaj {
         };
         
         tabRes = new DefaultTableModel(colonnes, 0);
+        
         table = new JTable(tabRes);
-
         table.setBackground(btnColor);
         table.setForeground(txtColor);
         table.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        
         table.setRowHeight(40);
         table.setFont(new Font("Arial", Font.PLAIN, 14));
         table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
@@ -137,6 +128,7 @@ public class PageClient extends JPanel implements IPageMaj {
         JLabel titreTable = new JLabel("Emprunts en cours");
         titreTable.setFont(new Font("Arial", Font.BOLD, 18));
         titreTable.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        titreTable.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JPanel topPanel = new JPanel();
         topPanel.setBackground(bgColor);
@@ -147,8 +139,6 @@ public class PageClient extends JPanel implements IPageMaj {
         abonnementTxt.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
         abonnementTxt.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        titreTable.setAlignmentX(Component.LEFT_ALIGNMENT);
-
         topPanel.add(abonnementTxt);
         topPanel.add(titreTable);
 
@@ -156,14 +146,13 @@ public class PageClient extends JPanel implements IPageMaj {
 
         scroll = new JScrollPane(table);
         body.add(scroll, BorderLayout.CENTER);
-        //scroll.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
         scroll.setBorder(BorderFactory.createEmptyBorder());
         scroll.getViewport().setBackground(bgColor);
 		
-        
         JPanel foot = new JPanel();
         foot.setBackground(bgColor);
         add(foot, BorderLayout.SOUTH);
+        
         JButton deconnexion = new JButton("Se déconnecter");
         deconnexion.setBackground(btnColor);
         deconnexion.setForeground(txtColor);
@@ -195,7 +184,7 @@ public class PageClient extends JPanel implements IPageMaj {
            + " à " + ab.getPrix() + "€. Vous pouvez faire jusqu'à " + ab.getNbEmpruntsMax() + " emprunts simultanément.");
        }
         listeEmprunt = ed.getListeEmpruntsByClientId(user.getClientId());
-        LocalDate today = LocalDate.now();
+        LocalDate today = GestionDate.getDateJour();
 
         for (Emprunt e : listeEmprunt) {
             LocalDate localDateFin = LocalDate.parse(e.getDateFin());

@@ -61,7 +61,7 @@ public class CompteDAO extends DAO<Compte> {
 		Compte c = null;
 		String requete = "SELECT *"
 				+ " FROM compte"
-				+ " WHERE compteId= " + id;
+				+ " WHERE compteId= '" + id + "'";
 		try {
 			rs = stmt.executeQuery(requete);
 			if (rs.first()) {
@@ -79,7 +79,7 @@ public class CompteDAO extends DAO<Compte> {
 		Compte c = null;
 		String requete = "SELECT *"
 				+ " FROM compte"
-				+ " WHERE identifiant= " + identifiant;
+				+ " WHERE identifiant= '" + identifiant + "'";
 		try {
 			rs = stmt.executeQuery(requete);
 			if (rs.first()) {

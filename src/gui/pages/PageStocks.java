@@ -206,13 +206,13 @@ public class PageStocks extends JPanel implements IPageMaj {
 		recherche.add(loupe, gbc);
 		*/
 		loupe.addActionListener(e -> {
-			count++;
 			if (count%2 == 0) {
 				rb.run();
 			} else {
 				majUI();
 				titreRecherche.setText("Rechercher référence objet");
 			}
+			count++;
 		});
 		
 		rechercherObjet();

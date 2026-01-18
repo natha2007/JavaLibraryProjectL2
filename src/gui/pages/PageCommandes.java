@@ -180,6 +180,7 @@ public class PageCommandes extends JPanel implements IPageMaj {
         boutonLayout.add(commande);
         suiteMsg = new JPanel();
         suiteMsg.setLayout(new BoxLayout(suiteMsg, BoxLayout.Y_AXIS));
+        suiteMsg.setBackground(bgColor);
         boutonLayout.add(confirmation);
         boutonLayout.add(suiteMsg);
 		grid.add(boutonLayout);
@@ -312,8 +313,7 @@ public class PageCommandes extends JPanel implements IPageMaj {
 			throw new SaisieInvalideException("Caractères invalides");
 		}
 		if (o != null && (!(o.getNom().equals(nom)) || !(o.getAuteur().equals(auteur)) || (Math.round(o.getPrix() * 100) / 100f) != prix )){
-			System.out.println("différent");
-			throw new SaisieInvalideException("" + (Math.round(o.getPrix() * 100) / 100f) + " " + prix);
+			throw new SaisieInvalideException("La référence indiquée correspond à un autre livre");
 		}
 	}
 }

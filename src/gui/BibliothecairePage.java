@@ -128,6 +128,7 @@ public class BibliothecairePage extends JPanel {
 	 * Switch sur la "page" Emprunts
 	 */
 	public void showEmprunts() {
+		pe.majUI();
 		cl.show(body, "Emprunts");
 	}
 	
@@ -148,6 +149,10 @@ public class BibliothecairePage extends JPanel {
 	
 	public void rechercherStock() {
 		ps.rechercherObjet();
+	}
+	
+	public void rechercherEmprunts() {
+		pe.rechercherObjet();
 	}
 	
 	/*

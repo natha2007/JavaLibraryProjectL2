@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import dao.ClientDAO;
 import dao.CompteDAO;
 import dao.EmpruntDAO;
+import dao.ObjetDAO;
 import metier.Client;
 import metier.Compte;
 import metier.Emprunt;
@@ -31,6 +32,7 @@ public class PageRetours extends JPanel implements IPage {
     private ClientDAO clientDAO = new ClientDAO();
     private EmpruntDAO empruntDAO = new EmpruntDAO();
     private CompteDAO compteDAO = new CompteDAO();
+    private ObjetDAO objetDAO = new ObjetDAO();
 
     private JLabel mainText;
     private JTextField tfPrenom, tfNom, tfIdentifiant, tfReference;
@@ -260,8 +262,11 @@ public class PageRetours extends JPanel implements IPage {
             }
             aSupprimer = correspondants.get(index);
         }
-
+        
+        objetDAO.updateDispo(aSupprimer.getObjet());
+        System.out.println(aSupprimer.toString());
         empruntDAO.delete(aSupprimer);
+        
 
         labelResultat.setText(
             "Le client " + client.getNom() + " " + client.getPrenom() +

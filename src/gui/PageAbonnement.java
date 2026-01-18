@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import dao.AbonnementDAO;
 import dao.ClientDAO;
 import dao.CompteDAO;
+import dao.EmpruntDAO;
 import metier.*;
 
 import java.awt.*;
@@ -379,10 +380,19 @@ public class PageAbonnement extends JPanel implements IPage {
 				champPrenom1.setText(null);
 				champCompte1.setText(null);
 			}
+			verifierRetourEmpruntsSupp(c);
 			cl = cld.read(id);
 			System.out.println(cl);
 		} else {
 			throw new SaisieInvalideException("Le compte n'existe pas");
+		}
+	}
+	
+	private void verifierRetourEmpruntsSupp(Compte c) throws SaisieInvalideException {
+		EmpruntDAO ed = new EmpruntDAO();
+		//faire des DAO généraux pour pas en recréer tout le temps
+		if (!(ed.getListeEmpruntsByClientId(cld.getClientFromCompte(c.getCompteId())).isEmpty())) {
+			throw new SaisieInvalideException("Le client doit retourner tous ses emprunts avant de supprimer son abonnement");
 		}
 	}
 	

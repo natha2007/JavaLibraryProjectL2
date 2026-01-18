@@ -210,7 +210,7 @@ public class PageEmprunts extends JPanel implements IPage {
 			mainText.setText("En attente de connexion");
 			return;
 		} else {
-			mainText.setText("Stock actuel de la bibliothèque");
+			mainText.setText("Stock disponible de la bibliothèque");
 			ObjetDAO od = new ObjetDAO();
 			listeObjets = od.getListeObjet();
 			tabRes.setRowCount(0);
@@ -287,9 +287,10 @@ public class PageEmprunts extends JPanel implements IPage {
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     	String ajd = today.format(formatter);
     	String fe = finEmprunt.format(formatter);
-    	Compte c=cd.readAvecIdentifiant(identifiant);
+    	Compte c=cd.read(identifiant);
     	Integer compteId=c.getCompteId(); 
-    	Client cl=cld.read(compteId);
+    	Integer clientId = cld.getClientFromCompte(compteId);
+    	Client cl=cld.read(clientId);
     	Objet o=od.read(objetId);
     	Emprunt e=new Emprunt(ajd,fe,30f,cl,o);
     	ed.create(e);
@@ -320,6 +321,10 @@ public class PageEmprunts extends JPanel implements IPage {
 		if (("Bibliothécaire").equals(c.getTypeCompte())) {
 			throw new SaisieInvalideException("Cet identifiant appartient a un bibliothécaire");
 		};
+	}
+	
+	private void verifAbonnement() {
+		//à remplir mon petit samumumumumummumumumumumumummuumumumumumummumumumumumummumumumumumumumumumumumummumumumumumum
 	}
 	
 	private void pageConfirmation() {

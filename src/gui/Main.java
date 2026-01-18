@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Dimension;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import dao.AbonnementDAO;
 import dao.BibliothecaireDAO;
@@ -25,6 +26,8 @@ public class Main {
 		mf.setMinimumSize(new Dimension(1024, 600)); // limite basse réelle
 		mf.setSize(1280, 720);  
 		mf.pack();
+		
+		
 		
 		
 		// Après avoir importé la bonne base de donnée (dernière en date)

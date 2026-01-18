@@ -5,23 +5,20 @@ public class Emprunt {
 	private Integer empruntId;
 	private String dateDebut;
 	private String dateFin;
-	private float dureeMaximaleEmprunt;
 	private Client client;
 	private Objet objet;
 	
-	public Emprunt(String dateDebut, String dateFin, float dureeMaximaleEmprunt, Client client, Objet objet) {
+	public Emprunt(String dateDebut, String dateFin, Client client, Objet objet) {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
-		this.dureeMaximaleEmprunt = dureeMaximaleEmprunt;
 		this.client = client;
 		this.objet = objet;
 	}
 	
-	public Emprunt(Integer empruntId, String dateDebut, String dateFin, float dureeMaximaleEmprunt, Client client, Objet objet) {
+	public Emprunt(Integer empruntId, String dateDebut, String dateFin, Client client, Objet objet) {
 		this.empruntId=empruntId;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
-		this.dureeMaximaleEmprunt = dureeMaximaleEmprunt;
 		this.client = client;
 		this.objet = objet;
 	}
@@ -50,14 +47,6 @@ public class Emprunt {
 		this.dateFin = dateFin;
 	}
 
-	public float getDureeMaximaleEmprunt() {
-		return dureeMaximaleEmprunt;
-	}
-
-	public void setDureeMaximaleEmprunt(float dureeMaximaleEmprunt) {
-		this.dureeMaximaleEmprunt = dureeMaximaleEmprunt;
-	}
-
 	public Client getClient() {
 		return client;
 	}
@@ -77,7 +66,6 @@ public class Emprunt {
 	@Override
 	public String toString() {
 		return "Emprunt [empruntId=" + empruntId + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin
-				+ ", dureeMaximaleEmprunt=" + dureeMaximaleEmprunt 
 				+ ", clientId=" + this.client.getClientId() 
 				+ ", objetId=" + this.objet.getObjetId()
 				+ "]";

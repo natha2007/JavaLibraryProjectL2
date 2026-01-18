@@ -18,9 +18,8 @@ public class EmpruntDAO extends DAO<Emprunt> {
 		LocalDate today = LocalDate.now();
 		LocalDate oneMonthLater = today.plusDays(30);
 
-		String requete = "INSERT INTO emprunt(dateDebut, dateFin, dureeMaximaleEmprunt, clientId, objetId)"
+		String requete = "INSERT INTO emprunt(dateDebut, dateFin, clientId, objetId)"
 				+ "VALUES('" + today + "', '" + oneMonthLater
-				+ "', '" + e1.getDureeMaximaleEmprunt() 
 				+ "', '" + e1.getClient().getClientId() 
 				+ "', '" + e1.getObjet().getObjetId() 
 				+ "')";
@@ -42,7 +41,6 @@ public class EmpruntDAO extends DAO<Emprunt> {
 		String requete = "UPDATE emprunt"
 				+ " SET dateDebut= '" + e1.getDateDebut()
 				+ "', dateFin= '" + e1.getDateFin()
-				+ "', dureeMaximaleEmprunt= " + e1.getDureeMaximaleEmprunt()
 				+ ", clientId= " + e1.getClient().getClientId() 
 				+ ", objetId= " + e1.getObjet().getObjetId() 
 				+ " WHERE empruntId= " + e1.getEmpruntId();
@@ -96,7 +94,7 @@ public class EmpruntDAO extends DAO<Emprunt> {
 			if (rs.first()) {
 				c1 = cd.read(rs.getInt(5));
 				o1 = od.read(rs.getInt(6));
-				e1 = new Emprunt(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getFloat(4), c1, o1);
+				e1 = new Emprunt(rs.getInt(1),rs.getString(2),rs.getString(3), c1, o1);
 			}
 		} catch (SQLException e) {
 			System.out.println("erreur requête SQL");
@@ -117,7 +115,7 @@ public class EmpruntDAO extends DAO<Emprunt> {
 			while (rs.next()) {
 				c1 = cd.read(rs.getInt(5));
 				o1 = od.read(rs.getInt(6));
-				Emprunt e = new Emprunt(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getFloat(4),c1,o1);
+				Emprunt e = new Emprunt(rs.getInt(1),rs.getString(2),rs.getString(3),c1,o1);
 				liste.add(e);
 			}
 		} catch (SQLException e) {

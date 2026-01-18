@@ -386,12 +386,16 @@ public class PageEmprunts extends JPanel implements IPageMaj {
         message.setFont(new Font("Arial", Font.BOLD, 16));
 
         JButton retour = new JButton("Retour");
+        retour.setBackground(btnColor);
+        retour.setForeground(txtColor);
         retour.addActionListener(e -> resetPage());
 
         JPanel centre = new JPanel(new BorderLayout());
+        centre.setBackground(bgColor);
         centre.add(message, BorderLayout.CENTER);
 
         JPanel bas = new JPanel();
+        bas.setBackground(bgColor);
         bas.add(retour);
 
         add(centre, BorderLayout.CENTER);

@@ -344,7 +344,7 @@ public class PageEmprunts extends JPanel implements IPageMaj {
     	}
     	else if (ed.countAbonnement(cl)>=10) {
             throw new SaisieInvalideException(
-                    "Nombre maximum d'emprunts atteint (10)"
+                    "Effectuez des rendus pour emprunter de nouveau"
             );
     	}
 	}

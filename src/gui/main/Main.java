@@ -18,7 +18,6 @@ import dao.EmpruntDAO;
 import dao.ObjetDAO;
 import gui.gestion.GestionBD;
 import gui.gestion.GestionDate;
-import gui.gestion.GestionMdp;
 import metier.Abonnement;
 import metier.Client;
 import metier.Compte;
@@ -34,8 +33,7 @@ public class Main {
 		mf.setSize(1280, 720);  
 		mf.pack();
 		
-
-		GestionBD.genererBibliothecaire("DrStefan", GestionMdp.hash("122007"),"Docteur","Stefan");
+		
 		
 		
 		// Après avoir importé la bonne base de donnée (dernière en date)
@@ -43,6 +41,7 @@ public class Main {
 		// une seconde fois
 		
 		/*
+		
 		
 		
 		*/

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import dao.*;
 import metier.*;
@@ -31,6 +32,10 @@ public class PageClient extends JPanel implements IPageMaj {
     private Abonnement ab;
     private Client cl;
     private JLabel abonnementTxt;
+    
+	private final Color btnColor = GestionUIStyle.getButtonColor();
+	private final Color bgColor = GestionUIStyle.getBgColor();
+	private final Color txtColor = GestionUIStyle.getTextColor();
 
     private Runnable rb;
 
@@ -47,7 +52,7 @@ public class PageClient extends JPanel implements IPageMaj {
 
     @Override
     public void initialiserUI() {
-    	
+    	setBackground(bgColor);
     	
         setLayout(new BorderLayout());
 
@@ -57,13 +62,17 @@ public class PageClient extends JPanel implements IPageMaj {
         ad = new AbonnementDAO();
 
         JPanel header = new JPanel(new GridLayout(2,1));
+        header.setBackground(bgColor);
         //header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
         //header.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
         add(header, BorderLayout.NORTH);
 
         JPanel headerPremLigne = new JPanel(new GridLayout(1,3));
+        headerPremLigne.setBackground(bgColor);
         JPanel PremLigne1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        PremLigne1.setBackground(bgColor);
         JPanel PremLigne3 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        PremLigne3.setBackground(bgColor);
         JLabel titreProfil = new JLabel("Profil");
     	JLabel dateDuJour = new JLabel("pas de date a afficher");
 		if (GestionDate.getDateJour() != null) {
@@ -94,6 +103,7 @@ public class PageClient extends JPanel implements IPageMaj {
         
 
         body = new JPanel(new BorderLayout());
+        body.setBackground(bgColor);
         add(body, BorderLayout.CENTER);
 
         String[] colonnes = {
@@ -109,17 +119,24 @@ public class PageClient extends JPanel implements IPageMaj {
         tabRes = new DefaultTableModel(colonnes, 0);
         table = new JTable(tabRes);
 
+        table.setBackground(btnColor);
+        table.setForeground(txtColor);
         table.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
         table.setRowHeight(40);
         table.setFont(new Font("Arial", Font.PLAIN, 14));
         table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
         
+        JTableHeader headerT = table.getTableHeader();
+        headerT.setBackground(btnColor);
+        headerT.setForeground(txtColor);
+        
         JLabel titreTable = new JLabel("Emprunts en cours");
         titreTable.setFont(new Font("Arial", Font.BOLD, 18));
         titreTable.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JPanel topPanel = new JPanel();
+        topPanel.setBackground(bgColor);
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
 
         abonnementTxt = new JLabel();
@@ -136,11 +153,17 @@ public class PageClient extends JPanel implements IPageMaj {
 
         scroll = new JScrollPane(table);
         body.add(scroll, BorderLayout.CENTER);
-        scroll.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+        //scroll.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+        scroll.setBorder(BorderFactory.createEmptyBorder());
+        scroll.getViewport().setBackground(bgColor);
+		
         
         JPanel foot = new JPanel();
+        foot.setBackground(bgColor);
         add(foot, BorderLayout.SOUTH);
         JButton deconnexion = new JButton("Se déconnecter");
+        deconnexion.setBackground(btnColor);
+        deconnexion.setForeground(txtColor);
         foot.add(deconnexion);
         deconnexion.addActionListener(e -> seDeconnecter(user));
     }

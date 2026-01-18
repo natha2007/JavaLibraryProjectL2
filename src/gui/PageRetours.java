@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -38,7 +39,11 @@ public class PageRetours extends JPanel implements IPageMaj {
     private JTextField tfPrenom, tfNom, tfIdentifiant, tfReference;
     private JButton btnRetourner;
     private JLabel labelResultat;
-    private JComboBox tfTypeObjet;
+//    private JComboBox tfTypeObjet;
+    
+	private final Color btnColor = GestionUIStyle.getButtonColor();
+	private final Color bgColor = GestionUIStyle.getBgColor();
+	private final Color txtColor = GestionUIStyle.getTextColor();
 
     public PageRetours() {
         initialiserUI();
@@ -53,7 +58,7 @@ public class PageRetours extends JPanel implements IPageMaj {
 
     @Override
     public void initialiserUI() {
-    	
+    	setBackground(bgColor);
         setLayout(new BorderLayout(10, 10));
         JPanel grid = new JPanel(new GridLayout(1,2));
         add(grid, BorderLayout.CENTER);
@@ -65,6 +70,7 @@ public class PageRetours extends JPanel implements IPageMaj {
 
         // panel gauche
         JPanel panelGauche = new JPanel(new GridBagLayout());
+        panelGauche.setBackground(bgColor);
         GridBagConstraints c = new GridBagConstraints();
         
 
@@ -122,6 +128,7 @@ public class PageRetours extends JPanel implements IPageMaj {
 
         // panel droit 
         JPanel panelDroit = new JPanel(new GridBagLayout());
+        panelDroit.setBackground(bgColor);
         GridBagConstraints d = new GridBagConstraints();
        
        
@@ -158,6 +165,8 @@ public class PageRetours extends JPanel implements IPageMaj {
         
         btnRetourner = new JButton("Retourner");
         btnRetourner.setPreferredSize(new Dimension(200, 45));
+        btnRetourner.setBackground(btnColor);
+        btnRetourner.setForeground(txtColor);
         e.gridx = 0;
         e.gridy = 0;
         foot.add(btnRetourner, e);
@@ -168,6 +177,7 @@ public class PageRetours extends JPanel implements IPageMaj {
         e.gridx = 0;
         e.gridy = 1;
         foot.add(labelResultat, e);
+        foot.setBackground(bgColor);
         
         grid.add(panelDroit);
 

@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import dao.ObjetDAO;
 import metier.Objet;
@@ -39,6 +42,10 @@ public class PageStocks extends JPanel implements IPageMaj {
 	private ArrayList<Objet> listeObjets;
 	private JPanel center;
 	private JLabel titreRecherche;
+	
+	private final Color btnColor = GestionUIStyle.getButtonColor();
+	private final Color bgColor = GestionUIStyle.getBgColor();
+	private final Color txtColor = GestionUIStyle.getTextColor();
 	
 	private int count = 0;
 
@@ -66,6 +73,8 @@ public class PageStocks extends JPanel implements IPageMaj {
 	@Override
 	public void initialiserUI() {
 		setLayout(new BorderLayout());
+		setBackground(bgColor);
+		
 		mainText = new JLabel();
 		add(mainText, BorderLayout.NORTH);
 		DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -88,6 +97,12 @@ public class PageStocks extends JPanel implements IPageMaj {
         
         tabRes = new DefaultTableModel(colonnes, 0);
         JTable table = new JTable(tabRes);
+        table.setBackground(btnColor);
+        table.setForeground(txtColor);
+        
+        JTableHeader header = table.getTableHeader();
+        header.setBackground(btnColor);
+        header.setForeground(txtColor);
 		
 		/*
 		for (Objet o : listeObjets) {
@@ -126,14 +141,21 @@ public class PageStocks extends JPanel implements IPageMaj {
        
 		
 		center = new JPanel(new BorderLayout());
+		center.setBackground(bgColor);
 		add(center, BorderLayout.CENTER);
 		
+		 
 		
 		scroll = new JScrollPane(table);
+		scroll.getViewport().setBackground(bgColor);
+		scroll.setBorder(BorderFactory.createEmptyBorder());
+		
+		
 		JLabel test = new JLabel("test");
 		
 		center.add(scroll, BorderLayout.CENTER);
 		JPanel nord = new JPanel(new GridLayout(1,3));
+		nord.setBackground(bgColor);
 		
 		center.add(nord, BorderLayout.NORTH);
 		
@@ -159,6 +181,7 @@ public class PageStocks extends JPanel implements IPageMaj {
 		ImageIcon imageLoupe = new ImageIcon(loupeFic);
 		Image img = imageLoupe.getImage().getScaledInstance(16, 12, Image.SCALE_SMOOTH);
 		JButton loupe = new JButton(new ImageIcon(img));
+		loupe.setBackground(btnColor);
 		
 		nord.add(loupe);
 		

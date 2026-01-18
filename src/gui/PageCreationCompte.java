@@ -45,6 +45,9 @@ public class PageCreationCompte extends JPanel {
    	private JPanel footer;
    	private JPanel header;
    	private JPanel body;
+	private final Color btnColor = GestionUIStyle.getButtonColor();
+	private final Color bgColor = GestionUIStyle.getBgColor();
+	private final Color txtColor = GestionUIStyle.getTextColor();
    	
    	private JLabel confirmation=new JLabel("");
    	
@@ -77,12 +80,13 @@ public class PageCreationCompte extends JPanel {
 
     
     public void initialiserUI() {
-
+    	setBackground(bgColor);
         setLayout(new BorderLayout());
 
         header = new JPanel();
         header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
         header.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
+        header.setBackground(bgColor);
         add(header, BorderLayout.NORTH);
 
         JLabel titreCreaCmt = new JLabel("Créez votre compte client");
@@ -91,6 +95,7 @@ public class PageCreationCompte extends JPanel {
         header.add(titreCreaCmt);
 
         body = new JPanel(new GridLayout(3, 2, 15, 15));
+        body.setBackground(bgColor);
         body.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(body, BorderLayout.CENTER);
 
@@ -118,14 +123,20 @@ public class PageCreationCompte extends JPanel {
 //        body.add(basDroite);
         
         footer = new JPanel();
+        footer.setBackground(bgColor);
         //footer.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
         add(footer, BorderLayout.SOUTH);
         
         JButton retour=new JButton("Retour");
+        retour.setBackground(btnColor);
+        retour.setForeground(txtColor);
         footer.add(retour);
         retour.addActionListener(e->rb.run());
         
         JButton valider=new JButton("Valider");
+        valider.setBackground(btnColor);
+        valider.setForeground(txtColor);
+        
         footer.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
         footer.add(valider);
         valider.addActionListener(e -> validerProfil() );

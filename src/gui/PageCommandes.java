@@ -24,6 +24,9 @@ public class PageCommandes extends JPanel implements IPageMaj {
 	private JTextField champReference;
 	private JLabel confirmation;
 	private JPanel suiteMsg;
+	private final Color btnColor = GestionUIStyle.getButtonColor();
+	private final Color bgColor = GestionUIStyle.getBgColor();
+	private final Color txtColor = GestionUIStyle.getTextColor();
 	
 	public PageCommandes() {
 		initialiserUI();
@@ -46,9 +49,11 @@ public class PageCommandes extends JPanel implements IPageMaj {
 	@Override
 	public void initialiserUI() {
 		setLayout(new BorderLayout());
+		setBackground(bgColor);
 		
 		JPanel head = new JPanel(new FlowLayout());
 		head.setPreferredSize(new Dimension(0, 50));
+		head.setBackground(bgColor);
 		add(head, BorderLayout.NORTH);
 		
 		mainText = new JLabel();
@@ -60,8 +65,10 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		
 		JPanel grid = new JPanel(new GridLayout(3,2));
 		add(grid, BorderLayout.CENTER);
+		grid.setBackground(bgColor);
 		
 		JPanel zoneNom = new JPanel();
+		zoneNom.setBackground(bgColor);
 		zoneNom.setLayout(new BoxLayout(zoneNom, BoxLayout.Y_AXIS));
 		nom = new JLabel("nom/titre : ");
 		champNom = new JTextField(30);
@@ -80,6 +87,7 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		zoneNom.add(erreurNom);
 		
 		JPanel zoneAuteur= new JPanel();
+		zoneAuteur.setBackground(bgColor);
 		zoneAuteur.setLayout(new BoxLayout(zoneAuteur, BoxLayout.Y_AXIS));
 		auteur = new JLabel("auteur/constructeur : ");
 		champAuteur = new JTextField(30);
@@ -96,6 +104,7 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		zoneAuteur.add(champAuteur);
 		
 		JPanel zonePrix = new JPanel();
+		zonePrix.setBackground(bgColor);
 		zonePrix.setLayout(new BoxLayout(zonePrix, BoxLayout.Y_AXIS));
 		
 		prix = new JLabel("prix : ");
@@ -116,6 +125,7 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		zonePrix.add(champPrix);
 		
 		JPanel zoneObjet = new JPanel();
+		zoneObjet.setBackground(bgColor);
 		zoneObjet.setLayout(new BoxLayout(zoneObjet, BoxLayout.Y_AXIS));
 		typeObjet = new JLabel("typeObjet");
 		String[] listeTypeObjet = {"Livre","CD","DVD","JeuSociete","Ordinateur"};
@@ -133,6 +143,7 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		zoneObjet.add(champTypeObjet);
 		
 		JPanel zoneReference = new JPanel();
+		zoneReference.setBackground(bgColor);
 		zoneReference.setLayout(new BoxLayout(zoneReference, BoxLayout.Y_AXIS));
 		reference = new JLabel("reference");
 		champReference = new JTextField(30);
@@ -149,6 +160,8 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		zoneReference.add(champReference);
 		
 		JButton commande = new JButton("Commander");
+		commande.setBackground(btnColor);
+		commande.setForeground(txtColor); 
 		d = commande.getPreferredSize();
 //        d.height = 25;
 //        commande.setMaximumSize(d);
@@ -160,7 +173,7 @@ public class PageCommandes extends JPanel implements IPageMaj {
         confirmation.setAlignmentX(Component.CENTER_ALIGNMENT);
         //confirmation.setForeground(new Color(255,0,0,255));
         
-        
+        boutonLayout.setBackground(bgColor);
         boutonLayout.add(commande);
         suiteMsg = new JPanel();
         suiteMsg.setLayout(new BoxLayout(suiteMsg, BoxLayout.Y_AXIS));

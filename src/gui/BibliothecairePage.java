@@ -12,7 +12,7 @@ import javax.swing.border.EmptyBorder;
 import dao.BibliothecaireDAO;
 import metier.Bibliothecaire;
 
-public class BibliothecairePage extends JPanel {
+public class BibliothecairePage extends JPanel implements IPageMaj {
 	
 	private Runnable rb;
 	private CardLayout cl;
@@ -29,6 +29,9 @@ public class BibliothecairePage extends JPanel {
 	private JButton commandes;
 	private JButton stocks;
 	private JButton retours;
+	private final Color btnColor = GestionUIStyle.getButtonColor();
+	private final Color bgColor = GestionUIStyle.getBgColor();
+	private final Color txtColor = GestionUIStyle.getTextColor();
 	
 	// BODY
 	
@@ -76,7 +79,8 @@ public class BibliothecairePage extends JPanel {
 	 * Initialise les éléments de l'interface "dynamiques" (dépendant de l'utilisateur)
 	 * Et crée les éléments "statiques".
 	 */
-	private void initialiserUI() {
+	@Override
+	public void initialiserUI() {
 		setLayout(new BorderLayout());
 		initHead();
 		initBody();
@@ -88,7 +92,8 @@ public class BibliothecairePage extends JPanel {
 	/**
 	 * Crée les élements dynamiques (dépendant de l'utilisateur)
 	 */
-	private void majUI() {
+	@Override
+	public void majUI() {
 		if (user == null) {
 			mainText.setText("En attente de connexion");
 			title.setText("");
@@ -177,15 +182,25 @@ public class BibliothecairePage extends JPanel {
 		head.setPreferredSize(new Dimension(0,50));
 		
 		abonnements = new JButton("Abonnements");
-		abonnements.setContentAreaFilled(false);
+		abonnements.setBackground(btnColor);
+		abonnements.setForeground(txtColor);
+		
 		emprunts = new JButton("Emprunts");
-		emprunts.setContentAreaFilled(false);
+		emprunts.setBackground(btnColor);
+		emprunts.setForeground(txtColor);
+		
 		commandes = new JButton("Commandes");
-		commandes.setContentAreaFilled(false);
+		commandes.setBackground(btnColor);
+		commandes.setForeground(txtColor);
+
 		stocks = new JButton("Stocks");
-		stocks.setContentAreaFilled(false);
+		stocks.setBackground(btnColor);
+		stocks.setForeground(txtColor);
+
 		retours = new JButton("Retours");
-		retours.setContentAreaFilled(false);
+		retours.setBackground(btnColor);
+		retours.setForeground(txtColor);
+
 
 		head.add(abonnements);
 		head.add(emprunts);
@@ -208,7 +223,6 @@ public class BibliothecairePage extends JPanel {
 	private void initBody() {
 		cl = new CardLayout();
 		body = new JPanel(cl);
-		body.setBackground(new Color(255,255,153));
 		
 		bd = new BibliothecaireDAO();
 		
@@ -219,7 +233,7 @@ public class BibliothecairePage extends JPanel {
 		pr = new PageRetours();
 		
 		pb = new JPanel(new BorderLayout());
-		
+		pb.setBackground(bgColor);
 		
 //		GridBagConstraints gbc = new GridBagConstraints();
 //		
@@ -229,6 +243,7 @@ public class BibliothecairePage extends JPanel {
 //		gbc.weightx = 1;
 		title = new JLabel();
 		title.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		pb.add(title, BorderLayout.NORTH);
 		
 //		gbc.insets = new Insets(10,0,0,0);
@@ -251,6 +266,7 @@ public class BibliothecairePage extends JPanel {
 //		gbc.weightx = 1;
 		mainText = new JLabel();
 		mainText.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		pb.add(mainText, BorderLayout.SOUTH);
 		
 		body.add(pa,"Abonnements");
@@ -272,20 +288,24 @@ public class BibliothecairePage extends JPanel {
 		footText = new JLabel("Gestionnaire bibliothèque - 2026");
 		footText.setHorizontalAlignment(getWidth());
 		footText.setFont(new Font("Serif", Font.BOLD, 20));
-		
+		footText.setForeground(txtColor);
 		
 		accueil = new JButton("Accueil");
-		accueil.setContentAreaFilled(false);
+		accueil.setBackground(btnColor);
+		accueil.setForeground(txtColor);
 		connexion = new JButton("Se déconnecter");
-		connexion.setContentAreaFilled(false);
+		connexion.setBackground(btnColor);
+		connexion.setForeground(txtColor);
 		
 		accueil.addActionListener(e -> retournerAccueil());
 		connexion.addActionListener(e -> retournerPageConnexion(user));
 		
 		footGrid = new JPanel(new GridLayout(1,2));
+		
 		footGrid2 = new JPanel(new GridLayout(1,2));
+		footGrid2.setBackground(bgColor);
 		JPanel footGrid3 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JPanel footGrid4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		footGrid3.setBackground(bgColor);
 		
 		String message = "";
 		dateDuJour = new JLabel("pas de date a afficher");

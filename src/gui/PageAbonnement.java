@@ -29,6 +29,9 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 	private final ClientDAO cld = new ClientDAO();
 	private final CompteDAO cd = new CompteDAO();
 	private final AbonnementDAO abd = new AbonnementDAO();
+	private final Color btnColor = GestionUIStyle.getButtonColor();
+	private final Color bgColor = GestionUIStyle.getBgColor();
+	private final Color txtColor = GestionUIStyle.getTextColor();
 
 	
 	public PageAbonnement() {
@@ -53,7 +56,7 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 	@Override
 	public void initialiserUI() {
 		setLayout(new BorderLayout());
-		
+		setBackground(bgColor);
 		mainText = new JLabel();
 		mainText.setHorizontalAlignment(SwingConstants.CENTER);
 		add(mainText, BorderLayout.NORTH);
@@ -63,6 +66,10 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		JPanel droite = new JPanel(new GridBagLayout());
 		JScrollPane scrollGauche = new JScrollPane(gauche);
 		JScrollPane scrollDroite = new JScrollPane(droite);
+		gauche.setBackground(bgColor);
+		droite.setBackground(bgColor);
+		scrollGauche.setBackground(bgColor);
+		scrollDroite.setBackground(bgColor);
 		scrollGauche.setBorder(BorderFactory.createEmptyBorder());
 		scrollDroite.setBorder(BorderFactory.createEmptyBorder());
 		grid.add(scrollGauche);
@@ -141,6 +148,8 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		gbc.gridy = 9;
 		gbc.weightx = 1;
 		JButton ajouter = new JButton("Ajouter");
+		ajouter.setBackground(btnColor);
+		ajouter.setForeground(txtColor);
 		gauche.add(ajouter, gbc);
 		
 		gbc.insets = new Insets(0,0,0,0);
@@ -217,6 +226,8 @@ public class PageAbonnement extends JPanel implements IPageMaj {
 		gbc1.gridy = 8;
 		gbc1.weightx = 1;
 		JButton supprimer = new JButton("Supprimer");
+		supprimer.setBackground(btnColor);
+		supprimer.setForeground(txtColor);
 		droite.add(supprimer, gbc1);
 		
 		gbc1.insets = new Insets(0,0,0,0);

@@ -17,6 +17,9 @@ public class ConnexionPage extends JPanel {
     private JTextField champIdentifiant = new JTextField(30);
     private JPasswordField champMdp = new JPasswordField(30);
     private Integer IdClientActuel;
+	private final Color btnColor = GestionUIStyle.getButtonColor();
+	private final Color bgColor = GestionUIStyle.getBgColor();
+	private final Color txtColor = GestionUIStyle.getTextColor();
 
     public ConnexionPage(Consumer<CompteUtilisateur> conn) {
         this.conn = conn;
@@ -29,6 +32,10 @@ public class ConnexionPage extends JPanel {
         JPanel head = new JPanel(new GridLayout(1, 3));
         JPanel body = new JPanel(new GridBagLayout());
         JPanel foot = new JPanel(new GridBagLayout());
+        
+        head.setBackground(bgColor);
+        body.setBackground(bgColor);
+        foot.setBackground(bgColor);
 
         add(head, BorderLayout.NORTH);
         add(body, BorderLayout.CENTER);
@@ -102,6 +109,8 @@ public class ConnexionPage extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(0, 100, 50, 100);
         JButton connexionBtn = new JButton("Se connecter");
+        connexionBtn.setBackground(btnColor);
+        connexionBtn.setForeground(txtColor);
         foot.add(connexionBtn, gbc);
         connexionBtn.addActionListener(e -> verifInfos());
     }

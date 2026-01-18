@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import dao.CompteDAO;
 import dao.EmpruntDAO;
@@ -60,6 +62,10 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 	private Integer objetId;
 	private Integer compteId;
 	private Integer clientId;
+	private final Color btnColor = GestionUIStyle.getButtonColor();
+	private final Color bgColor = GestionUIStyle.getBgColor();
+	private final Color txtColor = GestionUIStyle.getTextColor();
+
 	
 	private int count = 0;
 
@@ -85,6 +91,8 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 	@Override
 	public void initialiserUI() {
 		setLayout(new BorderLayout());
+		setBackground(bgColor);
+		
 		mainText = new JLabel();
 		add(mainText, BorderLayout.NORTH);
 		
@@ -113,6 +121,14 @@ public class PageEmprunts extends JPanel implements IPageMaj {
             }
         };
         JTable table = new JTable(tabRes);
+        table.setBackground(btnColor);
+        table.setForeground(txtColor);
+        
+        JTableHeader header = table.getTableHeader();
+        header.setBackground(btnColor);
+        header.setForeground(txtColor);
+
+        
         
 		tabRes.addTableModelListener(e -> {
 		    int row = e.getFirstRow();
@@ -133,12 +149,15 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 
 		
 		body = new JPanel(new GridLayout(2,1));
+		body.setBackground(bgColor);
 		add(body, BorderLayout.CENTER);
 		
 		JPanel haut = new JPanel();
 		haut.setLayout(new BorderLayout());
+		haut.setBackground(bgColor);
 		
 		recherche = new JPanel(new GridLayout(1, 3));
+		recherche.setBackground(bgColor);
 		
 		titreRecherche = new JLabel("Rechercher et sélectionnez la référence :");
 		barreRecherche = new JTextField(40);
@@ -158,25 +177,36 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 		ImageIcon imageLoupe = new ImageIcon(loupeFic);
 		Image img = imageLoupe.getImage().getScaledInstance(16, 12, Image.SCALE_SMOOTH);
 		JButton loupe = new JButton(new ImageIcon(img));
+		loupe.setBackground(btnColor);
 		
 		recherche.add(loupe);
 		haut.add(recherche, BorderLayout.NORTH);
 		
 		scroll = new JScrollPane(table);
+		scroll.getViewport().setBackground(bgColor);
+		scroll.setBorder(BorderFactory.createEmptyBorder());
+		
 		haut.add(scroll, BorderLayout.CENTER);
 		
 		body.add(haut);
 
 		JPanel bas = new JPanel(new GridLayout(4,1,5,5));
+		bas.setBackground(bgColor);
 		
 		JLabel ideTitre=new JLabel("Saisissez l'identifiant du client :");
 		ideVal = new JTextField(15);
 		JButton valider = new JButton("Valider");
+		valider.setBackground(btnColor);
+		valider.setForeground(txtColor);
 		
 		JPanel ligne1 = new JPanel(new GridBagLayout());
 		JPanel ligne2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel ligne3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel ligne4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		ligne1.setBackground(bgColor);
+		ligne2.setBackground(bgColor);
+		ligne3.setBackground(bgColor);
+		ligne4.setBackground(bgColor);
 		
 		ligne1.add(ideTitre);
 		ligne2.add(ideVal);

@@ -113,8 +113,8 @@ public class EmpruntDAO extends DAO<Emprunt> {
 		try {
 			this.rs = stmt.executeQuery(requete);
 			while (rs.next()) {
-				c1 = cd.read(rs.getInt(5));
-				o1 = od.read(rs.getInt(6));
+				c1 = cd.read(rs.getInt(4));
+				o1 = od.read(rs.getInt(5));
 				Emprunt e = new Emprunt(rs.getInt(1),rs.getString(2),rs.getString(3),c1,o1);
 				liste.add(e);
 			}

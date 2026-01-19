@@ -5,8 +5,8 @@ public class Client {
 	private Integer clientId;
 	private String nom;
 	private String prenom;
-	private Abonnement abonnement; //clé étrangère abonnementId
-	private Compte compte; //clé étrangère compteId
+	private Abonnement abonnement; 
+	private Compte compte; 
 	
 	public Client(String nom, String prenom, Abonnement abonnement, Compte compte) {
 		this.abonnement = abonnement;

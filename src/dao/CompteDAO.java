@@ -75,24 +75,6 @@ public class CompteDAO extends DAO<Compte> {
 		return c;
 	}
 	
-	public boolean exists(String identifiant, String mdpHash) {
-		boolean exists = false;
-		String requete = "SELECT *"
-				+ " FROM compte"
-				+ " WHERE identifiant='" + identifiant +
-				"' AND mdpHash='" + mdpHash + "'";
-		try {
-			rs = stmt.executeQuery(requete);
-			if (rs.first()) {
-				exists = true;
-			}
-		} catch (SQLException e) {
-			System.out.println("erreur requête SQL");
-			e.printStackTrace();
-		}
-		return exists;
-	}
-	
 	public boolean exists(String identifiant) {
 		boolean exists = false;
 		String requete = "SELECT *"

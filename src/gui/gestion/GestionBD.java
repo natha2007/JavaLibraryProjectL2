@@ -8,11 +8,15 @@ import dao.*;
 public class GestionBD {
 	private ArrayList<Objet> listeObjets;
 	
-	public static void genererObjets() {
+	/**
+	 * Génère des objets aléatoires en BD pour des tests
+	 * @param nombre nombre d'objet à générer
+	 */
+	public static void genererObjets(int nombre) {
 		ObjetDAO od = new ObjetDAO();
 		Objet o = null;
 		int randomTypeObjet = 0;
-		for (int i=0;i<500;i++) {
+		for (int i=0;i<nombre;i++) {
 			randomTypeObjet =  (int)(Math.random() * 4);
 			String typeObjet = null;
 			switch(randomTypeObjet) {
@@ -37,6 +41,13 @@ public class GestionBD {
 		}
 	}
 	
+	/**
+	 * Permet de générer un bibliothécaire (pas possible par le logiciel)
+	 * @param identifiant
+	 * @param mdp
+	 * @param nom
+	 * @param prenom
+	 */
 	public static void genererBibliothecaire(String identifiant, String mdp, String nom, String prenom) {
 		CompteDAO cd = new CompteDAO();
 		BibliothecaireDAO bd = new BibliothecaireDAO();
@@ -47,19 +58,5 @@ public class GestionBD {
 			bd.create(b);
 		} 
 	}
-	
-	
-	/*
-	public static void main(String[] args) {
-		//GestionBD.genererObjets();
-		ObjetDAO od = new ObjetDAO();
-		
-		
-		for (int i = 1506; i < 2006; i++) {
-			od.delete(i);
-		}
-		
-	}
-	*/
 	
 }

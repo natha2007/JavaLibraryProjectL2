@@ -122,46 +122,4 @@ public class BibliothecaireDAO extends DAO<Bibliothecaire> {
 		return verif;
 	}
 	
-	public boolean exists(String nom, String prenom) {
-		boolean verif = false;
-		String requete = "SELECT *"
-				+ " FROM bibliothecaire"
-				+ " WHERE nom='" + nom
-				+ "' AND prenom='" + prenom + "'";
-		try {
-			rs = stmt.executeQuery(requete);
-			if (rs.first()) {
-				verif = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("erreur requête SQL");
-		}
-		return verif;
-	}
-	
-	/**
-	 * Renvoie vrai si le bibliothecaire existe.
-	 * On recherche le bibliothecaire par son compteId.
-	 * Renvoie faux sinon.
-	 * @param compteId 
-	 * @return boolean
-	 */
-	public boolean existsByCompteId(Integer compteId) {
-		boolean verif = false;
-		String requete = "SELECT * "
-					+ " FROM bibliothecaire"
-					+ " WHERE compteId= " + compteId;
-		try {
-			rs = stmt.executeQuery(requete);
-			if (rs.first()) {
-				verif = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("erreur requête SQL");
-		}
-		return verif;
-	}
-	
 }

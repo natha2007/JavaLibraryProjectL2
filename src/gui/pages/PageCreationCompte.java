@@ -45,7 +45,7 @@ public class PageCreationCompte extends JPanel {
    	private JPasswordField txtConfirm;
    	
    	private CompteDAO cd = new CompteDAO();
-   	private ClientDAO cld=new ClientDAO();
+   	private ClientDAO cld = new ClientDAO();
    	private Compte c;
    	
 	private final Color btnColor = GestionUIStyle.getButtonColor();
@@ -300,9 +300,6 @@ public class PageCreationCompte extends JPanel {
 		String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w\\s])\\S{12,}$";
 		String mdpTxt = new String(txtMdp.getPassword());
 		String verifTxt = new String(txtConfirm.getPassword());
-
-		// String confirmTxt = new String(txtConfirm.getPassword());
-		
 		if (mdpTxt.isEmpty()) {
 			throw new SaisieInvalideException("Vous devez saisir un mot de passe");
 		}

@@ -42,7 +42,6 @@ public class PageRetours extends JPanel implements IPageMaj {
     private JTextField tfPrenom, tfNom, tfIdentifiant, tfReference;
     private JButton btnRetourner;
     private JLabel labelResultat;
-//    private JComboBox tfTypeObjet;
     
 	private final Color btnColor = GestionUIStyle.getButtonColor();
 	private final Color bgColor = GestionUIStyle.getBgColor();
@@ -53,7 +52,10 @@ public class PageRetours extends JPanel implements IPageMaj {
         majUI();
     }
 
-    
+    /**
+     * Permet de récupérer l'utilisateur connecté
+     * @param user
+     */
     public void setUser(CompteUtilisateur user) {
         this.user = user;
         majUI();
@@ -61,8 +63,9 @@ public class PageRetours extends JPanel implements IPageMaj {
 
     @Override
     public void initialiserUI() {
+    	setLayout(new BorderLayout(10, 10));
     	setBackground(bgColor);
-        setLayout(new BorderLayout(10, 10));
+      
         JPanel grid = new JPanel(new GridLayout(1,2));
         add(grid, BorderLayout.CENTER);
 
@@ -75,18 +78,13 @@ public class PageRetours extends JPanel implements IPageMaj {
         JPanel panelGauche = new JPanel(new GridBagLayout());
         panelGauche.setBackground(bgColor);
         GridBagConstraints c = new GridBagConstraints();
-        
-
         Dimension fieldSize = new Dimension(600, 22);
 
-        
         // Nom
         c.insets = new Insets(0, 50, 0, 0);
-        ///c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0; 
         c.gridy = 0;
         c.weightx = 1.0;
-        
         panelGauche.add(new JLabel("Nom :"), c);
         c.insets = new Insets(0,50,100,0);
         c.gridx = 0; 
@@ -96,8 +94,6 @@ public class PageRetours extends JPanel implements IPageMaj {
         tfNom.setPreferredSize(fieldSize);
         panelGauche.add(tfNom, c);
        
-		
-        
         // Prenom
         c.insets = new Insets(0, 50, 0, 0);
         c.gridx = 0; c.gridy++;
@@ -109,24 +105,6 @@ public class PageRetours extends JPanel implements IPageMaj {
         tfPrenom = new JTextField(30);
         tfPrenom.setPreferredSize(fieldSize);
         panelGauche.add(tfPrenom, c);
-       
-        // prenom
-        
-        //c.gridx = 0; c.gridy++;
-        
-        //c.gridx = 1;
-       
-
-        // type d'objet
-        /*
-        c.gridx = 0; c.gridy++;
-        panelGauche.add(new JLabel("Type objet :"), c);
-        c.gridx = 1;
-        String[] listeTypeObjet = {"Livre","CD","DVD","JeuSociete","Ordinateur"};
-		tfTypeObjet = new JComboBox(listeTypeObjet);
-        tfTypeObjet.setPreferredSize(fieldSize);
-        panelGauche.add(tfTypeObjet, c);
-         */
         grid.add(panelGauche);
 
         // panel droit 
@@ -134,10 +112,8 @@ public class PageRetours extends JPanel implements IPageMaj {
         panelDroit.setBackground(bgColor);
         GridBagConstraints d = new GridBagConstraints();
        
-       
-        d.insets = new Insets(0, 0, 0, 50);
-        
         // Identifiant
+        d.insets = new Insets(0, 0, 0, 50);
         d.gridx = 0; d.gridy = 0;
         d.weightx = 1.0;
         panelDroit.add(new JLabel("Identifiant :"), d);
@@ -160,18 +136,19 @@ public class PageRetours extends JPanel implements IPageMaj {
         tfReference.setPreferredSize(fieldSize);
         panelDroit.add(tfReference, d);
 
-        // Bouton Retourner
+        //foot 
         JPanel foot = new JPanel(new GridBagLayout());
         add(foot, BorderLayout.SOUTH);
 
+        // Bouton Retourner
         GridBagConstraints e = new GridBagConstraints();
         
+        e.gridx = 0;
+        e.gridy = 0;
         btnRetourner = new JButton("Retourner");
         btnRetourner.setPreferredSize(new Dimension(200, 45));
         btnRetourner.setBackground(btnColor);
         btnRetourner.setForeground(txtColor);
-        e.gridx = 0;
-        e.gridy = 0;
         foot.add(btnRetourner, e);
         
 
@@ -187,6 +164,10 @@ public class PageRetours extends JPanel implements IPageMaj {
         btnRetourner.addActionListener(f -> gererErreurs());
     }
 
+    /**
+     * Met à jour les éléments nécessitant d'être mis à jour comme l'utilisateur
+     * ou une page à "rafraichir"
+     */
     @Override
     public void majUI() {
         if (user == null) {
@@ -198,6 +179,9 @@ public class PageRetours extends JPanel implements IPageMaj {
         }
     }
     
+    /**
+     * Permet de gérer l'affichage d'erreur
+     */
     private void gererErreurs() {
     	try {
     		traiterRetour();
@@ -206,6 +190,11 @@ public class PageRetours extends JPanel implements IPageMaj {
     	}
     }
 
+    /**
+     * Permet de valider la saisie des champs, et de retourner 
+     * correctement l'emprunt auprès de la bibliothèque
+     * @throws SaisieInvalideException
+     */
     private void traiterRetour() throws SaisieInvalideException{
         String identifiant = tfIdentifiant.getText().trim();
         if (identifiant.isEmpty()) {

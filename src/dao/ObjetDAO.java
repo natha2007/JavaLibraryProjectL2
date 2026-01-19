@@ -50,7 +50,6 @@ private ResultSet rs;
 		return o1;
 	}
 	
-	
 	public Objet updateDispo(Objet o) {
 	    int nouvelleDispo = (o.getDisponibilite() == 1) ? 0 : 1;
 	    o.setDisponibilite(nouvelleDispo);
@@ -67,8 +66,6 @@ private ResultSet rs;
 	    return o;
 	}
 
-
-	
 	@Override
 	public void delete(Objet o1) {
 		String requete = "DELETE FROM objet"
@@ -79,23 +76,6 @@ private ResultSet rs;
 			System.out.println("erreur requête SQL");
 			e.printStackTrace(); 
 		}
-	}
-	
-	public int delete(Integer id) {
-		int add=0;
-		String requete = "DELETE FROM objet"
-				+ " WHERE objetId= " + id;
-		try {
-			this.rs = stmt.executeQuery(requete);
-			if (rs.first()) {
-				add = rs.getInt(1);
-			}
-		} catch (SQLException e) {
-			System.out.println("erreur requête SQL");
-			e.printStackTrace();
-		}
-		return add;
-				
 	}
 	
 	public Objet read(Integer id) {
@@ -135,22 +115,6 @@ private ResultSet rs;
 			System.out.println("");//pour éviter d'afficher des erreurs dans la console quand ce qui est écrit dans la barre de recherche est mauvais
 		}
 		return o1;
-	}
-	
-	public boolean exists(String reference) {
-		boolean verif = false;
-		String requete = "SELECT *"
-				+ " FROM objet"
-				+ " WHERE reference= '" + reference + "'";
-		try {
-			this.rs = stmt.executeQuery(requete);
-			if (rs.first()) {
-				verif = true;
-			}
-		} catch (SQLException e) {
-			System.out.println("");//pour éviter d'afficher des erreurs dans la console quand ce qui est écrit dans la barre de recherche est mauvais
-		}
-		return verif;
 	}
 	
 	public ArrayList<Objet> getListeObjet(){

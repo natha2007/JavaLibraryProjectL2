@@ -10,13 +10,6 @@ public class Abonnement {
 		this.typeAbonnement = typeAbonnement;
 		this.prix = prix;
 		this.nbEmpruntsMax=nbEmpruntsMax;
-		/*abonnementId sera géré dans la méthode create
-		* de AbonnementDAO, il suffira de faire un 
-		* INSERT INTO simple, sans préciser l'id
-		* et il s'incrémentera automatiquement.
-		* Comme les id de toutes les tables sont auto_increment
-		* on fera pareil pour toutes les classes
-		*/
 	}
 	
 	public Abonnement(Integer abonnementId, String typeAbonnement, float prix, Integer nbEmpruntsMax) {

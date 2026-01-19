@@ -7,8 +7,8 @@ public class TestObjet {
 	public static void main(String[] args) {
 		ObjetDAO  objetdao=new ObjetDAO();
 		Objet o1=new Objet("Les misérables", "Victor Hugo", 
-				Float.valueOf(9), "Livre", 1, " 2070142221");
-//		objetdao.create(o1);
+		Float.valueOf(9), "Livre", 1, " 2070142221");
+		objetdao.create(o1);
 
 		o1.setNom("Les misérables Tome 1");
 		objetdao.update(o1);

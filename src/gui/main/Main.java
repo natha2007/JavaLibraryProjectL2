@@ -32,18 +32,5 @@ public class Main {
 		mf.setMinimumSize(new Dimension(1024, 600)); // limite basse réelle
 		mf.setSize(1280, 720);  
 		mf.pack();
-		
-		
-		
-		
-		// Après avoir importé la bonne base de donnée (dernière en date)
-		// décommenter le code en dessous, l'exécuter puis le recommenter avant d'exécuter
-		// une seconde fois
-		
-		/*
-		
-		
-		
-		*/
 	}
 }

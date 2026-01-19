@@ -37,7 +37,6 @@ public class PageStocks extends JPanel implements IPageMaj {
 	private CompteUtilisateur user;
 	private JLabel mainText;
 	private JScrollPane scroll;
-	private JList liste;
 	private JTextField barreRecherche;
 
 	private DefaultTableModel tabRes;
@@ -79,13 +78,9 @@ public class PageStocks extends JPanel implements IPageMaj {
 		
 		mainText = new JLabel();
 		add(mainText, BorderLayout.NORTH);
-		DefaultListModel<String> listModel = new DefaultListModel<>();
-		liste = new JList(listModel);
-		
 		
 		ObjetDAO od = new ObjetDAO();
 		listeObjets = od.getListeObjet();
-		
 
         String[] colonnes = {
             "objetId",
@@ -105,28 +100,8 @@ public class PageStocks extends JPanel implements IPageMaj {
         JTableHeader header = table.getTableHeader();
         header.setBackground(btnColor);
         header.setForeground(txtColor);
-		
-		/*
-		for (Objet o : listeObjets) {
-			listModel.addElement(o.getObjetId() + " | " + 
-								o.getNom() + " | " + o.getAuteur()
-								+ " | " + o.getPrix() + " | "  + o.getTypeObjet()
-								 + " | " + o.getDisponibilite() + " | "
-								+ o.getReference());
-			listModel.addElement("-------------------------------------------------------"
-					+ "------------------------------------------------------------------"
-					+ "-----------------------------------------------------------------");
-			/*
-			for (int i = 0; i < 15; i++) {
-				listModel.addElement("");
-			}
-			
-			
-		}
-		*/
         
-
-		 for (Objet o : listeObjets) {
+		for (Objet o : listeObjets) {
 	        	Object[] ligne = {
 	        			o.getObjetId(),
 	        			o.getNom(),
@@ -140,18 +115,13 @@ public class PageStocks extends JPanel implements IPageMaj {
 	        	tabRes.addRow(ligne);
 	        }
         
-       
-		
 		center = new JPanel(new BorderLayout());
 		center.setBackground(bgColor);
 		add(center, BorderLayout.CENTER);
 		
-		 
-		
-		scroll = new JScrollPane(table);
+		JScrollPane scroll = new JScrollPane(table);
 		scroll.getViewport().setBackground(bgColor);
 		scroll.setBorder(BorderFactory.createEmptyBorder());
-		
 		
 		JLabel test = new JLabel("test");
 		
@@ -161,17 +131,13 @@ public class PageStocks extends JPanel implements IPageMaj {
 		
 		center.add(nord, BorderLayout.NORTH);
 		
-		//JPanel recherche = new JPanel(new GridBagLayout());
-		
-		
-		
 		titreRecherche = new JLabel("Rechercher référence objet");
+		nord.add(titreRecherche);
+		
 		barreRecherche = new JTextField(40);
 		barreRecherche.setMinimumSize(new Dimension(100,20));
 		barreRecherche.setMaximumSize(new Dimension(200,20));
-		//barreRecherche.setPreferredSize(new Dimension(50,20));
-		nord.add(titreRecherche);
-		nord.add(barreRecherche);		
+		nord.add(barreRecherche);	
 		
 		BufferedImage loupeFic = null;
 		try {
@@ -184,27 +150,8 @@ public class PageStocks extends JPanel implements IPageMaj {
 		Image img = imageLoupe.getImage().getScaledInstance(16, 12, Image.SCALE_SMOOTH);
 		JButton loupe = new JButton(new ImageIcon(img));
 		loupe.setBackground(btnColor);
-		
 		nord.add(loupe);
 		
-		/*
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		recherche.add(titreRecherche, gbc);
-		
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.weightx = 0.9;
-		recherche.add(barreRecherche, gbc);
-		
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.weightx = 0.1;
-		
-		recherche.add(loupe, gbc);
-		*/
 		loupe.addActionListener(e -> {
 			if (count%2 == 0) {
 				rb.run();
@@ -227,7 +174,6 @@ public class PageStocks extends JPanel implements IPageMaj {
 			mainText.setText("En attente de connexion");
 		} else {
 			mainText.setText("Stock actuel de la bibliothèque");
-			//compléter ici pour les choses qui nécéssitent les infos de l'utilisateur
 			ObjetDAO od = new ObjetDAO();
 			listeObjets = od.getListeObjet();
 			tabRes.setRowCount(0);
@@ -248,7 +194,10 @@ public class PageStocks extends JPanel implements IPageMaj {
 		}
 	}
 	
-	
+	/**
+	 * Permet d'afficher la table selon la recherche par référence 
+	 * saisie par l'utilisateur
+	 */
 	public void rechercherObjet() {
 		ObjetDAO od = new ObjetDAO();
 		String recherche = barreRecherche.getText();
@@ -275,9 +224,5 @@ public class PageStocks extends JPanel implements IPageMaj {
 		        }
 		}
 	}
-	
-	
-	
-	
 	
 }

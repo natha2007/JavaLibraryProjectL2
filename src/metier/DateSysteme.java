@@ -10,13 +10,6 @@ public class DateSysteme {
 	
 	public DateSysteme(LocalDate dateDuJour) {
 		this.dateDuJour = dateDuJour;
-		
-		/*
-		 * dateId sera géré dans la méthode create
-		 * de DateSystemeDAO. mais enft jsp trop si ca marche bien ici, car je vois pas d'increment 
-		 * avec le test
-		 * L'id s'incrémente automatiquement en base.)
-		 */
 	}
 
 	public DateSysteme(Integer dateId, LocalDate dateDuJour) {
@@ -39,8 +32,6 @@ public class DateSysteme {
 	public void setDateDuJour(LocalDate dateDuJour) {
 		this.dateDuJour = dateDuJour;
 	}
-
-
 
 	@Override
 	public String toString() {

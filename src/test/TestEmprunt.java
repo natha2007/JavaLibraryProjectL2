@@ -1,5 +1,8 @@
 package test;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 import dao.*;
 import gui.gestion.GestionDate;
 import metier.*;
@@ -18,8 +21,9 @@ public class TestEmprunt {
 		Abonnement ab = ad.read(5);
 		Compte c = new Compte("nathmrc","876557656757576...",GestionDate.getDateFromLocalDate(),"client");
 		Client cl = cd.read(2);
-		
-		Emprunt e = new Emprunt("2026-01-04","2026-02-04",cl,o);
+		LocalDate finEmprunt = GestionDate.getDateJour().plusDays(30);
+		Date fe = GestionDate.getDateFromLocalDate(finEmprunt);
+		Emprunt e = new Emprunt(GestionDate.getDateFromLocalDate(GestionDate.getDateJour()),fe,cl,o);
 		
 		//test create
 		

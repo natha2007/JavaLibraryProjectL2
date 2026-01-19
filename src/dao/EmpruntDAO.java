@@ -81,7 +81,6 @@ public class EmpruntDAO extends DAO<Emprunt> {
 	    return count;
 	}
 
-	
 	public Emprunt read(Integer id) {
 		Emprunt e1 = null;
 		Client c1 = null;
@@ -94,7 +93,7 @@ public class EmpruntDAO extends DAO<Emprunt> {
 			if (rs.first()) {
 				c1 = cd.read(rs.getInt(5));
 				o1 = od.read(rs.getInt(6));
-				e1 = new Emprunt(rs.getInt(1),rs.getString(2),rs.getString(3), c1, o1);
+				e1 = new Emprunt(rs.getInt(1),rs.getDate(2),rs.getDate(3), c1, o1);
 			}
 		} catch (SQLException e) {
 			System.out.println("erreur requête SQL");
@@ -115,7 +114,7 @@ public class EmpruntDAO extends DAO<Emprunt> {
 			while (rs.next()) {
 				c1 = cd.read(rs.getInt(4));
 				o1 = od.read(rs.getInt(5));
-				Emprunt e = new Emprunt(rs.getInt(1),rs.getString(2),rs.getString(3),c1,o1);
+				Emprunt e = new Emprunt(rs.getInt(1),rs.getDate(2),rs.getDate(3),c1,o1);
 				liste.add(e);
 			}
 		} catch (SQLException e) {

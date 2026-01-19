@@ -1,6 +1,7 @@
 package gui.pages;
 
 import java.awt.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -20,24 +21,12 @@ public class PageClient extends JPanel implements IPageMaj {
     private CompteUtilisateur user;
 
     private JTextArea profilInfos;
-    private JTable table;
-    private JScrollPane scroll;
     private DefaultTableModel tabRes;
-
-    private ArrayList<Emprunt> listeEmprunt;
+    private JLabel abonnementTxt;
 
     private ClientDAO cd = new ClientDAO();
     private EmpruntDAO ed = new EmpruntDAO();
     private ObjetDAO od = new ObjetDAO();
-    private AbonnementDAO ad = new AbonnementDAO();
-
-    private Abonnement ab;
-    private Client cl;
-    private JLabel abonnementTxt;
-    
-	private final Color btnColor = GestionUIStyle.getButtonColor();
-	private final Color bgColor = GestionUIStyle.getBgColor();
-	private final Color txtColor = GestionUIStyle.getTextColor();
 
     private Runnable rb;
 
@@ -47,14 +36,27 @@ public class PageClient extends JPanel implements IPageMaj {
         majUI();
     }
 
+    /**
+     * Permet d'obtenir les informations sur l'utilisateur connecté
+     * @param user l'utilisateur connecté
+     */
     public void setUser(CompteUtilisateur user) {
         this.user = user;
         majUI();
     }
 
+    /**
+	 * Initialise les éléments de l'interface "dynamiques" (dépendant de l'utilisateur)
+	 * Et crée les éléments "statiques".
+	 */
     @Override
     public void initialiserUI() {
         setLayout(new BorderLayout());
+        
+        Color btnColor = GestionUIStyle.getButtonColor();
+        Color bgColor = GestionUIStyle.getBgColor();
+    	Color txtColor = GestionUIStyle.getTextColor();
+    	
     	setBackground(bgColor);
 
         JPanel header = new JPanel(new GridLayout(2,1));
@@ -113,7 +115,7 @@ public class PageClient extends JPanel implements IPageMaj {
         
         tabRes = new DefaultTableModel(colonnes, 0);
         
-        table = new JTable(tabRes);
+        JTable table = new JTable(tabRes);
         table.setBackground(btnColor);
         table.setForeground(txtColor);
         table.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -144,7 +146,7 @@ public class PageClient extends JPanel implements IPageMaj {
 
         body.add(topPanel, BorderLayout.NORTH);
 
-        scroll = new JScrollPane(table);
+        JScrollPane scroll = new JScrollPane(table);
         body.add(scroll, BorderLayout.CENTER);
         scroll.setBorder(BorderFactory.createEmptyBorder());
         scroll.getViewport().setBackground(bgColor);
@@ -160,10 +162,17 @@ public class PageClient extends JPanel implements IPageMaj {
         deconnexion.addActionListener(e -> seDeconnecter(user));
     }
     
+    /**
+     * Gère la deconnexion lorsque l'utilisateur clique sur le bouton "se déconnecter"
+     * @param empty
+     */
     public void seDeconnecter(CompteUtilisateur empty) {
     	rb.run();
     }
 
+    /**
+	 * Crée les élements dynamiques (dépendant de l'utilisateur ou nécessitant d'être mis à jour)
+	 */
     @Override
     public void majUI() {
         tabRes.setRowCount(0);
@@ -173,9 +182,9 @@ public class PageClient extends JPanel implements IPageMaj {
             return;
         }
 
-        cl = cd.read(user.getClientId());
+        Client cl = cd.read(user.getClientId());
         profilInfos.setText("Bonjour " + cl.getPrenom() + " " + cl.getNom());
-        ab=cl.getAbonnement();
+        Abonnement ab=cl.getAbonnement();
         
        if (ab == null) {
     	   abonnementTxt.setText("Vous n'avez aucun abonnement actif (aucun emprunt possible)");
@@ -183,11 +192,11 @@ public class PageClient extends JPanel implements IPageMaj {
     	   abonnementTxt.setText("Vous bénéficiez du forfait " + ab.getTypeAbonnement() 
            + " à " + ab.getPrix() + "€. Vous pouvez faire jusqu'à " + ab.getNbEmpruntsMax() + " emprunts simultanément.");
        }
-        listeEmprunt = ed.getListeEmpruntsByClientId(user.getClientId());
+        ArrayList<Emprunt> listeEmprunt = ed.getListeEmpruntsByClientId(user.getClientId());
         LocalDate today = GestionDate.getDateJour();
 
         for (Emprunt e : listeEmprunt) {
-            LocalDate localDateFin = LocalDate.parse(e.getDateFin());
+            LocalDate localDateFin = e.getDateFin().toLocalDate();
             Objet objet = od.read(e.getObjet().getObjetId());
 
             Object[] ligne = {

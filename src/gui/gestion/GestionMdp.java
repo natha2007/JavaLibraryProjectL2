@@ -27,6 +27,12 @@ public class GestionMdp {
 		
 	}
 	
+	/**
+	 * Converti le mot de passe saisi par l'utilisateur récupéré en
+     * un mot de passe crypté 
+	 * @param pwdTab mdp saisi (JPasswordField renvoie un char[])
+	 * @return mot de passe crypté
+	 */
 	public static String getMdpResultHash(char[] pwdTab) {
 		String pwd = "";
 		for (int i = 0; i<pwdTab.length; i++) {

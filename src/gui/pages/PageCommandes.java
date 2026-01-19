@@ -12,21 +12,19 @@ import gui.gestion.SaisieInvalideException;
 import metier.Objet;
 
 public class PageCommandes extends JPanel implements IPageMaj {
+	
 	private CompteUtilisateur user;
 	private JLabel mainText;
-	private JLabel nom;
+
 	private JTextField champNom;
-	private JLabel erreurNom;
-	private JLabel auteur;
 	private JTextField champAuteur;
-	private JLabel prix;
 	private JFormattedTextField champPrix;
-	private JLabel typeObjet;
 	private JComboBox champTypeObjet;
-	private JLabel reference;
 	private JTextField champReference;
+	
 	private JLabel confirmation;
 	private JPanel suiteMsg;
+	
 	private final Color btnColor = GestionUIStyle.getButtonColor();
 	private final Color bgColor = GestionUIStyle.getBgColor();
 	private final Color txtColor = GestionUIStyle.getTextColor();
@@ -60,11 +58,9 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		add(head, BorderLayout.NORTH);
 		
 		mainText = new JLabel();
-		//mainText.setPreferredSize(new Dimension(1000,150));
 		mainText.setHorizontalAlignment(SwingConstants.CENTER);
 		mainText.setVerticalAlignment(SwingConstants.CENTER);
 		head.add(mainText);
-		
 		
 		JPanel grid = new JPanel(new GridLayout(3,2));
 		add(grid, BorderLayout.CENTER);
@@ -73,17 +69,20 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		JPanel zoneNom = new JPanel();
 		zoneNom.setBackground(bgColor);
 		zoneNom.setLayout(new BoxLayout(zoneNom, BoxLayout.Y_AXIS));
-		nom = new JLabel("nom/titre : ");
+		
+		JLabel nom = new JLabel("nom/titre : ");
+		nom.setAlignmentX(Component.CENTER_ALIGNMENT);
+		nom.setAlignmentY(Component.CENTER_ALIGNMENT);
+		
 		champNom = new JTextField(30);
-		erreurNom = new JLabel("");
 		Dimension d = champNom.getPreferredSize();
         d.height = 25;
         champNom.setMaximumSize(d);
         champNom.setPreferredSize(d);
-        nom.setAlignmentX(Component.CENTER_ALIGNMENT);
         champNom.setAlignmentX(Component.CENTER_ALIGNMENT);
-        nom.setAlignmentY(Component.CENTER_ALIGNMENT);
         champNom.setAlignmentY(Component.CENTER_ALIGNMENT);
+		JLabel erreurNom = new JLabel("");
+		
 		grid.add(zoneNom);
 		zoneNom.add(nom);
 		zoneNom.add(champNom);
@@ -92,16 +91,19 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		JPanel zoneAuteur= new JPanel();
 		zoneAuteur.setBackground(bgColor);
 		zoneAuteur.setLayout(new BoxLayout(zoneAuteur, BoxLayout.Y_AXIS));
-		auteur = new JLabel("auteur/constructeur : ");
-		champAuteur = new JTextField(30);
+		
+		JLabel auteur = new JLabel("auteur/constructeur : ");
 		auteur.setAlignmentX(Component.CENTER_ALIGNMENT);
+		auteur.setAlignmentY(Component.CENTER_ALIGNMENT);
+		
+		champAuteur = new JTextField(30);
 	    champAuteur.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    auteur.setAlignmentY(Component.CENTER_ALIGNMENT);
 	    champAuteur.setAlignmentY(Component.CENTER_ALIGNMENT);
 		d = champAuteur.getPreferredSize();
         d.height = 25;
         champAuteur.setMaximumSize(d);
         champAuteur.setPreferredSize(d);
+        
 		grid.add(zoneAuteur);
 		zoneAuteur.add(auteur);
 		zoneAuteur.add(champAuteur);
@@ -110,19 +112,21 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		zonePrix.setBackground(bgColor);
 		zonePrix.setLayout(new BoxLayout(zonePrix, BoxLayout.Y_AXIS));
 		
-		prix = new JLabel("prix : ");
+		JLabel prix = new JLabel("prix : ");
+		prix.setAlignmentX(Component.CENTER_ALIGNMENT);
+		prix.setAlignmentY(Component.CENTER_ALIGNMENT);
+		
 		NumberFormat format = NumberFormat.getNumberInstance();
 		format.setGroupingUsed(false);
 		champPrix = new JFormattedTextField(format);
 		champPrix.setColumns(30);
-		prix.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    champPrix.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    prix.setAlignmentY(Component.CENTER_ALIGNMENT);
 	    champPrix.setAlignmentY(Component.CENTER_ALIGNMENT);
 		d = champPrix.getPreferredSize();
         d.height = 25;
         champPrix.setMaximumSize(d);
         champPrix.setPreferredSize(d);
+        
 		grid.add(zonePrix);
 		zonePrix.add(prix);
 		zonePrix.add(champPrix);
@@ -130,17 +134,20 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		JPanel zoneObjet = new JPanel();
 		zoneObjet.setBackground(bgColor);
 		zoneObjet.setLayout(new BoxLayout(zoneObjet, BoxLayout.Y_AXIS));
-		typeObjet = new JLabel("typeObjet");
+		
+		JLabel typeObjet = new JLabel("typeObjet");
+		typeObjet.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    typeObjet.setAlignmentY(Component.CENTER_ALIGNMENT);
+		
 		String[] listeTypeObjet = {"Livre","CD","DVD","JeuSociete","Ordinateur"};
 		champTypeObjet = new JComboBox(listeTypeObjet);
-		typeObjet.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    champTypeObjet.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    typeObjet.setAlignmentY(Component.CENTER_ALIGNMENT);
 	    champTypeObjet.setAlignmentY(Component.CENTER_ALIGNMENT);
 		d = champTypeObjet.getPreferredSize();
         d.height = 25;
         champTypeObjet.setMaximumSize(d);
         champTypeObjet.setPreferredSize(d);
+        
 		grid.add(zoneObjet);
 		zoneObjet.add(typeObjet);
 		zoneObjet.add(champTypeObjet);
@@ -148,16 +155,19 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		JPanel zoneReference = new JPanel();
 		zoneReference.setBackground(bgColor);
 		zoneReference.setLayout(new BoxLayout(zoneReference, BoxLayout.Y_AXIS));
-		reference = new JLabel("reference");
-		champReference = new JTextField(30);
+		
+		JLabel reference = new JLabel("reference");
 		reference.setAlignmentX(Component.CENTER_ALIGNMENT);
+		reference.setAlignmentY(Component.CENTER_ALIGNMENT);
+		
+		champReference = new JTextField(30);
 	    champReference.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    reference.setAlignmentY(Component.CENTER_ALIGNMENT);
 	    champReference.setAlignmentY(Component.CENTER_ALIGNMENT);
 		d = champReference.getPreferredSize();
         d.height = 25;
         champReference.setMaximumSize(d);
         champReference.setPreferredSize(d);
+        
 		grid.add(zoneReference);
 		zoneReference.add(reference);
 		zoneReference.add(champReference);
@@ -165,28 +175,26 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		JButton commande = new JButton("Commander");
 		commande.setBackground(btnColor);
 		commande.setForeground(txtColor); 
-		d = commande.getPreferredSize();
-//        d.height = 25;
-//        commande.setMaximumSize(d);
-//        commande.setPreferredSize(d);
 		commande.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
         JPanel boutonLayout = new JPanel();
 		boutonLayout.setLayout(new BoxLayout(boutonLayout, BoxLayout.Y_AXIS));
-        confirmation = new JLabel("");
-        confirmation.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //confirmation.setForeground(new Color(255,0,0,255));
-        
         boutonLayout.setBackground(bgColor);
         boutonLayout.add(commande);
+        
+        confirmation = new JLabel("");
+        confirmation.setAlignmentX(Component.CENTER_ALIGNMENT);
+        boutonLayout.add(confirmation);
+        
         suiteMsg = new JPanel();
         suiteMsg.setLayout(new BoxLayout(suiteMsg, BoxLayout.Y_AXIS));
         suiteMsg.setBackground(bgColor);
-        boutonLayout.add(confirmation);
+        suiteMsg.add(confirmation);
         boutonLayout.add(suiteMsg);
+        
 		grid.add(boutonLayout);
-		suiteMsg.add(confirmation);
-		commande.addActionListener(e -> ajouterCommande());
 		
+		commande.addActionListener(e -> ajouterCommande());
 	}
 	
 	/**
@@ -202,6 +210,9 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * Ajoute une commande en vérifiant la validité des champs de saisie
+	 */
 	private void ajouterCommande() {
 		try {
 			validerSaisie();
@@ -211,6 +222,9 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * Crée la commande en base de donnée
+	 */
 	private void creerCommande() {
 		String nom = champNom.getText();
 		String auteur = champAuteur.getText();
@@ -229,6 +243,10 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		confirmation.setText("vous avez bien commandé le " + typeObjet + " : " + nom);
 	}
 	
+	/**
+	 * Gère l'affichage des erreurs de saisie
+	 * @param message message d'erreur
+	 */
 	private void afficherErreur(String message) {
 	    confirmation.setForeground(Color.RED);
 	    if (message.length() < 89) {
@@ -251,6 +269,10 @@ public class PageCommandes extends JPanel implements IPageMaj {
 	    
 	}
 	
+	/**
+	 * Vérifie la validité de tous les champs de saisie
+	 * @throws SaisieInvalideException
+	 */
 	private void validerSaisie() throws SaisieInvalideException {
 		validerNom();
 		validerPrix();
@@ -258,6 +280,10 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		validerReference();
 	}
 	
+	/**
+	 * vérifie la validité du champ de saisie nom
+	 * @throws SaisieInvalideException
+	 */
 	private void validerNom() throws SaisieInvalideException {
 		String t = champNom.getText();
 		if (t.isEmpty()) {
@@ -268,6 +294,10 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * vérifie la validité du champ de saisie prix
+	 * @throws SaisieInvalideException
+	 */
 	private void validerPrix() throws SaisieInvalideException {
 		Number n = (Number) champPrix.getValue();
 		if (n == null || n.floatValue() <= 0) {
@@ -275,6 +305,10 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * vérifie la validité du champ de saisie auteur
+	 * @throws SaisieInvalideException
+	 */
 	private void validerAuteur() throws SaisieInvalideException {
 		String t = champAuteur.getText();
 		if (t.isEmpty()) {
@@ -285,18 +319,10 @@ public class PageCommandes extends JPanel implements IPageMaj {
 		}
 	}
 	
-	/*
-	private void validerTypeObjet() throws SaisieInvalideException {
-		String t = champTypeObjet.getText();
-		if (t.isEmpty()) {
-			throw new SaisieInvalideException("Vous devez saisir un type d'objet");
-		}
-		if (t.contains("'") || t.contains("\"") || t.contains(";") || t.contains("/") || t.contains("--") || t.contains("*")) {
-			throw new SaisieInvalideException("Caractères invalides");
-		}
-	}
-	*/
-	
+	/**
+	 * vérifie la validité du champ de saisie reference
+	 * @throws SaisieInvalideException
+	 */
 	private void validerReference() throws SaisieInvalideException {
 		ObjetDAO od = new ObjetDAO();
 		String t = champReference.getText();

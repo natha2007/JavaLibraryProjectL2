@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import dao.EmpruntDAO;
 import dao.ClientDAO;
 import dao.ObjetDAO;
 import gui.gestion.CompteUtilisateur;
+import gui.gestion.GestionDate;
 import gui.gestion.GestionUIStyle;
 import gui.gestion.SaisieInvalideException;
 import metier.Compte;
@@ -45,15 +47,15 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 	private Runnable rb;
 	private CompteUtilisateur user;
 	private JLabel mainText;
-	private JScrollPane scroll;
+
 	private JTextField barreRecherche;
 	private JTextField ideVal;
 	private DefaultTableModel tabRes;
 	private ArrayList<Objet> listeObjets;
-	private JPanel body;
+
 	private JLabel titreRecherche;
 	private JLabel confirmation=new JLabel();
-	private JPanel recherche;
+
 	private Boolean checked;
 	private CompteDAO cd =new CompteDAO();
 	private ClientDAO cld =new ClientDAO();
@@ -98,7 +100,6 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 		
 		mainText = new JLabel();
 		add(mainText, BorderLayout.NORTH);
-		
 
         String[] colonnes = {
         	"Sélection",
@@ -131,8 +132,6 @@ public class PageEmprunts extends JPanel implements IPageMaj {
         header.setBackground(btnColor);
         header.setForeground(txtColor);
 
-        
-        
 		tabRes.addTableModelListener(e -> {
 		    int row = e.getFirstRow();
 		    int col = e.getColumn();
@@ -151,23 +150,25 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 		});
 
 		
-		body = new JPanel(new GridLayout(2,1));
+		JPanel body = new JPanel(new GridLayout(2,1));
 		body.setBackground(bgColor);
 		add(body, BorderLayout.CENTER);
 		
 		JPanel haut = new JPanel();
 		haut.setLayout(new BorderLayout());
 		haut.setBackground(bgColor);
+		body.add(haut);
 		
-		recherche = new JPanel(new GridLayout(1, 3));
+		JPanel recherche = new JPanel(new GridLayout(1, 3));
 		recherche.setBackground(bgColor);
+		haut.add(recherche, BorderLayout.NORTH);
 		
 		titreRecherche = new JLabel("Rechercher et sélectionnez la référence :");
+		recherche.add(titreRecherche);
+		
 		barreRecherche = new JTextField(40);
 		barreRecherche.setMinimumSize(new Dimension(100,20));
 		barreRecherche.setMaximumSize(new Dimension(200,20));
-		//barreRecherche.setPreferredSize(new Dimension(50,20));
-		recherche.add(titreRecherche);
 		recherche.add(barreRecherche);		
 		
 		BufferedImage loupeFic = null;
@@ -181,51 +182,46 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 		Image img = imageLoupe.getImage().getScaledInstance(16, 12, Image.SCALE_SMOOTH);
 		JButton loupe = new JButton(new ImageIcon(img));
 		loupe.setBackground(btnColor);
-		
 		recherche.add(loupe);
-		haut.add(recherche, BorderLayout.NORTH);
 		
-		scroll = new JScrollPane(table);
+		JScrollPane scroll = new JScrollPane(table);
 		scroll.getViewport().setBackground(bgColor);
 		scroll.setBorder(BorderFactory.createEmptyBorder());
-		
 		haut.add(scroll, BorderLayout.CENTER);
-		
-		body.add(haut);
 
 		JPanel bas = new JPanel(new GridLayout(4,1,5,5));
 		bas.setBackground(bgColor);
+		body.add(bas);
 		
 		JLabel ideTitre=new JLabel("Saisissez l'identifiant du client :");
+		
 		ideVal = new JTextField(15);
+		
 		JButton valider = new JButton("Valider");
 		valider.setBackground(btnColor);
 		valider.setForeground(txtColor);
 		
 		JPanel ligne1 = new JPanel(new GridBagLayout());
-		JPanel ligne2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JPanel ligne3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JPanel ligne4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		ligne1.setBackground(bgColor);
-		ligne2.setBackground(bgColor);
-		ligne3.setBackground(bgColor);
-		ligne4.setBackground(bgColor);
-		
 		ligne1.add(ideTitre);
-		ligne2.add(ideVal);
-		ligne3.add(confirmation);
-		ligne4.add(valider);
-		
 		bas.add(ligne1);
+		
+		JPanel ligne2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		ligne2.setBackground(bgColor);
+		ligne2.add(ideVal);
 		bas.add(ligne2);
+		
+		JPanel ligne3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		ligne3.setBackground(bgColor);
+		ligne3.add(confirmation);
 		bas.add(ligne3);
+		
+		JPanel ligne4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		ligne4.setBackground(bgColor);
+		ligne4.add(valider);
 		bas.add(ligne4);
-		
-		
-		body.add(bas);
 
 		loupe.addActionListener(e -> {
-			count++;
 			if (count%2 == 0) {
 				rechercherObjet();
 				rb.run();
@@ -233,8 +229,8 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 				majUI();
 				titreRecherche.setText("Rechercher puis sélectionnez l'objet");
 			}
+			count++;
 		});
-
 		rechercherObjet();
 		
 		valider.addActionListener(e -> validerEmprunt());
@@ -274,6 +270,10 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * Permet de trier le tableau d'objet lorsque une recherche
+	 * par référence est lancée
+	 */
 	public void rechercherObjet() {
 		ObjetDAO od = new ObjetDAO();
 		String recherche = barreRecherche.getText();
@@ -304,6 +304,11 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * Valide l'emprunt en vérifiant si tous les champs de saisie
+	 * sont valides, puis en créant l'emprant en base de donnée,
+	 * et enfin en affichant une page de confirmation
+	 */
 	private void validerEmprunt() {
 		try {
 			objetId = getObjetIdSelectionne();
@@ -316,24 +321,33 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 		}
 	}
 	
+	/**
+	 * Permet d'afficher les erreurs de saisie
+	 * @param message
+	 */
 	private void afficherErreur(String message) {
 	    confirmation.setForeground(Color.RED);
 	    confirmation.setText(message);
 	}
 	
+	/**
+	 * Permet de créer l'emprunt en base de données
+	 * @param objetId 
+	 */
 	private void creerEmprunt(Integer objetId) {
-		LocalDate today = LocalDate.now();
-		LocalDate finEmprunt = today.plusDays(30);
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    	String ajd = today.format(formatter);
-    	String fe = finEmprunt.format(formatter);
-    	
+		Date ajd = GestionDate.getDateFromLocalDate(GestionDate.getDateJour());
+		LocalDate finEmprunt = GestionDate.getDateJour().plusDays(30);
+		Date fe = GestionDate.getDateFromLocalDate(finEmprunt);
     	Objet o=od.read(objetId);
     	Emprunt e=new Emprunt(ajd,fe,cl,o);
     	ed.create(e);
     	od.updateDispo(o);
 	}
 	
+	/**
+	 * vérifie l'abonnement du client pour voir s'il peut emprunter ou non
+	 * @throws SaisieInvalideException
+	 */
 	private void verifAbonnement() throws SaisieInvalideException{
 		c=cd.read(identifiant);
     	compteId=c.getCompteId(); 
@@ -349,6 +363,11 @@ public class PageEmprunts extends JPanel implements IPageMaj {
     	}
 	}
 	
+	/**
+	 * Vérifie si un objet a été sélectionné pour être emprunté
+	 * @return
+	 * @throws SaisieInvalideException
+	 */
 	private int getObjetIdSelectionne() throws SaisieInvalideException {
 	    for (int i = 0; i < tabRes.getRowCount(); i++) {
 	        Boolean selected = (Boolean) tabRes.getValueAt(i, 0);
@@ -360,7 +379,10 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 	}
 
 
-	
+	/**
+	 * Vérifie si le champ identifiant est valide
+	 * @throws SaisieInvalideException
+	 */
 	private void idValide() throws SaisieInvalideException{
 		identifiant=ideVal.getText();
 		if (identifiant.isEmpty()) {
@@ -375,6 +397,9 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 		};
 	}
 	
+	/**
+	 * Affiche la page confirmation
+	 */
 	private void pageConfirmation() {
         removeAll();
         setLayout(new BorderLayout());
@@ -405,11 +430,13 @@ public class PageEmprunts extends JPanel implements IPageMaj {
         repaint();
     }
 	
+	/**
+	 * réaffiche la page de départ lorsque l'emprunt est validé
+	 */
 	public void resetPage() {
 	    removeAll();
 	    revalidate();
 	    repaint();
-
 	    initialiserUI();
 	    majUI();
 	    rb.run();

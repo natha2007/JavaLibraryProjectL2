@@ -8,9 +8,6 @@ public class Compte {
 	private String mdpHash;
 	private Date dateCreation;
 	private String typeCompte;
-	//penser à vérifier que dateCreation est bien une date,
-	//que la taille des String ne dépasse pas la limite max
-	//des VARCHAR
 	
 	public Compte(String identifiant, String mdpHash, Date dateCreation, String typeCompte) {
 		this.identifiant = identifiant;
@@ -18,8 +15,6 @@ public class Compte {
 		this.dateCreation = dateCreation;
 		this.typeCompte = typeCompte;
 	}
-
-	//penser à transformer le hash du mdp, où ? peut être dans l'UI
 
 	public Compte(Integer compteId, String identifiant, String mdpHash, Date dateCreation, String typeCompte) {
 		this.identifiant = identifiant;
@@ -29,7 +24,6 @@ public class Compte {
 		this.compteId = compteId;
 	}
 
-	
 	public Integer getCompteId() {
 		return compteId;
 	}

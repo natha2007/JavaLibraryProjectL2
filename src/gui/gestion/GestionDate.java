@@ -10,9 +10,11 @@ public class GestionDate {
 	private static LocalDate dateJour;
 	private static DateSysteme dateSysteme;
 	
-	
+	/**
+	 * Remplace la date dans la table date_systeme en base de donnée par
+	 * la date locale si elles sont différentes
+	 */
 	public static void majDate() {
-		System.out.println("maj date appelé");
 		DateSystemeDAO dsd = new DateSystemeDAO();
 		dateJour = LocalDate.now();
 		if (!dsd.exists(dateJour)) {
@@ -34,6 +36,11 @@ public class GestionDate {
 	
 	public static Date getDateFromLocalDate() {
 		Date date = Date.valueOf(GestionDate.getDateJour());
+		return date;
+	}
+	
+	public static Date getDateFromLocalDate(LocalDate localDate) {
+		Date date = Date.valueOf(localDate);
 		return date;
 	}
 

@@ -128,7 +128,7 @@ public class ConnexionPage extends JPanel {
      * Obtenir la saisie de l'utilisateur dans le champ identifiant
      * @return saisie de l'utilisateur sous forme de String
      */
-    public String getIdentifiant() {
+    private String getIdentifiant() {
         return champIdentifiant.getText();
     }
 
@@ -136,28 +136,15 @@ public class ConnexionPage extends JPanel {
      * Récupérer la saisie du mot de passe par l'utilisateur
      * @return mot de passe saisie sous forme de tableau de char
      */
-    public char[] getMdpResult() {
+    private char[] getMdpResult() {
         return champMdp.getPassword();
-    }
-
-    /**
-     * Converti le mot de passe saisi par l'utilisateur récupéré en
-     * un mot de passe crypté 
-     * @return mot de passe crypté
-     */
-    public String getMdpResultHash() {
-        String pwd = "";
-        for (int i = 0; i < this.getMdpResult().length; i++) {
-            pwd += this.getMdpResult()[i];
-        }
-        return GestionMdp.hash(pwd);
     }
 
     /**
      * Obtenir le mot de passe attendu par rapport à l'utilisateur rentré
      * @return mot de passe attendu
      */
-    public String getMdpAttendu() {
+    private String getMdpAttendu() {
         CompteDAO cd = new CompteDAO();
         String mdpAttendu = "";
         if (cd.exists(getIdentifiant())) {
@@ -186,8 +173,8 @@ public class ConnexionPage extends JPanel {
      * à ce qui se trouve en base de données
      * @throws SaisieInvalideException
      */
-    public void verifInfos() throws SaisieInvalideException {
-        if (this.getMdpAttendu().equals(this.getMdpResultHash())) {
+    private void verifInfos() throws SaisieInvalideException {
+        if (this.getMdpAttendu().equals(GestionMdp.getMdpResultHash(getMdpResult()))) {
             System.out.println("connexion réussie");
             CompteDAO cd = new CompteDAO();
             Compte c = cd.read(getIdentifiant());

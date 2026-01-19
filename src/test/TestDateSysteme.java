@@ -1,20 +1,22 @@
 package test;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import dao.DateSystemeDAO;
+import gui.gestion.GestionDate;
 import metier.DateSysteme;
 
 public class TestDateSysteme {
 
 	public static void main(String[] args) {
-		/*
+		
 		DateSystemeDAO dateDAO = new DateSystemeDAO();
 
 		// 1️ CREATE
 		System.out.println(" CREATE ");
-		Timestamp now = new Timestamp(System.currentTimeMillis());
-		DateSysteme ds = new DateSysteme(now, false);
+		LocalDate now = GestionDate.getDateJour();
+		DateSysteme ds = new DateSysteme(now);
 		dateDAO.create(ds);
 		System.out.println(ds);
 
@@ -26,8 +28,7 @@ public class TestDateSysteme {
 		// 3️ UPDATE
 		
 		System.out.println("\n UPDATE ");
-		dsRead.setDateManuelle(true);
-		dsRead.setDateDuJour(new Timestamp(System.currentTimeMillis()));
+		dsRead.setDateDuJour(GestionDate.getDateJour().plusDays(5));
 		dateDAO.update(dsRead);
 		System.out.println(dateDAO.read(dsRead.getDateId()));
 
@@ -36,6 +37,6 @@ public class TestDateSysteme {
 		//dateDAO.delete(dsRead);
 		
 		System.out.println("Ca suprimé");
-		*/
+		
 	}
 } 

@@ -13,8 +13,6 @@ import gui.pages.ConnexionPage;
 import gui.pages.PageClient;
 import gui.pages.PageCreationCompte;
 
-//idées lambda : transformer un resultSet en collection Java grâce à un lambdaStream
-//on peut mettre un abonnement bibliothécaire, vu que l'abonnement crée le compte
 
 public class MainFrame extends JFrame{
 	private CardLayout crd;
@@ -34,7 +32,7 @@ public class MainFrame extends JFrame{
 		
 		ConnexionPage connexion = new ConnexionPage(this::showLogiciel);
 		bp = new BibliothecairePage(this::seDeconnecter);
-		pg = new PageClient(this::seDeconnecter); //enlever 
+		pg = new PageClient(this::seDeconnecter); 
 		pcc = new PageCreationCompte(this::seDeconnecter);
 		
 		root.add(connexion, "Connexion");
@@ -43,9 +41,13 @@ public class MainFrame extends JFrame{
 		root.add(pcc, "creerCompte");
 		
 		pack();
-		//setSize(600,600);
 	}
 	
+	/**
+	 * Affiche la partie client, ou bibliothécaire selon le typeCompte
+	 * de l'utilisateur 
+	 * @param user
+	 */
 	public void showLogiciel(CompteUtilisateur user) {
 		if (user == null) {
 			crd.show(root, "creerCompte");
@@ -64,6 +66,9 @@ public class MainFrame extends JFrame{
 		}
 	}
 	
+	/**
+	 * Permet de se déconnecter depuis la partie Bibliothécaire
+	 */
 	public void seDeconnecter() {
 		bp.setUser(null);
 		crd.show(root, "Connexion");

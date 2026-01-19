@@ -26,16 +26,7 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 	private CardLayout cl; 
 	private CompteUtilisateur user;
 	
-	//private JPanel head;
 	private JPanel body;
-	//private JPanel foot;
-	
-	// HEAD
-
-	
-	
-	// BODY
-	
 	private PageAbonnement pa;
 	private PageEmprunts pe;
 	private PageCommandes pc;
@@ -47,14 +38,8 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 	private JLabel title;
 	private BibliothecaireDAO bd = new BibliothecaireDAO();
 	
-	// FOOT
-	
-	private JLabel footText;
 	private JLabel dateDuJour;
-	private JButton accueil;
-	private JButton connexion;
-	private JPanel footGrid;
-	private JPanel footGrid2;
+
 	
 	public BibliothecairePage(Runnable rb) {
 		this.rb = rb;
@@ -228,7 +213,7 @@ public class BibliothecairePage extends JPanel implements IPageMaj {
 		body = new JPanel(cl);
 		
 		pa = new PageAbonnement();
-		pe = new PageEmprunts(this::rechercherStock);
+		pe = new PageEmprunts(this::rechercherEmprunts);
 		pc = new PageCommandes();
 		ps = new PageStocks(this::rechercherStock);
 		pr = new PageRetours();

@@ -1,21 +1,22 @@
 package metier;
 
+import java.sql.Date;
 
 public class Emprunt {
 	private Integer empruntId;
-	private String dateDebut;
-	private String dateFin;
+	private Date dateDebut;
+	private Date dateFin;
 	private Client client;
 	private Objet objet;
 	
-	public Emprunt(String dateDebut, String dateFin, Client client, Objet objet) {
+	public Emprunt(Date dateDebut, Date dateFin, Client client, Objet objet) {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.client = client;
 		this.objet = objet;
 	}
 	
-	public Emprunt(Integer empruntId, String dateDebut, String dateFin, Client client, Objet objet) {
+	public Emprunt(Integer empruntId, Date dateDebut, Date dateFin, Client client, Objet objet) {
 		this.empruntId=empruntId;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
@@ -31,19 +32,19 @@ public class Emprunt {
 		this.empruntId = empruntId;
 	}
 	
-	public String getDateDebut() {
+	public Date getDateDebut() {
 		return dateDebut;
 	}
 
-	public void setDateDebut(String dateDebut) {
+	public void setDateDebut(Date dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	public String getDateFin() {
+	public Date getDateFin() {
 		return dateFin;
 	}
 
-	public void setDateFin(String dateFin) {
+	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
 	}
 

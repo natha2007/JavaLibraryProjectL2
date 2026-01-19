@@ -439,6 +439,8 @@ public class PageEmprunts extends JPanel implements IPageMaj {
 	    repaint();
 	    initialiserUI();
 	    majUI();
+	    confirmation.setText("");
+	    count = 0;
 	    rb.run();
 	}
 

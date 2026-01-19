@@ -121,7 +121,7 @@ public class ConnexionPage extends JPanel {
         connexionBtn.setBackground(btnColor);
         connexionBtn.setForeground(txtColor);
         foot.add(connexionBtn, gbc);
-        connexionBtn.addActionListener(e -> gererErreur());
+        connexionBtn.addActionListener(e -> gererErreurs());
     }
 
     /**
@@ -157,7 +157,7 @@ public class ConnexionPage extends JPanel {
      * gérer l'affichage d'un message d'erreur en interceptant une
      * SaisieInvalideException dans la méthode verifInfos()
      */
-    private void gererErreur() {
+    public void gererErreurs() {
     	try {
     		verifInfos();
     	} catch (SaisieInvalideException s) {
@@ -175,7 +175,6 @@ public class ConnexionPage extends JPanel {
      */
     private void verifInfos() throws SaisieInvalideException {
         if (this.getMdpAttendu().equals(GestionMdp.getMdpResultHash(getMdpResult()))) {
-            System.out.println("connexion réussie");
             CompteDAO cd = new CompteDAO();
             Compte c = cd.read(getIdentifiant());
             if (c != null) {

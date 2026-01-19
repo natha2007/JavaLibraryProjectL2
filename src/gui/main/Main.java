@@ -26,7 +26,7 @@ public class Main {
 	public static void main(String[] args) {
 		GestionDate.majDate();
 		System.out.println(GestionDate.getDateJour());
-		GestionBD.genererBibliothecaire("MercierN", "122007", "MERCIER", "Nathanaël");
+		GestionBD.genererBibliothecaire("DoeJ", "Jd12", "DOE", "John");
 		MainFrame mf = new MainFrame("Gestionnaire de bibliothèque");
 		mf.setVisible(true);
 		mf.setMinimumSize(new Dimension(1024, 600)); // limite basse réelle

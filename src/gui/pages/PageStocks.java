@@ -101,19 +101,17 @@ public class PageStocks extends JPanel implements IPageMaj {
         header.setBackground(btnColor);
         header.setForeground(txtColor);
         
-		for (Objet o : listeObjets) {
-	        	Object[] ligne = {
-	        			o.getObjetId(),
-	        			o.getNom(),
-	        			o.getAuteur(),
-	        			o.getPrix(),
-	        			o.getTypeObjet(),
-	        			o.getDisponibilite(),
-	        			o.getReference()
-	        	};
-	        	
-	        	tabRes.addRow(ligne);
-	        }
+        listeObjets.stream()
+			.map(o -> new Object[] {
+	        o.getObjetId(),
+	        o.getNom(),
+	        o.getAuteur(),
+	        o.getPrix(),
+	        o.getTypeObjet(),
+	        o.getDisponibilite(),
+	        o.getReference()
+	    })
+	    .forEach(tabRes::addRow);
         
 		center = new JPanel(new BorderLayout());
 		center.setBackground(bgColor);
@@ -178,21 +176,19 @@ public class PageStocks extends JPanel implements IPageMaj {
 			listeObjets = od.getListeObjet();
 			tabRes.setRowCount(0);
 			
-			 for (Objet o : listeObjets) {
-		        	Object[] ligne = {
-		        			o.getObjetId(),
-		        			o.getNom(),
-		        			o.getAuteur(),
-		        			o.getPrix(),
-		        			o.getTypeObjet(),
-		        			o.getDisponibilite(),
-		        			o.getReference()
-		        	};
-		        	
-		        	tabRes.addRow(ligne);
-		        }
+			listeObjets.stream()
+					.map(o -> new Object[] {
+			        o.getObjetId(),
+			        o.getNom(),
+			        o.getAuteur(),
+			        o.getPrix(),
+			        o.getTypeObjet(),
+			        o.getDisponibilite(),
+			        o.getReference()
+			    })
+			    .forEach(tabRes::addRow);
+		       }
 		}
-	}
 	
 	/**
 	 * Permet d'afficher la table selon la recherche par référence 
@@ -209,19 +205,19 @@ public class PageStocks extends JPanel implements IPageMaj {
 			listeObjets = od.getListeObjet(recherche);
 			tabRes.setRowCount(0);
 			
-			 for (Objet o : listeObjets) {
-		        	Object[] ligne = {
-		        			o.getObjetId(),
-		        			o.getNom(),
-		        			o.getAuteur(),
-		        			o.getPrix(),
-		        			o.getTypeObjet(),
-		        			o.getDisponibilite(),
-		        			o.getReference()
-		        	};
-		        	
-		        	tabRes.addRow(ligne);
-		        }
+			listeObjets.stream()
+				.map(o -> new Object[] {
+		        o.getObjetId(),
+		        o.getNom(),
+		        o.getAuteur(),
+		        o.getPrix(),
+		        o.getTypeObjet(),
+		        o.getDisponibilite(),
+		        o.getReference()
+		    })
+			.filter(o -> o[6].equals(barreRecherche.getText()))
+			.forEach(tabRes::addRow);
+		        
 		}
 	}
 	

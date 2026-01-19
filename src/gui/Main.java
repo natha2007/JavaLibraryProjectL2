@@ -17,12 +17,12 @@ import metier.Compte;
 
 public class Main {
 	public static void main(String[] args) {
-
+		GestionDate.majDate();
+		System.out.println(GestionDate.getDateJour());
 		MainFrame mf = new MainFrame("Gestionnaire de bibliothèque");
 		mf.setVisible(true);
 		mf.setMinimumSize(new Dimension(900,600));
-		GestionDate.majDate();
-		System.out.println(GestionDate.getDateJour());
+		
 		
 		// Après avoir importé la bonne base de donnée (dernière en date)
 		// décommenter le code en dessous, l'exécuter puis le recommenter avant d'exécuter

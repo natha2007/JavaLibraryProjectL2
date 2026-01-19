@@ -270,7 +270,12 @@ public class BibliothecairePage extends JPanel {
 		footGrid = new JPanel(new GridLayout(1,2));
 		footGrid2 = new JPanel(new GridLayout(1,3));
 		
-		dateDuJour = new JLabel(GestionDate.getDateJour().toString());
+		String message = "";
+		dateDuJour = new JLabel("pas de date a afficher");
+		if (GestionDate.getDateJour() != null) {
+			dateDuJour.setText(GestionDate.getDateJour().toString());
+		}
+		
 		
 		footGrid.add(accueil);
 		footGrid.add(connexion);
